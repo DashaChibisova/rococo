@@ -18,6 +18,7 @@ dependencies {
     annotationProcessor "org.projectlombok:lombok:${project.ext.lombokVersion}"
     compileOnly "org.projectlombok:lombok:${project.ext.lombokVersion}"
     runtimeOnly "mysql:mysql-connector-java:${project.ext.mysqlDriverVersion}"
+    implementation "org.springframework.kafka:spring-kafka:${project.ext.springKafkaVersion}"
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
@@ -38,8 +39,9 @@ jib {
         }
     }
     to {
-        image = "${project.ext.registry}/${project.name}"
+        image = "${project.ext.dockerHubName}/${project.name}"
         tags = ['latest', "${project.version}"]
+//        image = "${project.ext.dockerHubName}/${project.name}-${System.env.PROFILE}"
     }
 }
 
