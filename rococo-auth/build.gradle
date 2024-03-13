@@ -20,6 +20,7 @@ dependencies {
 //    runtimeOnly "mysql:mysql-connector-java:${project.ext.mysqlDriverVersion}"
     runtimeOnly "org.postgresql:postgresql:42.7.2" //добавила
     implementation "org.springframework.cloud:spring-cloud-starter-vault-config:${project.ext.springVaultVersion}"
+    implementation "org.flywaydb:flyway-core:${project.ext.flywayVersion}"
 
 
     implementation "org.springframework.kafka:spring-kafka:${project.ext.springKafkaVersion}"
