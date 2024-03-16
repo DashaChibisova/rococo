@@ -34,7 +34,7 @@ dependencies {
     implementation "wsdl4j:wsdl4j:${project.ext.wsdl4jVersion}"
     annotationProcessor "org.projectlombok:lombok:${project.ext.lombokVersion}"
     compileOnly "org.projectlombok:lombok:${project.ext.lombokVersion}"
-    runtimeOnly "org.postgresql:postgresql:${project.ext.postgresDriverVersion}"
+    runtimeOnly "org.postgresql:postgresql:42.7.2" //добавила
     jaxb("org.glassfish.jaxb:jaxb-xjc:${project.ext.glassfishJaxbVersion}")
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -42,7 +42,7 @@ dependencies {
 
 jib {
     container {
-        ports = ['8089']
+        ports = ['8080']
         jvmFlags = ["-Dspring.profiles.active=${System.env.PROFILE}"]
         environment = ['VAULT_TOKEN': "${System.env.VAULT_TOKEN}".toString()]
         creationTime = 'USE_CURRENT_TIMESTAMP'

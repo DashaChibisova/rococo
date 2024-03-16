@@ -32,11 +32,11 @@ public class UserEndpoint {
     return response;
   }
 
-  @PayloadRoot(namespace = NAMESPACE_URI, localPart = "currentUserRequest")
+  @PayloadRoot(namespace = NAMESPACE_URI, localPart = "userRequest")
   @ResponsePayload
-  public CurrentUserResponse currentUserRequest(@RequestPayload CurrentUserRequest request) {
-    CurrentUserResponse response = new CurrentUserResponse();
-    response.setUser(userService.getCurrentUser(request.getUsername()).toJaxbUser());
+  public UserResponse userRequest(@RequestPayload UserRequest request) {
+    UserResponse response = new UserResponse();
+    response.setUser(userService.getUser(request.getUsername()).toJaxbUser());
     return response;
   }
 }

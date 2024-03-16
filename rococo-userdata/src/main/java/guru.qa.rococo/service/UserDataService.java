@@ -60,7 +60,7 @@ public class UserDataService {
 
   @Transactional(readOnly = true)
   public @Nonnull
-  UserJson getCurrentUser(@Nonnull String username) {
+  UserJson getUser(@Nonnull String username) {
     return UserJson.fromEntity(getRequiredUser(username));
   }
 

@@ -48,10 +48,10 @@ public class RestUserDataClient implements UserDataClient {
 
   @Override
   public @Nonnull
-  UserJson currentUser(@Nonnull String username) {
+  UserJson user(@Nonnull String username) {
     MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
     params.add("username", username);
-    URI uri = UriComponentsBuilder.fromHttpUrl(rococoUserdataBaseUri + "/currentUser").queryParams(params).build().toUri();
+    URI uri = UriComponentsBuilder.fromHttpUrl(rococoUserdataBaseUri + "/user").queryParams(params).build().toUri();
 
     return Optional.ofNullable(
         webClient.get()
@@ -59,6 +59,6 @@ public class RestUserDataClient implements UserDataClient {
             .retrieve()
             .bodyToMono(UserJson.class)
             .block()
-    ).orElseThrow(() -> new NoRestResponseException("No REST UserJson response is given [/currentUser Route]"));
+    ).orElseThrow(() -> new NoRestResponseException("No REST UserJson response is given [/user Route]"));
   }
 }

@@ -26,9 +26,9 @@ public class UserController {
     return userService.update(user);
   }
 
-  @GetMapping("/currentUser")
-  public UserJson currentUser(@RequestParam String username) {
-    return userService.getCurrentUser(username);
+  @GetMapping("/user")
+  public UserJson user(@RequestParam String username) {
+    return userService.getUser(username);
   }
 
 }

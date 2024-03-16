@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="rococo-userdata"
            targetNamespace="rococo-userdata" elementFormDefault="qualified">
 
@@ -17,7 +18,7 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="currentUserRequest">
+    <xs:element name="userRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="username" type="xs:string"/>
@@ -25,7 +26,7 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="currentUserResponse">
+    <xs:element name="userResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="user" type="tns:user"/>

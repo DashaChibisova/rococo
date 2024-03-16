@@ -1,5 +1,5 @@
 server:
-  port: 8090
+  port: 8080
   error:
     include:
       message: true
@@ -7,6 +7,9 @@ server:
 spring:
   application:
     name: rococo-gateway
+
+rococo-userdata.client: rest
+
 
 logging:
   level:
@@ -36,22 +39,9 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: 'http://127.0.0.1:9000'
-  graphql:
-    graphiql:
-      enabled: true
 
-grpc:
-  client:
-    grpcCurrencyClient:
-      address: 'static://localhost:8092'
-      negotiationType: PLAINTEXT
-
-niffler-currency:
-  base-uri: 'http://127.0.0.1:8091'
 rococo-userdata:
   base-uri: 'http://127.0.0.1:8089'
-niffler-spend:
-  base-uri: 'http://127.0.0.1:8093'
 rococo-front:
   base-uri: 'http://127.0.0.1:3000'
 ---
@@ -68,20 +58,10 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: 'http://auth.niffler.dc:9000'
+          issuer-uri: 'http://auth.rococo.dc:9000'
 
-grpc:
-  client:
-    grpcCurrencyClient:
-      address: 'static://currency.niffler.dc:8092'
-      negotiationType: PLAINTEXT
-
-niffler-currency:
-  base-uri: 'http://currency.niffler.dc:8091'
 rococo-userdata:
-  base-uri: 'http://userdata.niffler.dc:8089'
-niffler-spend:
-  base-uri: 'http://spend.niffler.dc:8093'
+  base-uri: 'http://userdata.rococo.dc:8089'
 rococo-front:
   base-uri: 'http://frontend.rococo.dc'
 ---
@@ -104,18 +84,8 @@ spring:
         jwt:
           issuer-uri: 'https://auth.rococo.qa.guru'
 
-grpc:
-  client:
-    grpcCurrencyClient:
-      address: ${niffler-currency.grpc.url}
-      negotiationType: PLAINTEXT
-
-niffler-currency:
-  base-uri: ${niffler-currency.url}
 rococo-userdata:
   base-uri: ${rococo-userdata.url}
-niffler-spend:
-  base-uri: ${niffler-spend.url}
 rococo-front:
   base-uri: 'https://rococo.qa.guru'
 ---
@@ -138,18 +108,8 @@ spring:
         jwt:
           issuer-uri: 'https://auth.rococo-stage.qa.guru'
 
-grpc:
-  client:
-    grpcCurrencyClient:
-      address: ${niffler-currency.grpc.url}
-      negotiationType: PLAINTEXT
-
-niffler-currency:
-  base-uri: ${niffler-currency.url}
-niffler-userdata:
+rococo-userdata:
   base-uri: ${rococo-userdata.url}
-niffler-spend:
-  base-uri: ${niffler-spend.url}
 rococo-front:
   base-uri: 'https://rococo-stage.qa.guru'
 ---

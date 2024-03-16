@@ -17,7 +17,7 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="currentUserRequest">
+    <xs:element name="userRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="username" type="xs:string"/>
@@ -25,7 +25,7 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="currentUserResponse">
+    <xs:element name="userResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="user" type="tns:user"/>

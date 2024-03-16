@@ -34,9 +34,9 @@ public class UserController {
     return userDataClient.updateUserInfo(user.addUsername(username));
   }
 
-  @GetMapping("/currentUser")
-  public UserJson currentUser(@AuthenticationPrincipal Jwt principal) {
+  @GetMapping("/api/user")
+  public UserJson user(@AuthenticationPrincipal Jwt principal) {
     String username = principal.getClaim("sub");
-    return userDataClient.currentUser(username);
+    return userDataClient.user(username);
   }
 }
