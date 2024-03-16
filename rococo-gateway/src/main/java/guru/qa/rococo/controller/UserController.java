@@ -25,10 +25,10 @@ public class UserController {
   }
 
   @PatchMapping("/api/user")
-  public UserJson user(@AuthenticationPrincipal Jwt principal,
+  public UserJson userUpdateInfo(@AuthenticationPrincipal Jwt principal,
                                  @Valid @RequestBody UserJson user) {
     String username = principal.getClaim("sub");
-    return userDataClient.user(user.addUsername(username));
+    return userDataClient.userUpdateInfo(user.addUsername(username));
   }
 
   @GetMapping("/api/user")

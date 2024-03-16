@@ -35,7 +35,7 @@ public class RestUserDataClient implements UserDataClient {
 
   @Override
   public @Nonnull
-  UserJson user(@Nonnull UserJson user) {
+  UserJson userUpdateInfo(@Nonnull UserJson user) {
     return Optional.ofNullable(
         webClient.patch()
             .uri(rococoUserdataBaseUri + "/user")

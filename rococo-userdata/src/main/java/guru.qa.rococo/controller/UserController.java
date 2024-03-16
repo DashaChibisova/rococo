@@ -22,7 +22,7 @@ public class UserController {
   }
 
   @PatchMapping("/user")
-  public UserJson user(@RequestBody UserJson user) {
+  public UserJson userUpdateInfo(@RequestBody UserJson user) {
     return userService.update(user);
   }
 
