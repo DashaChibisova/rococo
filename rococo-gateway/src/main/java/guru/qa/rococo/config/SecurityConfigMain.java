@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -29,12 +30,14 @@ public class SecurityConfigMain {
     corsCustomizer.corsCustomizer(http);
 
     http.authorizeHttpRequests(customizer ->
-        customizer.requestMatchers(
-                antMatcher("/session"),
-                antMatcher("/actuator/health"))
-            .permitAll()
-            .anyRequest()
-            .authenticated()
+            customizer.requestMatchers(
+                            antMatcher(HttpMethod.GET, "/api/session"),
+                            antMatcher(HttpMethod.GET, "/api/artist/**"),
+                            antMatcher(HttpMethod.GET, "/api/museum/**"),
+                            antMatcher(HttpMethod.GET, "/api/painting/**"))
+                    .permitAll()
+                    .anyRequest()
+                    .authenticated()
     ).oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()));
     return http.build();
   }

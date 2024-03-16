@@ -11,7 +11,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
-
+@RequestMapping(value = "api")
 @RestController
 public class UserController {
 
@@ -24,14 +24,14 @@ public class UserController {
     this.userDataClient = userDataClient;
   }
 
-  @PatchMapping("/api/user")
+  @PatchMapping("/user")
   public UserJson userUpdateInfo(@AuthenticationPrincipal Jwt principal,
                                  @Valid @RequestBody UserJson user) {
     String username = principal.getClaim("sub");
     return userDataClient.userUpdateInfo(user.addUsername(username));
   }
 
-  @GetMapping("/api/user")
+  @GetMapping("/user")
   public UserJson user(@AuthenticationPrincipal Jwt principal) {
     String username = principal.getClaim("sub");
     return userDataClient.user(username);
