@@ -9,10 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -27,11 +24,11 @@ public class UserController {
     this.userDataClient = userDataClient;
   }
 
-  @PostMapping("/updateUserInfo")
-  public UserJson updateUserInfo(@AuthenticationPrincipal Jwt principal,
+  @PatchMapping("/api/user")
+  public UserJson user(@AuthenticationPrincipal Jwt principal,
                                  @Valid @RequestBody UserJson user) {
     String username = principal.getClaim("sub");
-    return userDataClient.updateUserInfo(user.addUsername(username));
+    return userDataClient.user(user.addUsername(username));
   }
 
   @GetMapping("/api/user")

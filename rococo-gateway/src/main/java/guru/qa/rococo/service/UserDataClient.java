@@ -5,7 +5,7 @@ import jakarta.annotation.Nonnull;
 
 public interface UserDataClient {
   @Nonnull
-  UserJson updateUserInfo(@Nonnull UserJson user);
+  UserJson user(@Nonnull UserJson user);
 
   @Nonnull
   UserJson user(@Nonnull String username);

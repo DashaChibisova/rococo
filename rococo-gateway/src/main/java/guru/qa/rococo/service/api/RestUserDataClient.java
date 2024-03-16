@@ -35,10 +35,10 @@ public class RestUserDataClient implements UserDataClient {
 
   @Override
   public @Nonnull
-  UserJson updateUserInfo(@Nonnull UserJson user) {
+  UserJson user(@Nonnull UserJson user) {
     return Optional.ofNullable(
-        webClient.post()
-            .uri(rococoUserdataBaseUri + "/updateUserInfo")
+        webClient.patch()
+            .uri(rococoUserdataBaseUri + "/user")
             .body(Mono.just(user), UserJson.class)
             .retrieve()
             .bodyToMono(UserJson.class)
