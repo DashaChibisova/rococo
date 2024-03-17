@@ -73,7 +73,7 @@ dependencies {
     implementation 'org.springframework:spring-webflux'
     implementation 'io.projectreactor.netty:reactor-netty'
 //    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-
+    implementation 'org.springframework.data:spring-data-commons:3.2.3'
     // For Java 11:
     implementation "org.glassfish.jaxb:jaxb-runtime:${project.ext.glassfishJaxbVersion}"
     implementation(files(genJaxb.classesDir).builtBy(genJaxb))

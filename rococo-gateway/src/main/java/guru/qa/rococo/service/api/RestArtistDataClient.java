@@ -6,6 +6,10 @@ import jakarta.annotation.Nonnull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -56,22 +60,22 @@ public class RestArtistDataClient {
     ));
   }
 
-//  public @Nonnull
-//  Page<ArtistJson> getArtists(@Nonnull Pageable pageable, @Nonnull String name) {
-//    MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-//    params.add("size", String.valueOf(pageable.getPageSize()));
-//    params.add("page", String.valueOf(pageable.getPageNumber()));
-//    URI uri = UriComponentsBuilder.fromHttpUrl(rococoArtistBaseUri + "/artist").queryParams(params).build().toUri();
-//    List<ArtistJson> artistJsons = Optional.ofNullable(
-//            webClient.get()
-//                    .uri(uri)
-//                    .retrieve()
-//                    .bodyToMono(new ParameterizedTypeReference<List<ArtistJson>>() {
-//                    })
-//                    .block()
-//    ).orElseThrow(() -> new NoRestResponseException(
-//            "No REST List<ArtistJson> response is given [/artist Route]"
-//    ));
-//    return new PageImpl<>(artistJsons);
-//  }
+  public @Nonnull
+  Page<ArtistJson> getArtists(@Nonnull Pageable pageable, @Nonnull String name) {
+    MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+    params.add("size", String.valueOf(pageable.getPageSize()));
+    params.add("page", String.valueOf(pageable.getPageNumber()));
+    URI uri = UriComponentsBuilder.fromHttpUrl(rococoArtistBaseUri + "/artist").queryParams(params).build().toUri();
+    List<ArtistJson> artistJsons = Optional.ofNullable(
+            webClient.get()
+                    .uri(uri)
+                    .retrieve()
+                    .bodyToMono(new ParameterizedTypeReference<List<ArtistJson>>() {
+                    })
+                    .block()
+    ).orElseThrow(() -> new NoRestResponseException(
+            "No REST List<ArtistJson> response is given [/artist Route]"
+    ));
+    return new PageImpl<>(artistJsons);
+  }
 }
