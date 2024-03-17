@@ -2,21 +2,13 @@ package guru.qa.rococo.service.api;
 
 import guru.qa.rococo.ex.NoRestResponseException;
 import guru.qa.rococo.model.ArtistJson;
-import guru.qa.rococo.model.UserJson;
-import guru.qa.rococo.service.ArtistDataClient;
-import guru.qa.rococo.service.UserDataClient;
 import jakarta.annotation.Nonnull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
+
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Mono;
@@ -33,9 +25,9 @@ public class RestArtistDataClient {
 
   @Autowired
   public RestArtistDataClient(WebClient webClient,
-                              @Value("${rococo-artist.base-uri}") String rococoArtisttaBaseUri) {
+                              @Value("${rococo-artist.base-uri}") String rococoArtistBaseUri) {
     this.webClient = webClient;
-    this.rococoArtistBaseUri = rococoArtisttaBaseUri;
+    this.rococoArtistBaseUri = rococoArtistBaseUri;
   }
 
   public @Nonnull
@@ -64,21 +56,22 @@ public class RestArtistDataClient {
     ));
   }
 
-  public @Nonnull
-  List<ArtistJson> getArtists(@Nonnull Pageable pageable, @Nonnull String name) {
-    MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-    params.add("size", String.valueOf(pageable.getPageSize()));
-    params.add("page", String.valueOf(pageable.getPageNumber()));
-    URI uri = UriComponentsBuilder.fromHttpUrl(rococoArtistBaseUri + "/artist").queryParams(params).build().toUri();
-    return Optional.ofNullable(
-            webClient.get()
-                    .uri(uri)
-                    .retrieve()
-                    .bodyToMono(new ParameterizedTypeReference<List<ArtistJson>>() {
-                    })
-                    .block()
-    ).orElseThrow(() -> new NoRestResponseException(
-            "No REST List<ArtistJson> response is given [/artist Route]"
-    ));
-  }
+//  public @Nonnull
+//  Page<ArtistJson> getArtists(@Nonnull Pageable pageable, @Nonnull String name) {
+//    MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+//    params.add("size", String.valueOf(pageable.getPageSize()));
+//    params.add("page", String.valueOf(pageable.getPageNumber()));
+//    URI uri = UriComponentsBuilder.fromHttpUrl(rococoArtistBaseUri + "/artist").queryParams(params).build().toUri();
+//    List<ArtistJson> artistJsons = Optional.ofNullable(
+//            webClient.get()
+//                    .uri(uri)
+//                    .retrieve()
+//                    .bodyToMono(new ParameterizedTypeReference<List<ArtistJson>>() {
+//                    })
+//                    .block()
+//    ).orElseThrow(() -> new NoRestResponseException(
+//            "No REST List<ArtistJson> response is given [/artist Route]"
+//    ));
+//    return new PageImpl<>(artistJsons);
+//  }
 }

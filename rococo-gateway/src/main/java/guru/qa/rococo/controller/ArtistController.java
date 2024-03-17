@@ -2,20 +2,15 @@ package guru.qa.rococo.controller;
 
 
 import guru.qa.rococo.model.ArtistJson;
-import guru.qa.rococo.model.UserJson;
-import guru.qa.rococo.service.ArtistDataClient;
-import guru.qa.rococo.service.UserDataClient;
+import guru.qa.rococo.service.api.RestArtistDataClient;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.web.PageableDefault;
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
-
-import java.awt.print.Pageable;
 
 @RequestMapping(value = "api")
 @RestController
@@ -23,10 +18,10 @@ public class ArtistController {
 
   private static final Logger LOG = LoggerFactory.getLogger(ArtistController.class);
 
-  private final ArtistDataClient artistDataClient;
+  private final RestArtistDataClient artistDataClient;
 
   @Autowired
-  public ArtistController(ArtistDataClient artistDataClient) {
+  public ArtistController(RestArtistDataClient artistDataClient) {
     this.artistDataClient = artistDataClient;
   }
 
@@ -43,9 +38,9 @@ public class ArtistController {
   }
 
 
-    @GetMapping("/artist")
-    public Page<ArtistJson> getAll(@RequestParam(required = false) String name,
-                                   @PageableDefault Pageable pageable) {
-    return artistDataClient.allArtists(pageable, name);
-  }
+//    @GetMapping("/artist")
+//    public Page<ArtistJson> getAll(@RequestParam(required = false) String name,
+//                                   @PageableDefault Pageable pageable) {
+//    return artistDataClient.getArtists(pageable, name);
+//  }
 }
