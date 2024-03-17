@@ -44,6 +44,8 @@ rococo-userdata:
   base-uri: 'http://127.0.0.1:8089'
 rococo-front:
   base-uri: 'http://127.0.0.1:3000'
+rococo-artist:
+  base-uri: 'http://127.0.0.1:8093'
 ---
 spring:
   config:
@@ -64,6 +66,8 @@ rococo-userdata:
   base-uri: 'http://userdata.rococo.dc:8089'
 rococo-front:
   base-uri: 'http://frontend.rococo.dc'
+rococo-artist:
+  base-uri: 'http://127.0.0.1:8093'
 ---
 spring:
   config:
@@ -86,6 +90,8 @@ spring:
 
 rococo-userdata:
   base-uri: ${rococo-userdata.url}
+rococo-artist:
+  base-uri: ${rococo-artist.url}
 rococo-front:
   base-uri: 'https://rococo.qa.guru'
 ---
@@ -110,6 +116,8 @@ spring:
 
 rococo-userdata:
   base-uri: ${rococo-userdata.url}
+rococo-artist:
+  base-uri: ${rococo-artist.url}
 rococo-front:
   base-uri: 'https://rococo-stage.qa.guru'
 ---
