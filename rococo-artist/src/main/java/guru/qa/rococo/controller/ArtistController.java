@@ -10,14 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
@@ -49,18 +42,8 @@ public class ArtistController {
     return artistService.allArtists(pageable,name);
   }
 
-
-
-//  @GetMapping("/currentArtist") //id on end url????
-//  public ArtistJson currentArtist(@RequestParam UUID idArtist) {
-//    return artistService.getCurrentArtist();
-//  }
-
-
-
-
-
-
-
-
+  @GetMapping("/artist/{id}")
+  public ArtistJson currentArtist(@PathVariable UUID id) {
+    return artistService.getCurrentArtist(id);
+  }
 }

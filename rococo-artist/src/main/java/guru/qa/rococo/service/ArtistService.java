@@ -15,6 +15,7 @@ import java.nio.charset.StandardCharsets;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 
 @Component
@@ -70,5 +71,12 @@ public class ArtistService {
                     .toList();
             return new PageImpl<>(artistJsons);
         }
+    }
+
+
+    @Transactional
+    public @Nonnull
+    ArtistJson getCurrentArtist(@Nonnull UUID id) {
+        return ArtistJson.fromEntity(artistRepository.getReferenceById(id));
     }
 }

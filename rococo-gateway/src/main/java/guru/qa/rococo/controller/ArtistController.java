@@ -15,6 +15,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RequestMapping(value = "api")
 @RestController
 public class ArtistController {
@@ -45,5 +47,10 @@ public class ArtistController {
     public Page<ArtistJson> getAll(@RequestParam(required = false) String name,
                                    @PageableDefault Pageable pageable) {
     return artistDataClient.getArtists(pageable, name);
+  }
+
+  @GetMapping("/artist/{id}")
+  public ArtistJson currentArtist(@PathVariable UUID id) {
+    return artistDataClient.getCurrentArtist(id);
   }
 }
