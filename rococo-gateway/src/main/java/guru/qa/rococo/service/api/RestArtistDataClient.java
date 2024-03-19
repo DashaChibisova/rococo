@@ -73,8 +73,6 @@ public class RestArtistDataClient {
     params.add("size", String.valueOf(pageable.getPageSize()));
     params.add("page", String.valueOf(pageable.getPageNumber()));
     URI uri = UriComponentsBuilder.fromHttpUrl(rococoArtistBaseUri + "/artist").queryParams(params).build().toUri();
-    ObjectMapper mapper = new ObjectMapper();
-    mapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
 
     ArtistDao artistDao = Optional.ofNullable(
             webClient.get()
