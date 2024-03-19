@@ -20,4 +20,5 @@ public record CountryJson(
                 entity.getName()
         );
     }
+
 }

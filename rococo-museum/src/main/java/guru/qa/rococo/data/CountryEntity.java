@@ -9,6 +9,8 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
+import static jakarta.persistence.FetchType.EAGER;
+
 @Getter
 @Setter
 @Entity

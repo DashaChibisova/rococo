@@ -1,6 +1,7 @@
 package guru.qa.rococo.service;
 
-
+import guru.qa.rococo.data.GeoEntity;
+import guru.qa.rococo.data.repository.GeoRepository;
 import guru.qa.rococo.model.CountryJson;
 import guru.qa.rococo.model.GeoJson;
 import jakarta.annotation.Nonnull;
@@ -18,21 +19,20 @@ import java.util.Optional;
 import java.util.UUID;
 
 
-//@Component
-//public class GeoService {
+@Component
+public class GeoService {
 
-//    private final GeoRepository geoRepository;
-//
-//    @Autowired
-//    public GeoService(GeoRepository geoRepository) {
-//        this.geoRepository = geoRepository;
-//    }
-//
-//    @Transactional
-//    public @Nonnull
-//    List<CountryJson> getAll(@Nonnull CountryJson country) {
-//
-//        return CountryJson.fromEntity(geoRepository.findAll());
-//    }
+    private final GeoRepository geoRepository;
 
-//}
+    @Autowired
+    public GeoService(GeoRepository geoRepository) {
+        this.geoRepository = geoRepository;
+    }
+
+    @Transactional
+    public @Nonnull
+    GeoJson getGeo(@Nonnull UUID id) {
+        return GeoJson.fromEntity(geoRepository.getReferenceById(id));
+    }
+
+}
