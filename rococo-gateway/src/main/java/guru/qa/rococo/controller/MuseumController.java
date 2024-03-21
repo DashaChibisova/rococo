@@ -2,6 +2,7 @@ package guru.qa.rococo.controller;
 
 import guru.qa.rococo.model.ArtistJson;
 import guru.qa.rococo.model.CountryJson;
+import guru.qa.rococo.model.MuseumJson;
 import guru.qa.rococo.service.api.RestArtistDataClient;
 import guru.qa.rococo.service.api.RestMuseumDataClient;
 import org.slf4j.Logger;
@@ -28,8 +29,13 @@ public class MuseumController {
     }
 
     @GetMapping("/country")
-    public Page<CountryJson> getAll(@RequestParam(required = false) String name,
+    public Page<CountryJson> getAllCountry(@RequestParam(required = false) String name,
                                     @PageableDefault Pageable pageable) {
         return museumDataClient.getCountries(pageable, name);
+    }
+
+    @GetMapping("/museum")
+    public Page<MuseumJson> getAllMuseum(@PageableDefault Pageable pageable) {
+        return museumDataClient.getAllMuseum(pageable);
     }
 }

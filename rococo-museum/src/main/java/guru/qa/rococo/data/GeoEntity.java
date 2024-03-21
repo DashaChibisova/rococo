@@ -26,7 +26,6 @@ public class GeoEntity implements Serializable {
   @JoinColumn(name = "country_id")
   private CountryEntity country;
 
-
   @Override
   public final boolean equals(Object o) {
     if (this == o) return true;
