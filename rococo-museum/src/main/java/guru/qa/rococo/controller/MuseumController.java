@@ -31,12 +31,12 @@ public class MuseumController {
     return museumService.getCurrentAMuseum(id);
   }
 
-  @PostMapping("/artist")
+  @PostMapping("/museum")
   public MuseumJson saveMuseum(@RequestBody MuseumJson museum) {
     return museumService.save(museum);
   }
 
-  @PatchMapping("/artist")
+  @PatchMapping("/museum")
   public MuseumJson updateMuseumInfo(@RequestBody MuseumJson museum) {
     return museumService.update(museum);
   }

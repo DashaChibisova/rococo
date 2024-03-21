@@ -11,10 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RequestMapping(value = "api")
 @RestController
@@ -38,4 +37,20 @@ public class MuseumController {
     public Page<MuseumJson> getAllMuseum(@PageableDefault Pageable pageable) {
         return museumDataClient.getAllMuseum(pageable);
     }
+
+    @GetMapping("/museum/{id}")
+    public MuseumJson getCurrentMuseum(@PathVariable UUID id) {
+        return museumDataClient.getCurrentMuseum(id);
+    }
+
+    @PostMapping("/museum")
+    public MuseumJson saveMuseum(@RequestBody MuseumJson museum) {
+        return museumDataClient.saveMuseum(museum);
+    }
+
+    @PatchMapping("/museum")
+    public MuseumJson updateMuseumInfo(@RequestBody MuseumJson museum) {
+        return museumDataClient.updateMuseumInfo(museum);
+    }
+
 }

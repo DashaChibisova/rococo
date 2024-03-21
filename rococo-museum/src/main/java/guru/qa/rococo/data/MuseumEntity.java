@@ -10,6 +10,8 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
+import static jakarta.persistence.FetchType.EAGER;
+
 @Getter
 @Setter
 @Entity
@@ -30,8 +32,9 @@ public class MuseumEntity implements Serializable {
   @Column(name = "photo", columnDefinition = "bytea")
   private byte[] photo;
 
-  @ManyToOne
-  @JoinColumn(name = "geo_id")
+
+  @OneToOne(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
+  @JoinColumn(name = "geo_id", referencedColumnName = "id")
   private GeoEntity geo;
 
 

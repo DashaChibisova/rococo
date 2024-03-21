@@ -77,4 +77,44 @@ public class RestMuseumDataClient {
     ));
     return new PageImpl<>(museumDao.content());
   }
+
+  public @Nonnull
+  MuseumJson updateMuseumInfo(@Nonnull MuseumJson museum) {
+    return Optional.ofNullable(
+            webClient.patch()
+                    .uri(rococoMuseumBaseUri + "/museum")
+                    .body(Mono.just(museum), MuseumJson.class)
+                    .retrieve()
+                    .bodyToMono(MuseumJson.class)
+                    .block()
+    ).orElseThrow(() -> new NoRestResponseException("No REST MuseumJson response is given [/updateMuseumInfo Route]"));
+  }
+
+  public @Nonnull
+  MuseumJson saveMuseum(@Nonnull MuseumJson museum) {
+    return Optional.ofNullable(
+            webClient.post()
+                    .uri(rococoMuseumBaseUri + "/museum")
+                    .body(Mono.just(museum), MuseumJson.class)
+                    .retrieve()
+                    .bodyToMono(MuseumJson.class)
+                    .block()
+    ).orElseThrow(() -> new NoRestResponseException(
+            "No REST ArtistJson response is given [/Artist Route]"
+    ));
+  }
+
+
+  public @Nonnull
+  MuseumJson getCurrentMuseum(@Nonnull UUID id) {
+    URI uri = UriComponentsBuilder.fromHttpUrl(rococoMuseumBaseUri + "/museum/" + id).build().toUri();
+
+    return Optional.ofNullable(
+            webClient.get()
+                    .uri(uri)
+                    .retrieve()
+                    .bodyToMono(MuseumJson.class)
+                    .block()
+    ).orElseThrow(() -> new NoRestResponseException("No REST MuseumJson response is given [/currentMuseum Route]"));
+  }
 }

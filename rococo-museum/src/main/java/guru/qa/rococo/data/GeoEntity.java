@@ -8,6 +8,8 @@ import org.hibernate.proxy.HibernateProxy;
 import java.io.Serializable;
 import java.util.*;
 
+import static jakarta.persistence.FetchType.EAGER;
+
 @Getter
 @Setter
 @Entity
@@ -22,8 +24,8 @@ public class GeoEntity implements Serializable {
   @Column(nullable = false)
   private String city;
 
-  @ManyToOne
-  @JoinColumn(name = "country_id")
+  @OneToOne(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
+  @JoinColumn(name = "country_id", referencedColumnName = "id")
   private CountryEntity country;
 
   @Override

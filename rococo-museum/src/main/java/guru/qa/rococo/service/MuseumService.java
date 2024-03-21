@@ -3,6 +3,7 @@ package guru.qa.rococo.service;
 import guru.qa.rococo.data.CountryEntity;
 import guru.qa.rococo.data.GeoEntity;
 import guru.qa.rococo.data.MuseumEntity;
+import guru.qa.rococo.data.repository.CountryRepository;
 import guru.qa.rococo.data.repository.MuseumRepository;
 import guru.qa.rococo.model.CountryJson;
 import guru.qa.rococo.model.GeoJson;
@@ -27,10 +28,12 @@ import java.util.UUID;
 public class MuseumService {
 
     private final MuseumRepository museumRepository;
+    private final CountryRepository сountryRepository;
 
     @Autowired
-    public MuseumService(MuseumRepository museumRepository) {
+    public MuseumService(MuseumRepository museumRepository, CountryRepository сountryRepository) {
         this.museumRepository = museumRepository;
+        this.сountryRepository = сountryRepository;
     }
 
     @Transactional
@@ -59,14 +62,14 @@ public class MuseumService {
         museumEntity.setTitle(museum.title());
 
         CountryJson country = museum.geo().country();
-        CountryEntity countryEntity = new CountryEntity();
-        countryEntity.setName(country.name());
+        CountryEntity referenceById = сountryRepository.getReferenceById(country.id());
 
         GeoJson geo = museum.geo();
         GeoEntity geoEntity = new GeoEntity();
         geoEntity.setCity(geo.city());
-        museumEntity.setGeo(geoEntity);
+        geoEntity.setCountry(referenceById);
 
+        museumEntity.setGeo(geoEntity);
         museumEntity.setPhoto(museum.photo() != null ? museum.photo().getBytes(StandardCharsets.UTF_8) : null);
         return MuseumJson.fromEntity(museumRepository.save(museumEntity));
     }
@@ -79,18 +82,19 @@ public class MuseumService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can`t find museumById by given id: " + museum.id());
         } else {
             MuseumEntity museumEntity = new MuseumEntity();
+            museumEntity.setId(museum.id());
             museumEntity.setDescription(museum.description());
             museumEntity.setTitle(museum.title());
 
             CountryJson country = museum.geo().country();
-            CountryEntity countryEntity = new CountryEntity();
-            countryEntity.setName(country.name());
+            CountryEntity referenceById = сountryRepository.getReferenceById(country.id());
 
             GeoJson geo = museum.geo();
             GeoEntity geoEntity = new GeoEntity();
             geoEntity.setCity(geo.city());
-            museumEntity.setGeo(geoEntity);
+            geoEntity.setCountry(referenceById);
 
+            museumEntity.setGeo(geoEntity);
             museumEntity.setPhoto(museum.photo() != null ? museum.photo().getBytes(StandardCharsets.UTF_8) : null);
             return MuseumJson.fromEntity(museumRepository.save(museumEntity));
         }
