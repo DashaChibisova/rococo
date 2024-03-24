@@ -1,9 +1,7 @@
 package guru.qa.rococo.controller;
 
-import guru.qa.rococo.model.ArtistJson;
 import guru.qa.rococo.model.CountryJson;
 import guru.qa.rococo.model.MuseumJson;
-import guru.qa.rococo.service.api.RestArtistDataClient;
 import guru.qa.rococo.service.api.RestMuseumDataClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

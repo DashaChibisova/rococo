@@ -6,17 +6,20 @@ import guru.qa.rococo.client.RestMuseumDataClient;
 import guru.qa.rococo.data.PaintingEntity;
 import guru.qa.rococo.data.repository.PaintingRepository;
 
-import guru.qa.rococo.model.PaintingJson;
+import guru.qa.rococo.model.*;
 import jakarta.annotation.Nonnull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 
@@ -47,14 +50,57 @@ public class PaintingService {
             return new PageImpl<>(paintingJsons);
     }
 
+    @Transactional
+    public @Nonnull
+    PaintingJson getCurrentPainting(@Nonnull UUID id) {
+        return fromEntity(paintingRepository.getReferenceById(id));
+
+    }
+
+    @Transactional
+    public @Nonnull
+    PaintingJson save(@Nonnull PaintingJson painting) {
+        PaintingEntity paintingEntity = new PaintingEntity();
+        paintingEntity.setTitle(painting.title());
+        paintingEntity.setDescription(painting.description());
+        paintingEntity.setArtist(painting.artist().id());
+        paintingEntity.setMuseum(painting.museum().id());
+        paintingEntity.setContent(painting.content() != null ? painting.content().getBytes(StandardCharsets.UTF_8) : null);
+
+        return fromEntity(paintingRepository.save(paintingEntity));
+    }
+
+    @Transactional
+    public @Nonnull
+    PaintingJson update(@Nonnull PaintingJson painting) {
+        Optional<PaintingEntity> museumById = paintingRepository.findById(painting.id());
+        if (museumById.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can`t find paintingById by given id: " + painting.id());
+        } else {
+            PaintingEntity paintingEntity = new PaintingEntity();
+            paintingEntity.setId(painting.id());
+            paintingEntity.setTitle(painting.title());
+            paintingEntity.setDescription(painting.description());
+            paintingEntity.setArtist(painting.artist().id());
+            paintingEntity.setMuseum(painting.museum().id());
+            paintingEntity.setContent(painting.content() != null ? painting.content().getBytes(StandardCharsets.UTF_8) : null);
+
+            return fromEntity(paintingRepository.save(paintingEntity));
+        }
+    }
+
 //    @Transactional
 //    public @Nonnull
-//    PaintingJson getCurrentPainting(@Nonnull UUID id) {
-//        return PaintingJson.fromEntity(paintingRepository.getReferenceById(id));
-//
+//    Page<PaintingJson> getPaintingByAuthorId(@Nonnull UUID id, @Nonnull Pageable pageable ) {
+//        List<PaintingJson> paintingJsons = paintingRepository.findAllByIdArtistContainsIgnoreCase(id,pageable)
+//                .stream()
+//                .map(this::fromEntity)
+//                .toList();
+//        return new PageImpl<>(paintingJsons);
 //    }
 
-        public PaintingJson fromEntity(@Nonnull PaintingEntity entity) {
+
+    private PaintingJson fromEntity(@Nonnull PaintingEntity entity) {
         return new PaintingJson(
                 entity.getId(),
                 entity.getTitle(),
