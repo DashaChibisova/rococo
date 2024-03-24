@@ -1,7 +1,6 @@
 package guru.qa.rococo.controller;
 
 import guru.qa.rococo.model.PaintingJson;
-import guru.qa.rococo.model.PaintingJsonSave;
 import guru.qa.rococo.service.PaintingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -42,8 +41,8 @@ public class PaintingController {
     return paintingService.update(painting);
   }
 
-//  @GetMapping("/painting/author/{id}")
-//  public Page<PaintingJson> getPaintingByAuthor(@PathVariable UUID id, @PageableDefault Pageable pageable) {
-//    return paintingService.getPaintingByAuthorId(id,pageable);
-//  }
+  @GetMapping("/painting/author/{id}")
+  public Page<PaintingJson> getPaintingByAuthor(@PathVariable UUID id, @PageableDefault Pageable pageable) {
+    return paintingService.getPaintingByAuthorId(id,pageable);
+  }
 }

@@ -1,9 +1,6 @@
 package guru.qa.rococo.controller;
 
-import guru.qa.rococo.model.CountryJson;
-import guru.qa.rococo.model.MuseumJson;
-import guru.qa.rococo.model.PaintingJson;
-import guru.qa.rococo.model.PaintingJsonSave;
+import guru.qa.rococo.model.*;
 import guru.qa.rococo.service.api.RestPaintingDataClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,7 +47,7 @@ public class PaintingController {
     }
 
     @GetMapping("/painting/author/{id}")
-    public Page<PaintingJson> getAllMuseum(@PathVariable UUID id, @PageableDefault Pageable pageable) {
+    public Page<PaintingJson> getPaintingByAuthor(@PathVariable UUID id, @PageableDefault Pageable pageable) {
         return paintingDataClient.getPaintingByAuthorId(id,pageable);
     }
 

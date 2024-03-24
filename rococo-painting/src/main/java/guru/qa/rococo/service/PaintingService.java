@@ -89,15 +89,15 @@ public class PaintingService {
         }
     }
 
-//    @Transactional
-//    public @Nonnull
-//    Page<PaintingJson> getPaintingByAuthorId(@Nonnull UUID id, @Nonnull Pageable pageable ) {
-//        List<PaintingJson> paintingJsons = paintingRepository.findAllByIdArtistContainsIgnoreCase(id,pageable)
-//                .stream()
-//                .map(this::fromEntity)
-//                .toList();
-//        return new PageImpl<>(paintingJsons);
-//    }
+    @Transactional
+    public @Nonnull
+    Page<PaintingJson> getPaintingByAuthorId(@Nonnull UUID id, @Nonnull Pageable pageable ) {
+        List<PaintingJson> paintingJsons = paintingRepository.findAllByArtist(id,pageable)
+                .stream()
+                .map(this::fromEntity)
+                .toList();
+        return new PageImpl<>(paintingJsons);
+    }
 
 
     private PaintingJson fromEntity(@Nonnull PaintingEntity entity) {
