@@ -29,13 +29,11 @@ public class PaintingEntity implements Serializable {
   @Column(name = "content", columnDefinition = "bytea")
   private byte[] content;
 
-  @OneToOne(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
-  @JoinColumn(name = "museum_id", referencedColumnName = "id")
-  private MuseumEntity museum;
+  @Column(name = "museum")
+  private UUID museum;
 
-  @OneToOne(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
-  @JoinColumn(name = "artist_id", referencedColumnName = "id")
-  private ArtistEntity artist;
+  @Column(name = "artist")
+  private UUID artist;
 
   @Override
   public final boolean equals(Object o) {

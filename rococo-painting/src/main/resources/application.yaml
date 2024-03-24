@@ -59,6 +59,10 @@ spring:
      url: 'jdbc:postgresql://localhost:5432/rococo-painting'
      username: postgres
      password: secret
+rococo-artist:
+  base-uri: 'http://127.0.0.1:8093'
+rococo-museum:
+  base-uri: 'http://127.0.0.1:8098'
 
 
 grpc:

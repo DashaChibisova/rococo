@@ -15,7 +15,9 @@ import static jakarta.persistence.FetchType.EAGER;
 @Getter
 @Setter
 @Entity
-@Table(name = "museum")
+//@Table(name = "museum")
+@Table(name = "museum", catalog = "rococo-museum")
+
 public class MuseumEntity implements Serializable {
 
   @Id

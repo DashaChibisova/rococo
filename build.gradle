@@ -25,6 +25,8 @@ subprojects {
         wsdl4jVersion = '1.6.3'
         jsr305Version = '3.0.2' //сама испр
         mysqlDriverVersion = '8.0.33' //сама испр
+        retrofitVersion = '2.9.0'
+        okhttp3Version = '3.14.9'
 
         dockerImage = System.getProperty("os.arch") == "aarch64" || System.getProperty("os.arch") == "arm64"
                 ? "arm64v8/eclipse-temurin:19-jre"

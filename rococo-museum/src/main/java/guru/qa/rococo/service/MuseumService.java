@@ -88,7 +88,6 @@ public class MuseumService {
 
             CountryJson country = museum.geo().country();
             CountryEntity referenceById = сountryRepository.getReferenceById(country.id());
-
             GeoJson geo = museum.geo();
             GeoEntity geoEntity = new GeoEntity();
             geoEntity.setCity(geo.city());
