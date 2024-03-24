@@ -1,6 +1,5 @@
 package guru.qa.rococo.service;
 
-
 import guru.qa.rococo.client.RestArtistDataClient;
 import guru.qa.rococo.client.RestMuseumDataClient;
 import guru.qa.rococo.data.PaintingEntity;
@@ -32,7 +31,7 @@ public class PaintingService {
 
     @Autowired
     public PaintingService(PaintingRepository paintingRepository,
-    RestMuseumDataClient restMuseumDataClient,RestArtistDataClient restArtistDataClient) {
+                           RestMuseumDataClient restMuseumDataClient, RestArtistDataClient restArtistDataClient) {
         this.paintingRepository = paintingRepository;
         this.restMuseumDataClient = restMuseumDataClient;
         this.restArtistDataClient = restArtistDataClient;
@@ -41,13 +40,13 @@ public class PaintingService {
     @Transactional
     public @Nonnull
     Page<PaintingJson> getAll(@Nonnull Pageable pageable
-                           ) {
+    ) {
 
         List<PaintingJson> paintingJsons = paintingRepository.findAll(pageable)
-                    .stream()
-                    .map(this::fromEntity)
-                    .toList();
-            return new PageImpl<>(paintingJsons);
+                .stream()
+                .map(this::fromEntity)
+                .toList();
+        return new PageImpl<>(paintingJsons);
     }
 
     @Transactional
@@ -91,8 +90,8 @@ public class PaintingService {
 
     @Transactional
     public @Nonnull
-    Page<PaintingJson> getPaintingByAuthorId(@Nonnull UUID id, @Nonnull Pageable pageable ) {
-        List<PaintingJson> paintingJsons = paintingRepository.findAllByArtist(id,pageable)
+    Page<PaintingJson> getPaintingByAuthorId(@Nonnull UUID id, @Nonnull Pageable pageable) {
+        List<PaintingJson> paintingJsons = paintingRepository.findAllByArtist(id, pageable)
                 .stream()
                 .map(this::fromEntity)
                 .toList();

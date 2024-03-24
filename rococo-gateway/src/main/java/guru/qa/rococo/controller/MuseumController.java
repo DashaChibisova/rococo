@@ -27,7 +27,7 @@ public class MuseumController {
 
     @GetMapping("/country")
     public Page<CountryJson> getAllCountry(@RequestParam(required = false) String name,
-                                    @PageableDefault Pageable pageable) {
+                                           @PageableDefault Pageable pageable) {
         return museumDataClient.getCountries(pageable, name);
     }
 

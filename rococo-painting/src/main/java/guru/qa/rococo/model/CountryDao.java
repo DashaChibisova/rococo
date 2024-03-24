@@ -14,7 +14,7 @@ public record CountryDao(
         int numberOfElements,
         boolean first,
         boolean empty
-        ) {
+) {
 }
 
 

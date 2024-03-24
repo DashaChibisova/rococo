@@ -10,21 +10,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RestController
 public class CountryController {
 
-  private final CountryService countryService;
+    private final CountryService countryService;
 
-  @Autowired
-  public CountryController(CountryService countryService) {
-    this.countryService = countryService;
-  }
+    @Autowired
+    public CountryController(CountryService countryService) {
+        this.countryService = countryService;
+    }
 
-  @GetMapping("/country")
-  public Page<CountryJson> getAllCountry(@PageableDefault Pageable pageable,
-                                         @RequestParam(defaultValue = "notSorted") String name) {
-    return countryService.getAll(pageable,name);
-  }
+    @GetMapping("/country")
+    public Page<CountryJson> getAllCountry(@PageableDefault Pageable pageable,
+                                           @RequestParam(defaultValue = "notSorted") String name) {
+        return countryService.getAll(pageable, name);
+    }
 
 }

@@ -2,7 +2,6 @@ package guru.qa.rococo.controller;
 
 
 import guru.qa.rococo.model.ArtistJson;
-import guru.qa.rococo.model.PaintingJson;
 import guru.qa.rococo.service.api.RestArtistDataClient;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;

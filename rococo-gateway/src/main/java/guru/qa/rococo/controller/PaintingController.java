@@ -36,19 +36,19 @@ public class PaintingController {
         return paintingDataClient.getCurrentPainting(id);
     }
 
-    @PostMapping("/painting")//????
+    @PostMapping("/painting")
     public PaintingJson savePainting(@RequestBody PaintingJson painting) {
         return paintingDataClient.savePainting(painting);
     }
 
-    @PatchMapping("/painting") //????
+    @PatchMapping("/painting")
     public PaintingJson updatePaintingInfo(@RequestBody PaintingJson painting) {
         return paintingDataClient.updatePaintingInfo(painting);
     }
 
     @GetMapping("/painting/author/{id}")
     public Page<PaintingJson> getPaintingByAuthor(@PathVariable UUID id, @PageableDefault Pageable pageable) {
-        return paintingDataClient.getPaintingByAuthorId(id,pageable);
+        return paintingDataClient.getPaintingByAuthorId(id, pageable);
     }
 
 }

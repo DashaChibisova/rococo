@@ -14,35 +14,35 @@ import java.util.UUID;
 @RestController
 public class PaintingController {
 
-  private final PaintingService paintingService;
+    private final PaintingService paintingService;
 
-  @Autowired
-  public PaintingController(PaintingService paintingService) {
-    this.paintingService = paintingService;
-  }
+    @Autowired
+    public PaintingController(PaintingService paintingService) {
+        this.paintingService = paintingService;
+    }
 
-  @GetMapping("/painting")
-  public Page<PaintingJson> getAllPainting(@PageableDefault Pageable pageable) {
-    return paintingService.getAll(pageable);
-  }
+    @GetMapping("/painting")
+    public Page<PaintingJson> getAllPainting(@PageableDefault Pageable pageable) {
+        return paintingService.getAll(pageable);
+    }
 
-  @GetMapping("/painting/{id}")
-  public PaintingJson getCurrentPainting(@PathVariable UUID id) {
-    return paintingService.getCurrentPainting(id);
-  }
+    @GetMapping("/painting/{id}")
+    public PaintingJson getCurrentPainting(@PathVariable UUID id) {
+        return paintingService.getCurrentPainting(id);
+    }
 
-  @PostMapping("/painting")
-  public PaintingJson savePainting(@RequestBody PaintingJson painting) {
-    return paintingService.save(painting);
-  }
+    @PostMapping("/painting")
+    public PaintingJson savePainting(@RequestBody PaintingJson painting) {
+        return paintingService.save(painting);
+    }
 
-  @PatchMapping("/painting")
-  public PaintingJson updatePaintingInfo(@RequestBody PaintingJson painting) {
-    return paintingService.update(painting);
-  }
+    @PatchMapping("/painting")
+    public PaintingJson updatePaintingInfo(@RequestBody PaintingJson painting) {
+        return paintingService.update(painting);
+    }
 
-  @GetMapping("/painting/author/{id}")
-  public Page<PaintingJson> getPaintingByAuthor(@PathVariable UUID id, @PageableDefault Pageable pageable) {
-    return paintingService.getPaintingByAuthorId(id,pageable);
-  }
+    @GetMapping("/painting/author/{id}")
+    public Page<PaintingJson> getPaintingByAuthor(@PathVariable UUID id, @PageableDefault Pageable pageable) {
+        return paintingService.getPaintingByAuthorId(id, pageable);
+    }
 }

@@ -14,30 +14,30 @@ import java.util.UUID;
 @RestController
 public class MuseumController {
 
-  private final MuseumService museumService;
+    private final MuseumService museumService;
 
-  @Autowired
-  public MuseumController(MuseumService museumService) {
-    this.museumService = museumService;
-  }
+    @Autowired
+    public MuseumController(MuseumService museumService) {
+        this.museumService = museumService;
+    }
 
-  @GetMapping("/museum")
-  public Page<MuseumJson> getAllMuseum(@PageableDefault Pageable pageable) {
-    return museumService.getAll(pageable);
-  }
+    @GetMapping("/museum")
+    public Page<MuseumJson> getAllMuseum(@PageableDefault Pageable pageable) {
+        return museumService.getAll(pageable);
+    }
 
-  @GetMapping("/museum/{id}")
-  public MuseumJson getCurrentMuseum(@PathVariable UUID id) {
-    return museumService.getCurrentAMuseum(id);
-  }
+    @GetMapping("/museum/{id}")
+    public MuseumJson getCurrentMuseum(@PathVariable UUID id) {
+        return museumService.getCurrentAMuseum(id);
+    }
 
-  @PostMapping("/museum")
-  public MuseumJson saveMuseum(@RequestBody MuseumJson museum) {
-    return museumService.save(museum);
-  }
+    @PostMapping("/museum")
+    public MuseumJson saveMuseum(@RequestBody MuseumJson museum) {
+        return museumService.save(museum);
+    }
 
-  @PatchMapping("/museum")
-  public MuseumJson updateMuseumInfo(@RequestBody MuseumJson museum) {
-    return museumService.update(museum);
-  }
+    @PatchMapping("/museum")
+    public MuseumJson updateMuseumInfo(@RequestBody MuseumJson museum) {
+        return museumService.update(museum);
+    }
 }

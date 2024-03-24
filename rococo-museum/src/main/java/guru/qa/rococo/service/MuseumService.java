@@ -39,12 +39,12 @@ public class MuseumService {
     @Transactional
     public @Nonnull
     Page<MuseumJson> getAll(@Nonnull Pageable pageable
-                           ) {
-            List<MuseumJson> museumJsons = museumRepository.findAll(pageable)
-                    .stream()
-                    .map(MuseumJson::fromEntity)
-                    .toList();
-            return new PageImpl<>(museumJsons);
+    ) {
+        List<MuseumJson> museumJsons = museumRepository.findAll(pageable)
+                .stream()
+                .map(MuseumJson::fromEntity)
+                .toList();
+        return new PageImpl<>(museumJsons);
     }
 
     @Transactional

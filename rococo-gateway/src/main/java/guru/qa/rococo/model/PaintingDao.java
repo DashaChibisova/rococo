@@ -14,7 +14,7 @@ public record PaintingDao(
         int numberOfElements,
         boolean first,
         boolean empty
-        ) {
+) {
 }
 
 
