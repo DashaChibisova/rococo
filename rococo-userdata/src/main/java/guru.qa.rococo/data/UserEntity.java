@@ -29,9 +29,6 @@ public class UserEntity {
     @Column(name = "avatar", columnDefinition = "bytea")
     private byte[] avatar;
 
-
-    //методы на редактирование и добавление? картин мезеев художников
-
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;
