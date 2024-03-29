@@ -25,6 +25,11 @@ public class DockerConfig implements Config {
   }
 
   @Override
+  public String userdataUrl() {
+    return "http://127.0.0.1:8089";
+  }
+
+  @Override
   public String jdbcHost() {
     return "niffler-all-db";
   }

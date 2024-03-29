@@ -3,6 +3,9 @@ package guru.qa.rococo.jupiter.extension;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SessionStorage;
 import com.codeborne.selenide.WebDriverRunner;
+import guru.qa.rococo.jupiter.annotation.TestUser;
+import guru.qa.rococo.jupiter.annotation.Token;
+import guru.qa.rococo.jupiter.model.UserJson;
 import guru.qa.rococo.utils.OauthUtils;
 import guru.qa.rococo.api.AuthApiClient;
 import guru.qa.rococo.api.cookie.ThreadSafeCookieManager;
@@ -11,11 +14,17 @@ import guru.qa.rococo.jupiter.annotation.ApiLogin;
 import org.junit.jupiter.api.extension.*;
 import org.junit.platform.commons.support.AnnotationSupport;
 import org.openqa.selenium.Cookie;
+import guru.qa.rococo.jupiter.annotation.User;
 
-public class ApiLoginExtension implements BeforeEachCallback, AfterTestExecutionCallback {
+
+import java.util.List;
+import java.util.Map;
+
+public class ApiLoginExtension implements BeforeEachCallback, AfterTestExecutionCallback, ParameterResolver {
 
   private static final Config CFG = Config.getInstance();
   private final AuthApiClient authApiClient = new AuthApiClient();
+  private boolean initBrowser = true;
 
   public static final ExtensionContext.Namespace NAMESPACE = ExtensionContext.Namespace.create(ApiLoginExtension.class);
 
@@ -27,30 +36,63 @@ public class ApiLoginExtension implements BeforeEachCallback, AfterTestExecution
             ApiLogin.class
     ).orElse(null);
 
+    final String login;
+    final String password;
+
     if (apiLogin != null) {
+      TestUser testUser = apiLogin.user();
+      if (!testUser.fake()) {
+        UserJson createdUserForApiLogin = getCreatedUserForApiLogin(extensionContext);
+        login = createdUserForApiLogin.username();
+        password = createdUserForApiLogin.testData().password();
+      } else {
+        login = apiLogin.username();
+        password = apiLogin.password();
+      }
+
       final String codeVerifier = OauthUtils.generateCodeVerifier();
       final String codeChallenge = OauthUtils.generateCodeChallange(codeVerifier);
       setCodeVerifier(extensionContext, codeVerifier);
       setCodChallenge(extensionContext, codeChallenge);
-      authApiClient.doLogin(extensionContext, apiLogin.username(), apiLogin.password());
+      authApiClient.doLogin(extensionContext, login, password);
 
-      Selenide.open(CFG.frontUrl());
-      SessionStorage sessionStorage = Selenide.sessionStorage();
-      sessionStorage.setItem(
-              "codeChallenge", getCodChallenge(extensionContext)
-      );
-      sessionStorage.setItem(
-              "id_token", getToken(extensionContext)
-      );
-      sessionStorage.setItem(
-              "codeVerifier", getCodeVerifier(extensionContext)
-      );
+      if (initBrowser) {
+        Selenide.open(CFG.frontUrl());
+        SessionStorage sessionStorage = Selenide.sessionStorage();
+        sessionStorage.setItem(
+                "codeChallenge", getCodChallenge(extensionContext)
+        );
+        sessionStorage.setItem(
+                "id_token", getToken(extensionContext)
+        );
+        sessionStorage.setItem(
+                "codeVerifier", getCodeVerifier(extensionContext)
+        );
 
-      WebDriverRunner.getWebDriver().manage().addCookie(
-              jsessionCookie()
-      );
-      Selenide.refresh();
+        WebDriverRunner.getWebDriver().manage().addCookie(
+                jsessionCookie()
+        );
+        Selenide.refresh();
+      }
     }
+  }
+
+  @Override
+  public boolean supportsParameter(ParameterContext parameterContext, ExtensionContext extensionContext) throws ParameterResolutionException {
+    return AnnotationSupport.findAnnotation(parameterContext.getParameter(), Token.class).isPresent() &&
+            parameterContext.getParameter().getType().isAssignableFrom(String.class);
+  }
+
+  @Override
+  public String resolveParameter(ParameterContext parameterContext, ExtensionContext extensionContext) throws ParameterResolutionException {
+    return "Bearer " + getToken(extensionContext);
+  }
+
+  @SuppressWarnings("unchecked")
+  private static UserJson getCreatedUserForApiLogin(ExtensionContext extensionContext) {
+    return ((List<UserJson>) extensionContext.getStore(CreateUserExtension.CREATE_USER_NAMESPACE).get(extensionContext.getUniqueId(), Map.class)
+            .get(User.Point.INNER))
+            .get(0);
   }
 
   @Override
