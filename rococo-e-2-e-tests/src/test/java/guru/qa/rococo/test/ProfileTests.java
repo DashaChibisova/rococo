@@ -1,20 +1,22 @@
 package guru.qa.rococo.test;
 
 import guru.qa.rococo.jupiter.annotation.ApiLogin;
-import guru.qa.rococo.jupiter.annotation.TestUser;
 
+import guru.qa.rococo.jupiter.extension.ApiLoginExtension;
+import guru.qa.rococo.jupiter.extension.ContextHolderExtension;
 import guru.qa.rococo.jupiter.extension.CreateUserExtension;
-import io.qameta.allure.junit5.AllureJunit5;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-@ExtendWith({CreateUserExtension.class})
+import static com.codeborne.selenide.Selenide.sleep;
+
+
+@ExtendWith({ContextHolderExtension.class,  ApiLoginExtension.class})
 public class ProfileTests {
     @Test
-    @ApiLogin(user = @TestUser)
+    @ApiLogin(username = "12345", password = "123")
     void exampleTest() {
+        sleep(1000000000L);
 
     }
 
