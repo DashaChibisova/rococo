@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
 
-public abstract class CreateUserExtension implements BeforeEachCallback, AfterTestExecutionCallback, ParameterResolver {
+public  class CreateUserExtension implements BeforeEachCallback, AfterTestExecutionCallback, ParameterResolver {
 
   public static final ExtensionContext.Namespace DB_CREATE_USER_NAMESPACE
           = ExtensionContext.Namespace.create(CreateUserExtension.class);
