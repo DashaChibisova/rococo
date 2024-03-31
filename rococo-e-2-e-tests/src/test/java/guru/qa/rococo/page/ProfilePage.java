@@ -1,32 +1,67 @@
 package guru.qa.rococo.page;
 
 import com.codeborne.selenide.SelenideElement;
-import guru.qa.rococo.page.message.SuccessMsg;
+import io.qameta.allure.Step;
 
+import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selectors.by;
 import static com.codeborne.selenide.Selenide.$;
 
 public class ProfilePage extends BasePage<ProfilePage> {
 
   public static final String PAGE_URL = CFG.frontUrl() + "/profile";
 
-  private final SelenideElement inputFirstname = $("input[type='firstname']");
-  private final SelenideElement inputSurname= $("input[type='surname']");
-  private final SelenideElement closeBtn= $(".btn variant-ringed");
-  private final SelenideElement updateBtn= $(".btn variant-filled-primary");
+  private final SelenideElement inputFirstname = $("input[name='firstname']");
+  private final SelenideElement inputSurname= $("input[name='surname']");
+  private final SelenideElement closeBtn= $(".variant-ringed");
+  private final SelenideElement updateBtn= $(".variant-filled-primary");
+  private final SelenideElement notAvtotizationBtn= $(".variant-ghost");
 
-  private final SelenideElement avatar= $(".btn variant-filled-primary");//??
+  private final SelenideElement avatarInput = $("input[type='file']");
 
+  private final SelenideElement profileCard= $(".card");//??
 
-  public ProfilePage addAvatar(String imagePath) {
-    avatar.click();
-//    avatarInput.uploadFromClasspath(imagePath);
-    checkMessage(SuccessMsg.PROFILE_MSG);
+  @Step("Check that page is loaded")
+  public ProfilePage waitForPageLoaded() {
+    profileCard.should(visible).shouldHave(text("Профиль"));
+    profileCard.should(visible).shouldHave(text("Обновить фото профиля"));
     return this;
   }
 
-  public ProfilePage updateNameUser(String firstname, String surname) {
+  @Step("Check that page is loaded")
+  public ProfilePage addAvatar(String imagePath) {
+    avatarInput.uploadFromClasspath(imagePath);
+    return this;
+  }
+
+  @Step("Check that page is loaded")
+  public ProfilePage setFirstnameUser(String firstname) {
     inputFirstname.setValue(firstname);
+    return this;
+  }
+
+  @Step("Check that page is loaded")
+  public ProfilePage setSurnameUser(String surname) {
     inputSurname.setValue(surname);
+    return this;
+  }
+
+  @Step("Update click")
+  public ProfilePage updateClick() {
+    updateBtn.click();
+    return this;
+  }
+
+  @Step("Update click")
+  public MainPage closeProfile() {
+    closeBtn.click();
+    return new MainPage();
+  }
+
+  @Step("Update click")
+  public ProfilePage notAvtorization() {
+    notAvtotizationBtn.click();
     return this;
   }
 

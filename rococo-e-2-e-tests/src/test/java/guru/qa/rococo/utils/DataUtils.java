@@ -1,6 +1,7 @@
 package guru.qa.rococo.utils;
 
 import com.github.javafaker.Faker;
+import org.apache.commons.lang3.RandomStringUtils;
 
 import javax.annotation.Nonnull;
 
@@ -36,5 +37,10 @@ public class DataUtils {
   @Nonnull
   public static String generateRandomSentence(int wordsCount) {
     return faker.lorem().sentence(wordsCount);
+  }
+
+  @Nonnull
+  public static String generateRandomString(int charCount) {
+    return RandomStringUtils.randomAlphabetic(charCount);
   }
 }

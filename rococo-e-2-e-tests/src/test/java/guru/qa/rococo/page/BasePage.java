@@ -12,10 +12,10 @@ public abstract class BasePage<T extends BasePage> {
 
   protected static final Config CFG = Config.getInstance();
 
-  protected final SelenideElement toaster = $(".Toastify__toast-body");
+  protected final SelenideElement toaster = $(".snackbar");
 
   @SuppressWarnings("unchecked")
-  @Step("")
+  @Step("Check that success message appears")
   public T checkMessage(Msg msg) {
     toaster.shouldHave(text(msg.getMessage()));
     return (T) this;

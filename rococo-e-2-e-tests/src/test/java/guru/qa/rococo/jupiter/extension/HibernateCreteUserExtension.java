@@ -57,11 +57,18 @@ public class HibernateCreteUserExtension extends CreateUserExtension {
                 inUserdata.getLastname(),
                 inUserdata.getAvatar() == null ? "" : new String(inUserdata.getAvatar()),
                 new TestData(
-                        password
+                        password,
+                        inAuth.getId()
+
                 )
         );
     }
 
+    @Override
+    public void deleteUser(UUID authId, UUID userdataId) {
+        userRepository.deleteInAuthById(authId);
+        userRepository.deleteInUserdataById(userdataId);
+    }
 
 
 }

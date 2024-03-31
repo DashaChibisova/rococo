@@ -22,69 +22,48 @@ import org.junit.platform.commons.support.AnnotationSupport;
 
 import java.util.*;
 
-public abstract class CreateUserExtension implements BeforeEachCallback, ParameterResolver {
+public abstract class CreateUserExtension implements BeforeEachCallback, ParameterResolver, AfterTestExecutionCallback {
 
     public static final ExtensionContext.Namespace CREATE_USER_NAMESPACE
             = ExtensionContext.Namespace.create(CreateUserExtension.class);
 
     @Override
     public void beforeEach(ExtensionContext extensionContext) throws Exception {
-        Map<User.Point, List<TestUser>> usersForTest = extractUsersForTest(extensionContext);
+        Optional<ApiLogin> dbUserAnnotation = AnnotationSupport.findAnnotation(
+                extensionContext.getRequiredTestMethod(),
+                ApiLogin.class
+        );
 
-        Map<User.Point, List<UserJson>> createdUsers = new HashMap<>();
-        for (Map.Entry<User.Point, List<TestUser>> userInfo : usersForTest.entrySet()) {
-            List<UserJson> usersForPoint = new ArrayList<>();
-            for (TestUser testUser : userInfo.getValue()) {
-                UserJson user = createUser(testUser);
-                usersForPoint.add(user);
+        if (dbUserAnnotation.isPresent()) {
+            TestUser dbUser = dbUserAnnotation.get().user();
 
-            }
-            createdUsers.put(userInfo.getKey(), usersForPoint);
+            UserJson createdUser = createUser(dbUser);
+
+            extensionContext.getStore(CREATE_USER_NAMESPACE).put(extensionContext.getUniqueId(), createdUser);
         }
 
-        extensionContext.getStore(CREATE_USER_NAMESPACE).put(extensionContext.getUniqueId(), createdUsers);
     }
 
     public abstract UserJson createUser(TestUser user);
-
+    public abstract void deleteUser(UUID authId, UUID userdataId);
 
     @Override
     public boolean supportsParameter(ParameterContext parameterContext, ExtensionContext extensionContext) throws ParameterResolutionException {
-        return AnnotationSupport.findAnnotation(parameterContext.getParameter(), User.class).isPresent() &&
-                (parameterContext.getParameter().getType().isAssignableFrom(UserJson.class) ||
-                        parameterContext.getParameter().getType().isAssignableFrom(UserJson[].class));
+        return AnnotationSupport.findAnnotation(extensionContext.getRequiredTestMethod(), ApiLogin.class)
+                .isPresent() &&
+                parameterContext.getParameter().getType().isAssignableFrom(UserJson.class);
     }
 
     @Override
-    public Object resolveParameter(ParameterContext parameterContext, ExtensionContext extensionContext) throws ParameterResolutionException {
-        User user = AnnotationSupport.findAnnotation(parameterContext.getParameter(), User.class).get();
-        Map<User.Point, List<UserJson>> createdUsers= extensionContext.getStore(CREATE_USER_NAMESPACE).get(extensionContext.getUniqueId(), Map.class);
-        List<UserJson> userJsons = createdUsers.get(user.value());
-        if (parameterContext.getParameter().getType().isAssignableFrom(UserJson[].class)) {
-            return userJsons.stream().toList().toArray(new UserJson[0]);
-        } else {
-            return userJsons.get(0);
-        }
+    public UserJson resolveParameter(ParameterContext parameterContext, ExtensionContext extensionContext) throws ParameterResolutionException {
+        return extensionContext.getStore(CREATE_USER_NAMESPACE).get(extensionContext.getUniqueId(), UserJson.class);
     }
 
-    private Map<User.Point, List<TestUser>> extractUsersForTest(ExtensionContext context) {
-        Map<User.Point, List<TestUser>> result = new HashMap<>();
-        AnnotationSupport.findAnnotation(context.getRequiredTestMethod(), ApiLogin.class).ifPresent(
-                apiLogin -> {
-                    TestUser user = apiLogin.user();
-                    if (!user.fake()) {
-                        result.put(User.Point.INNER, List.of(user));
-                    }
-                }
-        );
-        List<TestUser> outerUsers = new ArrayList<>();
-        AnnotationSupport.findAnnotation(context.getRequiredTestMethod(), TestUser.class).ifPresent(
-                tu -> {
-                    if (!tu.fake()) outerUsers.add(tu);
-                }
-        );
-        result.put(User.Point.OUTER, outerUsers);
-        return result;
+    @Override
+    public void afterTestExecution(ExtensionContext extensionContext) throws Exception {
+        UserJson createdUser = extensionContext.getStore(CREATE_USER_NAMESPACE)
+                .get(extensionContext.getUniqueId(), UserJson.class);
+        deleteUser(createdUser.testData().authId(), createdUser.id());
     }
 
 }
