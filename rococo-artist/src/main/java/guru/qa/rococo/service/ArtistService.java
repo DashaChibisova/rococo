@@ -62,14 +62,14 @@ public class ArtistService {
                     .stream()
                     .map(ArtistJson::fromEntity)
                     .toList();
-            return new PageImpl<>(artistJsons);
+
+            return new PageImpl<>(artistJsons, pageable, artistRepository.findAll().size());
 
         } else {
-
             List<ArtistJson> artistJsons = artistRepository.findAllByNameContainsIgnoreCase(name, pageable).stream()
                     .map(ArtistJson::fromEntity)
                     .toList();
-            return new PageImpl<>(artistJsons);
+            return new PageImpl<>(artistJsons, pageable, artistRepository.findAll().size());
         }
     }
 
