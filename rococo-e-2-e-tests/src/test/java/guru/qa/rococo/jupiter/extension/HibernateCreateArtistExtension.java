@@ -38,7 +38,7 @@ public class HibernateCreateArtistExtension extends CreateArtistExtension {
                 ? DataUtils.generateRandomUsername()
                 : artist.name();
         String biography = artist.biography().isEmpty()
-                ? DataUtils.generateRandomString(10)
+                ? DataUtils.generateRandomString(11)
                 : artist.biography();
 
 

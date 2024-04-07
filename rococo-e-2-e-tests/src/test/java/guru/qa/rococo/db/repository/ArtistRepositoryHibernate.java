@@ -31,4 +31,17 @@ public class ArtistRepositoryHibernate extends JpaService implements ArtistRepos
     ArtistEntity toBeDeleted = Optional.of(entityManager(ARTIST).find(ArtistEntity.class, id)).get();
     remove(ARTIST, toBeDeleted);
   }
+
+//  @Override
+//  public ArtistEntity findByName(String name) {
+//    return entityManager(ARTIST).find(ArtistEntity.class, name);
+//  }
+//
+//
+//  @Override
+//  public void deleteInArtistByName(String name) {
+//    ArtistEntity byName = findByName(name);
+//    ArtistEntity toBeDeleted = Optional.of(entityManager(ARTIST).find(ArtistEntity.class, byName.getId())).get();
+//    remove(ARTIST, toBeDeleted);
+//  }
 }

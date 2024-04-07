@@ -3,8 +3,6 @@ package guru.qa.rococo.page;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 
-import java.util.List;
-
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;

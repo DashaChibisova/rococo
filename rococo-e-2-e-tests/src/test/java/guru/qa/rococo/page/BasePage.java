@@ -21,4 +21,10 @@ public abstract class BasePage<T extends BasePage> {
     return (T) this;
   }
 
+  @Step("Check that success message appears")
+  public T checkMessageName(Msg msg, String name) {
+    toaster.shouldHave(text(msg.getMessage() + name));
+    return (T) this;
+  }
+
 }
