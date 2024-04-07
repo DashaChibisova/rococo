@@ -12,6 +12,9 @@ public interface Config {
 
   String authUrl();
 
+
+  String artistUrl();
+
   String userdataUrl();
 
   String jdbcHost();

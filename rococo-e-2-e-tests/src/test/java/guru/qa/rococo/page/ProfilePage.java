@@ -5,7 +5,6 @@ import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selectors.by;
 import static com.codeborne.selenide.Selenide.$;
 
 public class ProfilePage extends BasePage<ProfilePage> {
@@ -16,7 +15,7 @@ public class ProfilePage extends BasePage<ProfilePage> {
   private final SelenideElement inputSurname= $("input[name='surname']");
   private final SelenideElement closeBtn= $(".variant-ringed");
   private final SelenideElement updateBtn= $(".variant-filled-primary");
-  private final SelenideElement notAvtotizationBtn= $(".variant-ghost");
+  private final SelenideElement notAuthorizationBtn= $(".variant-ghost");
 
   private final SelenideElement avatarInput = $("input[type='file']");
 
@@ -29,19 +28,19 @@ public class ProfilePage extends BasePage<ProfilePage> {
     return this;
   }
 
-  @Step("Check that page is loaded")
+  @Step("Add avatar from classpath")
   public ProfilePage addAvatar(String imagePath) {
     avatarInput.uploadFromClasspath(imagePath);
     return this;
   }
 
-  @Step("Check that page is loaded")
+  @Step("Set firstname")
   public ProfilePage setFirstnameUser(String firstname) {
     inputFirstname.setValue(firstname);
     return this;
   }
 
-  @Step("Check that page is loaded")
+  @Step("Set surname")
   public ProfilePage setSurnameUser(String surname) {
     inputSurname.setValue(surname);
     return this;
@@ -53,15 +52,15 @@ public class ProfilePage extends BasePage<ProfilePage> {
     return this;
   }
 
-  @Step("Update click")
+  @Step("Close click")
   public MainPage closeProfile() {
     closeBtn.click();
     return new MainPage();
   }
 
-  @Step("Update click")
-  public ProfilePage notAvtorization() {
-    notAvtotizationBtn.click();
+  @Step("Unauthorization click")
+  public ProfilePage notAuthorization() {
+    notAuthorizationBtn.click();
     return this;
   }
 

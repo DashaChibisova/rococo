@@ -1,6 +1,5 @@
 package guru.qa.rococo.test;
 
-import guru.qa.rococo.jupiter.annotation.AllureIdParam;
 import guru.qa.rococo.jupiter.annotation.ApiLogin;
 
 import guru.qa.rococo.jupiter.annotation.TestUser;
@@ -11,11 +10,11 @@ import guru.qa.rococo.page.ProfilePage;
 import guru.qa.rococo.page.message.*;
 import guru.qa.rococo.utils.DataUtils;
 import io.qameta.allure.junit5.AllureJunit5;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
@@ -26,6 +25,7 @@ import java.util.stream.Stream;
 public class ProfileTests {
 
     @Test
+    @DisplayName("Add avatar")
     @ApiLogin(user = @TestUser) //не регает, только поле нажатия войти заходит
     void avatarShouldBeDisplayedInMainPage() {
         new MainPage()
@@ -41,6 +41,7 @@ public class ProfileTests {
     }
 
     @Test
+    @DisplayName("Avatar not updated due to size ")
     @ApiLogin(user = @TestUser) //не регает, только поле нажатия войти заходит
     void avatarNotUpdateFailedMessageDisplayed(UserJson user) {
         System.out.println(user.username());
@@ -57,6 +58,7 @@ public class ProfileTests {
     }
 
     @Test
+    @DisplayName("Profile button closing profile")
     @ApiLogin(user = @TestUser) //не регает, только поле нажатия войти заходит
     void checkCloseBtnDisappiarProfile(UserJson user) {
         System.out.println(user.username());
@@ -71,15 +73,16 @@ public class ProfileTests {
     }
 
     @Test
+    @DisplayName("Profile go from unauthorization zone")
     @ApiLogin(user = @TestUser) //не регает, только поле нажатия войти заходит
-    void checkGoToUnAvtorizationZoneFromProfile(UserJson user) {
+    void checkGoToUnAuthorizationZoneFromProfile(UserJson user) {
         System.out.println(user.username());
         new MainPage()
                 .toLoginPageDelete() // delete
                 .goToProfile();
         new ProfilePage()
                 .waitForPageLoaded()
-                .notAvtorization();
+                .notAuthorization();
 
         new MainPage()
                 .checkMessage(SuccessMsgSession.SESSION_MSG)
@@ -87,6 +90,7 @@ public class ProfileTests {
     }
 
     @ParameterizedTest
+    @DisplayName("Updated firstname ")
     @ApiLogin(user = @TestUser) //не регает, только поле нажатия войти заходит
     @MethodSource("testCasesFirstname")
     void checkFirstnameBeOrNotBeUpdatedMessageDisplayed(String name, Msg massage) {
@@ -103,6 +107,7 @@ public class ProfileTests {
     }
 
     @ParameterizedTest
+    @DisplayName("Updated lastname")
     @ApiLogin(user = @TestUser) //не регает, только поле нажатия войти заходит
     @MethodSource("testCasesLastname")
     void checkLastnameBeUpdateFailedMessageDisplayed(String name, Msg massage) {

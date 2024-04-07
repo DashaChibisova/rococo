@@ -11,8 +11,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
-import static guru.qa.rococo.db.Database.AUTH;
-import static guru.qa.rococo.db.Database.USERDATA;
+import static guru.qa.rococo.db.Database.*;
+import static guru.qa.rococo.db.Database.ARTIST;
 
 public class UserRepositoryHibernate extends JpaService implements UserRepository {
 

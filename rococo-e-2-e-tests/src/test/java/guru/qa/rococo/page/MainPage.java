@@ -11,13 +11,14 @@ import static com.codeborne.selenide.Selenide.$;
 import static guru.qa.rococo.condition.PhotoCondition.photoFromClasspath;
 
 public class MainPage extends BasePage<MainPage> {
+  public static final String PAGE_URL = CFG.frontUrl();
 
   private final SelenideElement pageContent = $("#page-content"); //id
 
   private final SelenideElement shellHeaderContent = $("#shell-header"); //id $(".app-bar")
 
 //  private final SelenideElement paintingBtn = $("a[href*='/painting']"); //*???
-//  private final SelenideElement artistBtn = $("a[href*='/artist']");
+  private final SelenideElement artistBtn = $("a[href*='/artist']");
 //  private final SelenideElement museumBtn = $("a[href*='/museum']");
 
   private final SelenideElement lightSwitch = $("//a[@title='Toggle Dark Mode']");
@@ -28,8 +29,10 @@ public class MainPage extends BasePage<MainPage> {
 
   @Step("Check that page is loaded")
   public MainPage waitForPageLoaded() {
-//    profileCard.should(visible).shouldHave(text("Профиль"));
-//    profileCard.should(visible).shouldHave(text("Обновить фото профиля"));
+    pageContent.should(visible).shouldHave(text("Ваши любимые картины и художники всегда рядом"));
+    pageContent.should(visible).shouldHave(text("Картины"));
+    pageContent.should(visible).shouldHave(text("Художники"));
+    pageContent.should(visible).shouldHave(text("Музеи"));
     return this;
   }
 
@@ -41,7 +44,7 @@ public class MainPage extends BasePage<MainPage> {
 
   @Step("Open artist page from heade")
   public ArtistPage toArtistPageFromHeader() {
-    shellHeaderContent.shouldHave(text("Художники")).click();
+    artistBtn.shouldHave(text("Художники")).click();
     return new ArtistPage();
   }
 
@@ -100,7 +103,7 @@ public class MainPage extends BasePage<MainPage> {
     return this;
   }
 
-  @Step("check avatar")
+  @Step("Check avatar")
   public MainPage checkAvatar(String imageName) {
     avatarImage.shouldHave(photoFromClasspath(imageName));
     return this;
