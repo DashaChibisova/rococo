@@ -53,7 +53,7 @@ public class ArtistTests {
                 .selectArtist(artistJson[0].name())
                 .getArtistInfo()
                 .checkCardArtistWithoutAuthorization(artistJson[0].name(), artistJson[0].biography());
-
+        //добавить проверку изображения
     }
 
     @Test

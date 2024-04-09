@@ -60,9 +60,13 @@ public class RestMuseumDataClient {
   }
 
   public @Nonnull
-  Page<MuseumJson> getAllMuseum(@Nonnull Pageable pageable) {
+  Page<MuseumJson> getAllMuseum(@Nonnull Pageable pageable, @Nonnull String title) {
     MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+    params.add("size", String.valueOf(pageable.getPageSize()));
     params.add("page", String.valueOf(pageable.getPageNumber()));
+    if(title != null) {
+      params.add("title", title);
+    }
     URI uri = UriComponentsBuilder.fromHttpUrl(rococoMuseumBaseUri + "/museum").queryParams(params).build().toUri();
 
     MuseumDao museumDao = Optional.ofNullable(
@@ -75,7 +79,7 @@ public class RestMuseumDataClient {
     ).orElseThrow(() -> new NoRestResponseException(
             "No REST List<MuseumJson> response is given [/museum Route]"
     ));
-    return new PageImpl<>(museumDao.content());
+    return new PageImpl<>(museumDao.content(), pageable, museumDao.totalElements());
   }
 
   public @Nonnull

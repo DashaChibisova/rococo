@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public record MuseumDao(
         ArrayList<MuseumJson> content,
-        String pageable,
+        PageDto pageable,
         int totalPages,
         int totalElements,
         boolean last,

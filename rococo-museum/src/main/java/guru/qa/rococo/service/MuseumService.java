@@ -38,13 +38,21 @@ public class MuseumService {
 
     @Transactional
     public @Nonnull
-    Page<MuseumJson> getAll(@Nonnull Pageable pageable
+    Page<MuseumJson> getAll(@Nonnull Pageable pageable,  String title
                            ) {
+        if (title.equals("notSorted")) {
+
             List<MuseumJson> museumJsons = museumRepository.findAll(pageable)
                     .stream()
                     .map(MuseumJson::fromEntity)
                     .toList();
-            return new PageImpl<>(museumJsons);
+            return new PageImpl<>(museumJsons, pageable, museumRepository.findAll().size());
+        } else {
+            List<MuseumJson> museumJsons = museumRepository.findAllByTitleContainsIgnoreCase(title, pageable).stream()
+                    .map(MuseumJson::fromEntity)
+                    .toList();
+            return new PageImpl<>(museumJsons, pageable, museumRepository.findAll().size());
+        }
     }
 
     @Transactional

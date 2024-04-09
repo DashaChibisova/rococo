@@ -22,8 +22,8 @@ public class MuseumController {
   }
 
   @GetMapping("/museum")
-  public Page<MuseumJson> getAllMuseum(@PageableDefault Pageable pageable) {
-    return museumService.getAll(pageable);
+  public Page<MuseumJson> getAllMuseum(@PageableDefault Pageable pageable, @RequestParam(defaultValue = "notSorted") String title) {
+    return museumService.getAll(pageable, title);
   }
 
   @GetMapping("/museum/{id}")

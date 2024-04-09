@@ -17,7 +17,7 @@ public class MainPage extends BasePage<MainPage> {
 
 //  private final SelenideElement paintingBtn = $("a[href*='/painting']"); //*???
   private final SelenideElement artistBtn = $("a[href*='/artist']");
-//  private final SelenideElement museumBtn = $("a[href*='/museum']");
+  private final SelenideElement museumBtn = $("#shell-header a[href*='/museum']");
 
   private final SelenideElement lightSwitch = $("//a[@title='Toggle Dark Mode']");
   private final SelenideElement submitBtn = $(".variant-filled-primary");
@@ -46,9 +46,10 @@ public class MainPage extends BasePage<MainPage> {
     return new ArtistPage();
   }
 
+  //отличие от museumBtn
   @Step("Open museum page from content")
   public MuseumPage toMuseumPageFromContent() {
-    shellHeaderContent.shouldHave(text("Музеи")).click();
+    museumBtn.shouldHave(text("Музеи")).click();
     return new MuseumPage();
   }
 

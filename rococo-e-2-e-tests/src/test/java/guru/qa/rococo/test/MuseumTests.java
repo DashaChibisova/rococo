@@ -1,18 +1,20 @@
 package guru.qa.rococo.test;
 
 import com.codeborne.selenide.Selenide;
-import guru.qa.rococo.db.repository.ArtistRepository;
-import guru.qa.rococo.db.repository.ArtistRepositoryHibernate;
+import guru.qa.rococo.db.repository.MuseumRepository;
+import guru.qa.rococo.db.repository.MuseumRepositoryHibernate;
 import guru.qa.rococo.jupiter.annotation.ApiLogin;
 import guru.qa.rococo.jupiter.annotation.Artist;
 import guru.qa.rococo.jupiter.annotation.TestMuseum;
 import guru.qa.rococo.jupiter.annotation.TestUser;
 import guru.qa.rococo.jupiter.extension.*;
 import guru.qa.rococo.jupiter.model.ArtistJson;
+import guru.qa.rococo.jupiter.model.MuseumJson;
 import guru.qa.rococo.page.ArtistPage;
 import guru.qa.rococo.page.MainPage;
-import guru.qa.rococo.page.message.SuccessMsgAddArtist;
-import guru.qa.rococo.page.message.SuccessMsgEditArtist;
+import guru.qa.rococo.page.MuseumPage;
+import guru.qa.rococo.page.message.SuccessMsgAddMuseum;
+import guru.qa.rococo.page.message.SuccessMsgEditMuseum;
 import guru.qa.rococo.utils.DataUtils;
 import io.qameta.allure.junit5.AllureJunit5;
 import org.junit.jupiter.api.DisplayName;
@@ -21,8 +23,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@ExtendWith({ContextHolderExtension.class, AllureJunit5.class, BrowserExtension.class, HibernateCreateMuseumExtension.class})
-//@ExtendWith({ContextHolderExtension.class, AllureJunit5.class, BrowserExtension.class, HibernateCreteUserExtension.class,ApiLoginExtension.class})
+//@ExtendWith({ContextHolderExtension.class, AllureJunit5.class, BrowserExtension.class, HibernateCreateMuseumExtension.class})
+@ExtendWith({ContextHolderExtension.class, AllureJunit5.class, BrowserExtension.class, HibernateCreteUserExtension.class,ApiLoginExtension.class})
 //@ExtendWith({ContextHolderExtension.class, AllureJunit5.class, BrowserExtension.class, HibernateCreteUserExtension.class,ApiLoginExtension.class,HibernateCreateArtistExtension.class })
 
 public class MuseumTests {
@@ -41,139 +43,145 @@ public class MuseumTests {
     @Test
     @DisplayName("Add museum without authorization not allowed")
     @TestMuseum()
-    void checkWithoutAuthorizationNotAddMuseum(ArtistJson[] artistJson) {
+    void checkWithoutAuthorizationNotAddMuseum(MuseumJson[] museumJsons) {
         Selenide.open(MainPage.PAGE_URL, MainPage.class);
         new MainPage()
                 .waitForPageLoaded()
-                .toArtistPageFromHeader();
-        new ArtistPage()
+                .toMuseumPageFromContent();
+        new MuseumPage()
                 .waitForPageLoaded()
                 .btnAddArtistIsAbsent()
-                .artistVisible(artistJson[0].name())
-                .selectArtist(artistJson[0].name())
-                .getArtistInfo()
-                .checkCardArtistWithoutAuthorization(artistJson[0].name(), artistJson[0].biography());
+                .museumVisible(museumJsons[0].title())
+                .selectMuseum(museumJsons[0].title())
+                .getMuseumInfo()
+                .checkCardMuseumWithoutAuthorization(museumJsons[0].title(), museumJsons[0].description());
+//                .checkPhoto("images/profile/artist.png");
+
 
     }
 
     @Test
-    @DisplayName("Check search artist")
-    @Artist(count = 3)
-    void checkSearchArtist(ArtistJson[] artistJson) {
+    @DisplayName("Check search museum")
+    @TestMuseum(count = 3)
+    void checkSearchMuseum(MuseumJson[] museumJsons) {
         Selenide.open(MainPage.PAGE_URL, MainPage.class);
-        String artistSearchName = artistJson[0].name();
+        String museumSearchName = museumJsons[0].title();
 
         new MainPage()
                 .waitForPageLoaded()
-                .toArtistPageFromHeader();
-        new ArtistPage()
+                .toMuseumPageFromContent();
+        new MuseumPage()
                 .waitForPageLoaded()
-                .searchArtist(artistSearchName)
-                .artistVisible(artistJson[0].name());
-        assertEquals(new ArtistPage().artistSize(), 1);
+                .searchMuseum(museumSearchName)
+                .museumVisible(museumSearchName);
+
+        assertEquals(new MuseumPage().museumSize(), 1);
     }
 
-    @Test
+    @Test //---
     @DisplayName("")
     @ApiLogin(user = @TestUser) //не регает, только поле нажатия войти заходит
-    void checkAddArtist() {
-         ArtistRepository artistRepository = new ArtistRepositoryHibernate();
+    void checkAddMuseum() {
+         MuseumRepository museumRepository = new MuseumRepositoryHibernate();
 
         Selenide.open(MainPage.PAGE_URL, MainPage.class);
-        String name = DataUtils.generateRandomName();
+        String title = DataUtils.generateRandomName();
 
         new MainPage()
                 .waitForPageLoaded()
                 .toLoginPageDelete() // delete
-                .toArtistPageFromHeader();
-        new ArtistPage()
+                .toMuseumPageFromContent();
+        new MuseumPage()
                 .waitForPageLoaded()
-                        .addArtistClick()
-                .getCardArtist()
-                .waitForNewArtistLoaded()
-                .setName(name)
-                .setBiography(DataUtils.generateRandomString(20))
-                .addPhoto("images/profile/artist.png")
+                        .addMuseumClick()
+                .getMuseumCardSave()
+                .waitForNewMuseumLoaded()
+                .setTitle(title)
+                .setCity(DataUtils.generateRandomCity())
+                .selectCountry("Австрия")
+                .addPhoto("images/museum/museum1.png")
+                .setDescription(DataUtils.generateRandomSentence(7))
                 .addBtnClick();
-        new ArtistPage()
-                .artistVisible(name)
-                .checkMessageName(SuccessMsgAddArtist.ARTIST_MSG, name)
-                .artistVisible(name)
-                .checkAvatar("images/profile/artist.png");
+        new MuseumPage()
+                .museumVisible(title)
+                .checkMessageName(SuccessMsgAddMuseum.MUSEUM_MSG, title)
+                .museumVisible(title)
+                .checkAvatar("images/museum/museum1.png");
 
 //        artistRepository.deleteInArtistByName(name);
         // удалить артиста не работает решить ошибки
 
     }
 
-    @Test
-    @DisplayName("Check close button on create artist")
+    @Test //---
+    @DisplayName("Check close button on create museum")
     @ApiLogin(user = @TestUser) //не регает, только поле нажатия войти заходит
-    void checkCloseBtnOnAddArtist() {
+    void checkCloseBtnOnAddMuseum() {
         Selenide.open(MainPage.PAGE_URL, MainPage.class);
 
         new MainPage()
                 .waitForPageLoaded()
                 .toLoginPageDelete() // delete
-                .toArtistPageFromHeader();
-        new ArtistPage()
+                .toMuseumPageFromContent();
+        new MuseumPage()
                 .waitForPageLoaded()
-                .addArtistClick()
-                .getCardArtist()
-                .waitForNewArtistLoaded()
-                .setName(DataUtils.generateRandomName())
+                .addMuseumClick()
+                .getMuseumCardSave()
+                .waitForNewMuseumLoaded()
+                .setTitle(DataUtils.generateRandomName())
                 .closeBtnClick()
-                .waitForNewArtistDisappear();
+                .waitForNewMuseumDisappear();
     }
 
 
     //(баг при редактировании биографии на 10 символов)
-    @Test
-    @DisplayName("Check update name, biography, photo")
+    @Test //--
+    @DisplayName("Check update title, discription")
     @ApiLogin(user = @TestUser) //не регает, только поле нажатия войти заходит
-    @Artist()
-    void checkUpdateDataAddArtist(ArtistJson[] artistJson) {
+    @TestMuseum()
+    void checkUpdateDataAddMuseum(MuseumJson[] museumJsons) {
         Selenide.open(MainPage.PAGE_URL, MainPage.class);
-        String name = DataUtils.generateRandomName();
+        String title = DataUtils.generateRandomName();
 
         new MainPage()
                 .waitForPageLoaded()
                 .toLoginPageDelete() // delete
-                .toArtistPageFromHeader();
-        new ArtistPage()
+                .toMuseumPageFromContent();
+        new MuseumPage()
                 .waitForPageLoaded()
-                .selectArtist(artistJson[0].name())
-                .getArtistInfo()
-                .nameArtist(artistJson[0].name())
+                .selectMuseum(museumJsons[0].title())
+                .getMuseumInfo()
+                .titleMuseum(museumJsons[0].title())
                 .editClick()
-                .getCardArtist()
-                .setName(name)
+                .getCardMuseum()
+                .setTitle(title)
                 .addBtnClick();
-        new ArtistPage()
-                .checkMessageName(SuccessMsgEditArtist.ARTIST_MSG, name)
-                .getArtistInfo()
-                .nameArtist(name);
+        new MuseumPage()
+                .checkMessageName(SuccessMsgEditMuseum.MUSEUM_MSG, title)
+                .getMuseumInfo()
+                .titleMuseum(title);
     }
 
-    @Test
-    @DisplayName("name/biography can`t be longer than 3/10 characters")
+    @Test //--
+    @DisplayName("")
     @ApiLogin(user = @TestUser) //не регает, только поле нажатия войти заходит
     void checkInvalideDataForAddArtistDisplayedError() {
         Selenide.open(MainPage.PAGE_URL, MainPage.class);
         new MainPage()
                 .waitForPageLoaded()
                 .toLoginPageDelete() // delete
-                .toArtistPageFromHeader();
-        new ArtistPage()
+                .toMuseumPageFromContent();
+        new MuseumPage()
                 .waitForPageLoaded()
-                .addArtistClick()
-                .getCardArtist()
-                .waitForNewArtistLoaded()
-                .setName(DataUtils.generateRandomString(2))
-                .setBiography(DataUtils.generateRandomString(4))
+                .addMuseumClick()
+                .getMuseumCardSave()
+                .waitForNewMuseumLoaded()
+                .setTitle(DataUtils.generateRandomString(2))
+                .setDescription(DataUtils.generateRandomString(4))
+                .setCity(DataUtils.generateRandomString(4))
                 .addPhoto("images/profile/artist.png")
                 .addBtnClick()
-                .errorArtistLengthChar();
+                .errorMuseumLengthChar();
 
     }
 

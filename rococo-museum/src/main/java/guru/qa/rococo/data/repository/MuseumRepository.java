@@ -12,4 +12,10 @@ import java.util.UUID;
 
 public interface MuseumRepository extends JpaRepository<MuseumEntity, UUID> {
 
+    @Nonnull
+    Page<MuseumEntity> findAllByTitleContainsIgnoreCase(
+            @Nonnull String title,
+            @Nonnull Pageable pageable
+    );
+
 }
