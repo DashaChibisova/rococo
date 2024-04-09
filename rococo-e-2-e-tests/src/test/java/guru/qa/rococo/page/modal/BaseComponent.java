@@ -1,4 +1,4 @@
-package guru.qa.rococo.page.component;
+package guru.qa.rococo.page.modal;
 
 import com.codeborne.selenide.SelenideElement;
 

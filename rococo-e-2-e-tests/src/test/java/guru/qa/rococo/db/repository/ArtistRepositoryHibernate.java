@@ -2,6 +2,7 @@ package guru.qa.rococo.db.repository;
 
 import guru.qa.rococo.db.EmfProvider;
 import guru.qa.rococo.db.jpa.JpaService;
+import guru.qa.rococo.db.jpa.ThreadLocalEntityManager;
 import guru.qa.rococo.db.model.ArtistEntity;
 import guru.qa.rococo.db.model.UserAuthEntity;
 import guru.qa.rococo.db.model.UserEntity;
@@ -17,7 +18,7 @@ import static guru.qa.rococo.db.Database.*;
 public class ArtistRepositoryHibernate extends JpaService implements ArtistRepository {
 
   public ArtistRepositoryHibernate() {
-    super(ARTIST, EmfProvider.INSTANCE.emf(ARTIST).createEntityManager());
+    super(AUTH, new ThreadLocalEntityManager(EmfProvider.INSTANCE.emf(AUTH)));
   }
 
   @Override

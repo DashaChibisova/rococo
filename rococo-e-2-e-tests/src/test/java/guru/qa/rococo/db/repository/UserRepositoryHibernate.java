@@ -2,6 +2,7 @@ package guru.qa.rococo.db.repository;
 
 import guru.qa.rococo.db.EmfProvider;
 import guru.qa.rococo.db.jpa.JpaService;
+import guru.qa.rococo.db.jpa.ThreadLocalEntityManager;
 import guru.qa.rococo.db.model.UserAuthEntity;
 import guru.qa.rococo.db.model.UserEntity;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -21,8 +22,8 @@ public class UserRepositoryHibernate extends JpaService implements UserRepositor
   public UserRepositoryHibernate() {
     super(
         Map.of(
-            AUTH, EmfProvider.INSTANCE.emf(AUTH).createEntityManager(),
-            USERDATA, EmfProvider.INSTANCE.emf(USERDATA).createEntityManager()
+                AUTH, new ThreadLocalEntityManager(EmfProvider.INSTANCE.emf(AUTH)),
+                USERDATA, new ThreadLocalEntityManager(EmfProvider.INSTANCE.emf(USERDATA))
         )
     );
   }

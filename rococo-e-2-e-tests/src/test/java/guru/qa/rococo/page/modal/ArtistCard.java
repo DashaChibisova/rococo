@@ -1,7 +1,6 @@
-package guru.qa.rococo.page.component;
+package guru.qa.rococo.page.modal;
 
 import com.codeborne.selenide.SelenideElement;
-import guru.qa.rococo.page.LoginPage;
 import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Condition.*;

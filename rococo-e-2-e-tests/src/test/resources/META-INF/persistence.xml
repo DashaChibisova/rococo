@@ -7,5 +7,8 @@
         <class>guru.qa.rococo.db.model.AuthorityEntity</class>
         <class>guru.qa.rococo.db.model.UserEntity</class>
         <class>guru.qa.rococo.db.model.ArtistEntity</class>
+        <class>guru.qa.rococo.db.model.MuseumEntity</class>
+        <class>guru.qa.rococo.db.model.GeoEntity</class>
+        <class>guru.qa.rococo.db.model.CountryEntity</class>
     </persistence-unit>
 </persistence>

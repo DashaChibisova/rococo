@@ -1,7 +1,6 @@
 package guru.qa.rococo.db;
 
 import guru.qa.rococo.config.Config;
-import guru.qa.rococo.db.jpa.ThreadSafeEntityManagerFactory;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
@@ -26,9 +25,8 @@ public enum EmfProvider {
 //      settings.put("hibernate.connection.driver_class", "org.postgresql.Driver");
       settings.put("hibernate.connection.driver_class", "com.p6spy.engine.spy.P6SpyDriver");
       settings.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
-      return new ThreadSafeEntityManagerFactory(
-          Persistence.createEntityManagerFactory("rococo", settings)
-      );
+      return Persistence.createEntityManagerFactory("rococo", settings);
+
     });
   }
 

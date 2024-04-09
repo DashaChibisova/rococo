@@ -15,7 +15,7 @@ import java.util.*;
 
 public class HibernateCreteUserExtension extends CreateUserExtension {
 
-    private static UserRepository userRepository = new UserRepositoryHibernate();
+    private final UserRepository userRepository = new UserRepositoryHibernate();
 
     @Override
     public UserJson createUser(TestUser dbUser) {

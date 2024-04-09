@@ -1,8 +1,8 @@
 package guru.qa.rococo.page;
 
 import com.codeborne.selenide.SelenideElement;
-import guru.qa.rococo.page.component.ArtistCard;
-import guru.qa.rococo.page.component.ArtistInfo;
+import guru.qa.rococo.page.modal.ArtistCard;
+import guru.qa.rococo.page.modal.ArtistInfo;
 import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Condition.*;

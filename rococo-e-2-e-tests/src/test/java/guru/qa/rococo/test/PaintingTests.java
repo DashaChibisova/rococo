@@ -18,14 +18,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 //@ExtendWith({ContextHolderExtension.class, AllureJunit5.class, BrowserExtension.class, HibernateCreateArtistExtension.class})
 //@ExtendWith({ContextHolderExtension.class, AllureJunit5.class, BrowserExtension.class, HibernateCreteUserExtension.class,ApiLoginExtension.class})
 @ExtendWith({ContextHolderExtension.class, AllureJunit5.class, BrowserExtension.class, HibernateCreteUserExtension.class,ApiLoginExtension.class,HibernateCreateArtistExtension.class })
 
-public class ArtistTests {
+public class PaintingTests {
 
     // отдельно тест на пагинацию и на пустые значения
 
@@ -37,6 +36,10 @@ public class ArtistTests {
     //если не добавлено что-то из параметров то нельзя сохранить
     // +yевалидные данные
     //добавление картины (если есть музеи то список, если нет, то другая модалка)
+
+//    при создании картины выбрать из существующих художников и выбрать где храниться оригинал
+//    при создании картины нет существующих художников и нет храниться оригинал
+//    длина на вводимые символы
 
     @Test
     @DisplayName("Add artist without authorization not allowed")

@@ -30,7 +30,7 @@ import java.util.UUID;
 
 public class HibernateCreateArtistExtension extends CreateArtistExtension {
 
-    private static ArtistRepository artistRepository = new ArtistRepositoryHibernate();
+    private final ArtistRepository artistRepository = new ArtistRepositoryHibernate();
 
     @Override
     public ArtistJson createArtist(Artist artist) throws IOException {

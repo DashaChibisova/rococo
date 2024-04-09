@@ -33,9 +33,6 @@ public abstract class CreateArtistExtension implements BeforeEachCallback, Param
             for (int i = 0; i < artistData.count(); i++) {
                 artistJsonList.add(createArtist(artistData));
             }
-
-//            ArtistJson artistJson = createArtist(artistData);
-
             extensionContext.getStore(CREATE_ARTIST_NAMESPACE)
                     .put(extensionContext.getUniqueId(), artistJsonList);
         }

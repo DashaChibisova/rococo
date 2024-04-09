@@ -40,6 +40,15 @@ public class DataUtils {
   }
 
   @Nonnull
+  public static String generateRandomCity() {
+    return faker.address().cityName();
+  }
+
+  @Nonnull
+  public static String generateRandomCountry() {
+    return faker.address().country();
+  }
+  @Nonnull
   public static String generateRandomString(int charCount) {
     return RandomStringUtils.randomAlphabetic(charCount);
   }
