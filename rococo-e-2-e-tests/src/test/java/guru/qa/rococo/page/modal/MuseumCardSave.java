@@ -17,7 +17,7 @@ public class MuseumCardSave extends BaseComponent<MuseumCardSave>{
 
     private final SelenideElement inputTitle = $("input[name='title']");
     private final SelenideElement inputCity = $("input[name='city']");
-    private final SelenideElement inputDescription = $("input[name='description']");
+    private final SelenideElement inputDescription = $("textarea[name='description']");
     private final ElementsCollection inputCountry = $$("[name='countryId'] option");
     private final SelenideElement photoInput = $("input[name='photo']");
     private final SelenideElement addBtn = $(".card .variant-filled-primary");
@@ -73,8 +73,9 @@ public class MuseumCardSave extends BaseComponent<MuseumCardSave>{
     @Step("Click add button")
     public MuseumCardSave addBtnClick() {
         addBtn.click();
-    return this;
+        return this;
     }
+
 
     @Step("Click close button")
     public MuseumCardSave closeBtnClick() {
@@ -90,8 +91,9 @@ public class MuseumCardSave extends BaseComponent<MuseumCardSave>{
 
     @Step("Error registration")
     public MuseumCardSave errorMuseumLengthChar() {
-        getSelf().should(visible).shouldHave(text("Имя не может быть короче 3 символов"));
-        getSelf().should(visible).shouldHave(text("Биография не может быть короче 10 символов"));
+        getSelf().should(visible).shouldHave(text("Название не может быть короче 3 символов"));
+        getSelf().should(visible).shouldHave(text("Описание не может быть короче 10 символов"));
+        getSelf().should(visible).shouldHave(text("Город не может быть короче 3 символов"));
         return new MuseumCardSave();
     }
 }

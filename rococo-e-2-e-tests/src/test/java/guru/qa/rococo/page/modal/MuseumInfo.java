@@ -12,7 +12,7 @@ public class MuseumInfo extends BaseComponent<MuseumInfo>{
         super($(".card"));
     }
 
-    private final SelenideElement editBtn = $("button[data-testid='edit-artist']");
+    private final SelenideElement editBtn = $("button[data-testid='edit-museum']");
     private final SelenideElement addPaintingUnderPhoto = $(".card .flex .variant-filled-primary");
     private final SelenideElement addPaintingUnderPainting = $(".card .rounded-container-token");
     private final SelenideElement cardHeader = $(".card .card-header");

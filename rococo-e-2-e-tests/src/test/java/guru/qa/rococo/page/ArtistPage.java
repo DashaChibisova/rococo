@@ -3,6 +3,7 @@ package guru.qa.rococo.page;
 import com.codeborne.selenide.SelenideElement;
 import guru.qa.rococo.page.modal.ArtistCard;
 import guru.qa.rococo.page.modal.ArtistInfo;
+import guru.qa.rococo.page.modal.MuseumCardSave;
 import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Condition.*;
@@ -23,7 +24,6 @@ public class ArtistPage extends BasePage<ArtistPage>{
     private final SelenideElement avatarImage = $("#page-content .avatar-image");
     protected final ArtistCard artistCard = new ArtistCard();
     protected final ArtistInfo artistInfo = new ArtistInfo();
-
 
     @Step("Check that page is loaded")
     public ArtistPage waitForPageLoaded() {
@@ -90,5 +90,6 @@ public class ArtistPage extends BasePage<ArtistPage>{
     public ArtistInfo getArtistInfo() {
         return artistInfo;
     }
+
 }
 

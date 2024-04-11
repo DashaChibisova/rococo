@@ -30,11 +30,6 @@ public class DataUtils {
   }
 
   @Nonnull
-  public static String generateNewCategory() {
-    return faker.food().fruit();
-  }
-
-  @Nonnull
   public static String generateRandomSentence(int wordsCount) {
     return faker.lorem().sentence(wordsCount);
   }

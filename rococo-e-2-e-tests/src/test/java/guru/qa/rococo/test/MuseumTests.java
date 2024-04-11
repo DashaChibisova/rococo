@@ -24,10 +24,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 //@ExtendWith({ContextHolderExtension.class, AllureJunit5.class, BrowserExtension.class, HibernateCreateMuseumExtension.class})
-@ExtendWith({ContextHolderExtension.class, AllureJunit5.class, BrowserExtension.class, HibernateCreteUserExtension.class,ApiLoginExtension.class})
-//@ExtendWith({ContextHolderExtension.class, AllureJunit5.class, BrowserExtension.class, HibernateCreteUserExtension.class,ApiLoginExtension.class,HibernateCreateArtistExtension.class })
+//@ExtendWith({ContextHolderExtension.class, AllureJunit5.class, BrowserExtension.class, HibernateCreteUserExtension.class,ApiLoginExtension.class})
+@ExtendWith({ContextHolderExtension.class, AllureJunit5.class, BrowserExtension.class, HibernateCreteUserExtension.class,ApiLoginExtension.class,HibernateCreateMuseumExtension.class })
 
 public class MuseumTests {
+
+    //все вводится само
 
     // отдельно тест на пагинацию и на пустые значения
 
@@ -55,9 +57,6 @@ public class MuseumTests {
                 .selectMuseum(museumJsons[0].title())
                 .getMuseumInfo()
                 .checkCardMuseumWithoutAuthorization(museumJsons[0].title(), museumJsons[0].description());
-//                .checkPhoto("images/profile/artist.png");
-
-
     }
 
     @Test
@@ -78,8 +77,8 @@ public class MuseumTests {
         assertEquals(new MuseumPage().museumSize(), 1);
     }
 
-    @Test //---
-    @DisplayName("")
+    @Test
+    @DisplayName("Check add museum")
     @ApiLogin(user = @TestUser) //не регает, только поле нажатия войти заходит
     void checkAddMuseum() {
          MuseumRepository museumRepository = new MuseumRepositoryHibernate();
@@ -113,7 +112,7 @@ public class MuseumTests {
 
     }
 
-    @Test //---
+    @Test
     @DisplayName("Check close button on create museum")
     @ApiLogin(user = @TestUser) //не регает, только поле нажатия войти заходит
     void checkCloseBtnOnAddMuseum() {
@@ -133,10 +132,8 @@ public class MuseumTests {
                 .waitForNewMuseumDisappear();
     }
 
-
-    //(баг при редактировании биографии на 10 символов)
-    @Test //--
-    @DisplayName("Check update title, discription")
+    @Test
+    @DisplayName("Check update title, description")
     @ApiLogin(user = @TestUser) //не регает, только поле нажатия войти заходит
     @TestMuseum()
     void checkUpdateDataAddMuseum(MuseumJson[] museumJsons) {
@@ -162,8 +159,8 @@ public class MuseumTests {
                 .titleMuseum(title);
     }
 
-    @Test //--
-    @DisplayName("")
+    @Test
+    @DisplayName("Title/city/description can`t be longer than 3/10/3 characters")
     @ApiLogin(user = @TestUser) //не регает, только поле нажатия войти заходит
     void checkInvalideDataForAddArtistDisplayedError() {
         Selenide.open(MainPage.PAGE_URL, MainPage.class);
@@ -177,37 +174,12 @@ public class MuseumTests {
                 .getMuseumCardSave()
                 .waitForNewMuseumLoaded()
                 .setTitle(DataUtils.generateRandomString(2))
+                .selectCountry("Австрия")
                 .setDescription(DataUtils.generateRandomString(4))
-                .setCity(DataUtils.generateRandomString(4))
-                .addPhoto("images/profile/artist.png")
+                .setCity(DataUtils.generateRandomString(2))
+                .addPhoto("images/museum/museum1.png")
                 .addBtnClick()
                 .errorMuseumLengthChar();
-
     }
-
-    //ЕДоделать как сделаю добавление картин!!!!
-    @Test
-    @DisplayName("")
-    @ApiLogin(user = @TestUser) //не регает, только поле нажатия войти заходит
-    @Artist()
-    void checkAddPaintingOnArtist(ArtistJson[] artistJson) {
-        Selenide.open(MainPage.PAGE_URL, MainPage.class);
-        new MainPage()
-                .waitForPageLoaded()
-                .toLoginPageDelete() // delete
-                .toArtistPageFromHeader();
-        new ArtistPage()
-                .waitForPageLoaded()
-                .selectArtist(artistJson[0].name())
-                .getArtistInfo()
-                .checkEmptyListPainting()
-                .addPaintingClick()
-        ;
-/// ЕДоделать как сделаю добавление картин!!!! замокать что нет данных
-
-
-
-    }
-
 
 }

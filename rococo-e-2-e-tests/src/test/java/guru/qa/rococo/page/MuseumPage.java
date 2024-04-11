@@ -1,7 +1,6 @@
 package guru.qa.rococo.page;
 
 import com.codeborne.selenide.SelenideElement;
-import guru.qa.rococo.page.modal.ArtistInfo;
 import guru.qa.rococo.page.modal.MuseumCardSave;
 import guru.qa.rococo.page.modal.MuseumInfo;
 import io.qameta.allure.Step;
@@ -49,6 +48,7 @@ public class MuseumPage extends BasePage<MuseumPage>{
     public MuseumPage selectMuseum(String name) {
         museumDataTable.$$("li")
                 .find(text(name))
+                .scrollIntoView(true)
                 .click();
         return this;
     }
@@ -73,7 +73,7 @@ public class MuseumPage extends BasePage<MuseumPage>{
 
     @Step("Add museum")
     public MuseumPage checkAvatar(String imageName) {
-        museumDataTable.$$("li .avatar-image")
+        museumDataTable.$$("li .rounded-lg")
                 .find(photoFromClasspath(imageName))
                 .shouldHave(appear);
         return this;
