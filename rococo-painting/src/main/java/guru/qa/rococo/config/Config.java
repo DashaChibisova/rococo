@@ -2,33 +2,33 @@ package guru.qa.rococo.config;
 
 public interface Config {
 
-  static Config getInstance() {
-    return LocalConfig.instance;
-  }
+    static Config getInstance() {
+        return LocalConfig.instance;
+    }
 
-  String frontUrl();
+    String frontUrl();
 
-  String authUrl();
+    String authUrl();
 
-  String gatewayUrl();
+    String gatewayUrl();
 
-  String jdbcHost();
+    String jdbcHost();
 
-  String currencyGrpcHost();
+    String currencyGrpcHost();
 
-  default String jdbcUser() {
-    return "postgres";
-  }
+    default String jdbcUser() {
+        return "postgres";
+    }
 
-  default String jdbcPassword() {
-    return "secret";
-  }
+    default String jdbcPassword() {
+        return "secret";
+    }
 
-  default int jdbcPort() {
-    return 5432;
-  }
+    default int jdbcPort() {
+        return 5432;
+    }
 
-  default int currencyGrpcPort() {
-    return 8092;
-  }
+    default int currencyGrpcPort() {
+        return 8092;
+    }
 }

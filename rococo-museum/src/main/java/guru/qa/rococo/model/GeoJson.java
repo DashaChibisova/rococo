@@ -9,13 +9,14 @@ import java.util.UUID;
 public record GeoJson(
         @JsonProperty("id")
         UUID id,
-    @JsonProperty("city")
-    String city,
-    @JsonProperty("country")
+        @JsonProperty("city")
+        String city,
+        @JsonProperty("country")
         CountryJson country
 ) {
 
-    public static @Nonnull GeoJson fromEntity(@Nonnull GeoEntity entity) {
+    public static @Nonnull
+    GeoJson fromEntity(@Nonnull GeoEntity entity) {
         return new GeoJson(
                 entity.getId(),
                 entity.getCity(),

@@ -15,32 +15,32 @@ import java.util.List;
 @Component
 public class CorsCustomizer {
 
-  private final String rococoFrontUri;
-  private final String rococoAuthUri;
+    private final String rococoFrontUri;
+    private final String rococoAuthUri;
 
-  @Autowired
-  public CorsCustomizer(@Value("${rococo-front.base-uri}") String rococoFrontUri,
-                        @Value("${rococo-auth.base-uri}") String rococoAuthUri) {
-    this.rococoFrontUri = rococoFrontUri;
-    this.rococoAuthUri = rococoAuthUri;
-  }
+    @Autowired
+    public CorsCustomizer(@Value("${rococo-front.base-uri}") String rococoFrontUri,
+                          @Value("${rococo-auth.base-uri}") String rococoAuthUri) {
+        this.rococoFrontUri = rococoFrontUri;
+        this.rococoAuthUri = rococoAuthUri;
+    }
 
-  public void corsCustomizer(@Nonnull HttpSecurity http) throws Exception {
-    http.cors(customizer());
-  }
+    public void corsCustomizer(@Nonnull HttpSecurity http) throws Exception {
+        http.cors(customizer());
+    }
 
-  Customizer<CorsConfigurer<HttpSecurity>> customizer() {
-    return c -> c.configurationSource(CorsCustomizer.this.corsConfigurationSource());
-  }
+    Customizer<CorsConfigurer<HttpSecurity>> customizer() {
+        return c -> c.configurationSource(CorsCustomizer.this.corsConfigurationSource());
+    }
 
-  CorsConfigurationSource corsConfigurationSource() {
-    return request -> {
-      CorsConfiguration cc = new CorsConfiguration();
-      cc.setAllowCredentials(true);
-      cc.setAllowedOrigins(List.of(rococoFrontUri, rococoAuthUri));
-      cc.setAllowedHeaders(List.of("*"));
-      cc.setAllowedMethods(List.of("*"));
-      return cc;
-    };
-  }
+    CorsConfigurationSource corsConfigurationSource() {
+        return request -> {
+            CorsConfiguration cc = new CorsConfiguration();
+            cc.setAllowCredentials(true);
+            cc.setAllowedOrigins(List.of(rococoFrontUri, rococoAuthUri));
+            cc.setAllowedHeaders(List.of("*"));
+            cc.setAllowedMethods(List.of("*"));
+            return cc;
+        };
+    }
 }

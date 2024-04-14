@@ -32,7 +32,7 @@ public class PaintingService {
 
     @Autowired
     public PaintingService(PaintingRepository paintingRepository,
-    RestMuseumDataClient restMuseumDataClient,RestArtistDataClient restArtistDataClient) {
+                           RestMuseumDataClient restMuseumDataClient, RestArtistDataClient restArtistDataClient) {
         this.paintingRepository = paintingRepository;
         this.restMuseumDataClient = restMuseumDataClient;
         this.restArtistDataClient = restArtistDataClient;
@@ -41,7 +41,7 @@ public class PaintingService {
     @Transactional
     public @Nonnull
     Page<PaintingJson> getAll(@Nonnull Pageable pageable
-            ,  String title) {
+            , String title) {
         if (title.equals("notSorted")) {
 
             List<PaintingJson> paintingJsons = paintingRepository.findAll(pageable)
@@ -49,13 +49,12 @@ public class PaintingService {
                     .map(this::fromEntity)
                     .toList();
             return new PageImpl<>(paintingJsons, pageable, paintingRepository.findAll().size());
+        } else {
+            List<PaintingJson> paintingJsons = paintingRepository.findAllByTitleContainsIgnoreCase(title, pageable).stream()
+                    .map(this::fromEntity)
+                    .toList();
+            return new PageImpl<>(paintingJsons, pageable, paintingRepository.findAll().size());
         }
-     else {
-        List<PaintingJson> paintingJsons = paintingRepository.findAllByTitleContainsIgnoreCase(title, pageable).stream()
-                .map(this::fromEntity)
-                .toList();
-        return new PageImpl<>(paintingJsons, pageable, paintingRepository.findAll().size());
-    }
     }
 
     @Transactional
@@ -99,12 +98,12 @@ public class PaintingService {
 
     @Transactional
     public @Nonnull
-    Page<PaintingJson> getPaintingByAuthorId(@Nonnull UUID id, @Nonnull Pageable pageable ) {
-        List<PaintingJson> paintingJsons = paintingRepository.findAllByArtist(id,pageable)
+    Page<PaintingJson> getPaintingByAuthorId(@Nonnull UUID id, @Nonnull Pageable pageable) {
+        List<PaintingJson> paintingJsons = paintingRepository.findAllByArtist(id, pageable)
                 .stream()
                 .map(this::fromEntity)
                 .toList();
-        return new PageImpl<>(paintingJsons,pageable, paintingRepository.findAllByArtist(id).size());
+        return new PageImpl<>(paintingJsons, pageable, paintingRepository.findAllByArtist(id).size());
     }
 
 

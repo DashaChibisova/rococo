@@ -41,8 +41,8 @@ public class MuseumService {
 
     @Transactional
     public @Nonnull
-    Page<MuseumJson> getAll(@Nonnull Pageable pageable,  String title
-                           ) {
+    Page<MuseumJson> getAll(@Nonnull Pageable pageable, String title
+    ) {
         if (title.equals("notSorted")) {
 
             List<MuseumJson> museumJsons = museumRepository.findAll(pageable)

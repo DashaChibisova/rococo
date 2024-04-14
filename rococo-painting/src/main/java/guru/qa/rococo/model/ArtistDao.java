@@ -14,7 +14,7 @@ public record ArtistDao(
         int numberOfElements,
         boolean first,
         boolean empty
-        ) {
+) {
 }
 
 

@@ -1,7 +1,5 @@
 package guru.qa.rococo.data.repository;
 
-import guru.qa.rococo.data.CountryEntity;
-import guru.qa.rococo.data.GeoEntity;
 import guru.qa.rococo.data.MuseumEntity;
 import jakarta.annotation.Nonnull;
 import org.springframework.data.domain.Page;

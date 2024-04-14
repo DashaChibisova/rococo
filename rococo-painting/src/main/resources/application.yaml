@@ -56,9 +56,9 @@ spring:
       - 'org.springframework.cloud.vault.config.VaultObservationAutoConfiguration'
       - 'org.springframework.cloud.vault.config.VaultReactiveAutoConfiguration'
   datasource:
-     url: 'jdbc:postgresql://localhost:5432/rococo-painting'
-     username: postgres
-     password: secret
+    url: 'jdbc:postgresql://localhost:5432/rococo-painting'
+    username: postgres
+    password: secret
 rococo-artist:
   base-uri: 'http://127.0.0.1:8093'
 rococo-museum:

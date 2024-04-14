@@ -12,23 +12,23 @@ import java.util.List;
 @RestController
 public class UserController {
 
-  private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
 
-  private final UserDataService userService;
+    private final UserDataService userService;
 
-  @Autowired
-  public UserController(UserDataService userService) {
-    this.userService = userService;
-  }
+    @Autowired
+    public UserController(UserDataService userService) {
+        this.userService = userService;
+    }
 
-  @PatchMapping("/user")
-  public UserJson userUpdateInfo(@RequestBody UserJson user) {
-    return userService.update(user);
-  }
+    @PatchMapping("/user")
+    public UserJson userUpdateInfo(@RequestBody UserJson user) {
+        return userService.update(user);
+    }
 
-  @GetMapping("/user")
-  public UserJson user(@RequestParam String username) {
-    return userService.getUser(username);
-  }
+    @GetMapping("/user")
+    public UserJson user(@RequestParam String username) {
+        return userService.getUser(username);
+    }
 
 }
