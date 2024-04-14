@@ -14,7 +14,7 @@ public record ArtistDto(
         int numberOfElements,
         boolean first,
         boolean empty
-        ) {
+) {
 }
 
 

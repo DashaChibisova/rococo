@@ -47,7 +47,7 @@ public class PaintingController {
 
     @GetMapping("/painting/author/{id}")
     public Page<PaintingJson> getPaintingByAuthor(@PathVariable UUID id, @PageableDefault Pageable pageable) {
-        return paintingDataClient.getPaintingByAuthorId(id,pageable);
+        return paintingDataClient.getPaintingByAuthorId(id, pageable);
     }
 
 }

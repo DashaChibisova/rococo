@@ -15,25 +15,25 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class UserController {
 
-  private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
 
-  private final UserDataClient userDataClient;
+    private final UserDataClient userDataClient;
 
-  @Autowired
-  public UserController(UserDataClient userDataClient) {
-    this.userDataClient = userDataClient;
-  }
+    @Autowired
+    public UserController(UserDataClient userDataClient) {
+        this.userDataClient = userDataClient;
+    }
 
-  @PatchMapping("/user")
-  public UserJson userUpdateInfo(@AuthenticationPrincipal Jwt principal,
-                                 @Valid @RequestBody UserJson user) {
-    String username = principal.getClaim("sub");
-    return userDataClient.userUpdateInfo(user.addUsername(username));
-  }
+    @PatchMapping("/user")
+    public UserJson userUpdateInfo(@AuthenticationPrincipal Jwt principal,
+                                   @Valid @RequestBody UserJson user) {
+        String username = principal.getClaim("sub");
+        return userDataClient.userUpdateInfo(user.addUsername(username));
+    }
 
-  @GetMapping("/user")
-  public UserJson user(@AuthenticationPrincipal Jwt principal) {
-    String username = principal.getClaim("sub");
-    return userDataClient.user(username);
-  }
+    @GetMapping("/user")
+    public UserJson user(@AuthenticationPrincipal Jwt principal) {
+        String username = principal.getClaim("sub");
+        return userDataClient.user(username);
+    }
 }

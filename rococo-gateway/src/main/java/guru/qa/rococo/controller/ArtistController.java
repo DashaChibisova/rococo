@@ -2,7 +2,6 @@ package guru.qa.rococo.controller;
 
 
 import guru.qa.rococo.model.ArtistJson;
-import guru.qa.rococo.model.PaintingJson;
 import guru.qa.rococo.service.api.RestArtistDataClient;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -22,36 +21,36 @@ import java.util.UUID;
 @RestController
 public class ArtistController {
 
-  private static final Logger LOG = LoggerFactory.getLogger(ArtistController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ArtistController.class);
 
-  private final RestArtistDataClient artistDataClient;
+    private final RestArtistDataClient artistDataClient;
 
-  @Autowired
-  public ArtistController(RestArtistDataClient artistDataClient) {
-    this.artistDataClient = artistDataClient;
-  }
+    @Autowired
+    public ArtistController(RestArtistDataClient artistDataClient) {
+        this.artistDataClient = artistDataClient;
+    }
 
-  @PatchMapping("/artist")
-  public ArtistJson userUpdateInfo(@AuthenticationPrincipal Jwt principal,
-                                 @Valid @RequestBody ArtistJson artist) {
-    return artistDataClient.updateArtistInfo(artist);
-  }
+    @PatchMapping("/artist")
+    public ArtistJson userUpdateInfo(@AuthenticationPrincipal Jwt principal,
+                                     @Valid @RequestBody ArtistJson artist) {
+        return artistDataClient.updateArtistInfo(artist);
+    }
 
-  @PostMapping("/artist")
-  public ArtistJson saveArtists(@AuthenticationPrincipal Jwt principal,
-                                 @Valid @RequestBody ArtistJson artist) {
-    return artistDataClient.saveArtists(artist);
-  }
+    @PostMapping("/artist")
+    public ArtistJson saveArtists(@AuthenticationPrincipal Jwt principal,
+                                  @Valid @RequestBody ArtistJson artist) {
+        return artistDataClient.saveArtists(artist);
+    }
 
 
     @GetMapping("/artist")
     public Page<ArtistJson> getAll(@RequestParam(required = false) String name,
                                    @PageableDefault Pageable pageable) {
-    return artistDataClient.getArtists(pageable, name);
-  }
+        return artistDataClient.getArtists(pageable, name);
+    }
 
-  @GetMapping("/artist/{id}")
-  public ArtistJson currentArtist(@PathVariable UUID id) {
-    return artistDataClient.getCurrentArtist(id);
-  }
+    @GetMapping("/artist/{id}")
+    public ArtistJson currentArtist(@PathVariable UUID id) {
+        return artistDataClient.getCurrentArtist(id);
+    }
 }

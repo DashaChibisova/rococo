@@ -17,5 +17,4 @@ public record PaintingJson(
         MuseumJson museum,
         @JsonProperty("artist")
         ArtistJson artist) {
-
 }
