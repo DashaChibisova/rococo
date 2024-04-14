@@ -3,26 +3,20 @@ package guru.qa.rococo.test;
 import guru.qa.rococo.jupiter.annotation.ApiLogin;
 
 import guru.qa.rococo.jupiter.annotation.TestUser;
-import guru.qa.rococo.jupiter.extension.*;
 import guru.qa.rococo.jupiter.model.UserJson;
 import guru.qa.rococo.page.MainPage;
 import guru.qa.rococo.page.ProfilePage;
 import guru.qa.rococo.page.message.*;
 import guru.qa.rococo.utils.DataUtils;
-import io.qameta.allure.junit5.AllureJunit5;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-
-
-@ExtendWith({ContextHolderExtension.class, AllureJunit5.class, BrowserExtension.class, HibernateCreteUserExtension.class, ApiLoginExtension.class})
-public class ProfileTests {
+public class ProfileTests extends BaseWebTest {
 
     @Test
     @DisplayName("Add avatar")

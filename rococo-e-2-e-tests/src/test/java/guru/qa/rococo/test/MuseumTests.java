@@ -4,30 +4,20 @@ import com.codeborne.selenide.Selenide;
 import guru.qa.rococo.db.repository.MuseumRepository;
 import guru.qa.rococo.db.repository.MuseumRepositoryHibernate;
 import guru.qa.rococo.jupiter.annotation.ApiLogin;
-import guru.qa.rococo.jupiter.annotation.Artist;
 import guru.qa.rococo.jupiter.annotation.TestMuseum;
 import guru.qa.rococo.jupiter.annotation.TestUser;
-import guru.qa.rococo.jupiter.extension.*;
-import guru.qa.rococo.jupiter.model.ArtistJson;
 import guru.qa.rococo.jupiter.model.MuseumJson;
-import guru.qa.rococo.page.ArtistPage;
 import guru.qa.rococo.page.MainPage;
 import guru.qa.rococo.page.MuseumPage;
 import guru.qa.rococo.page.message.SuccessMsgAddMuseum;
 import guru.qa.rococo.page.message.SuccessMsgEditMuseum;
 import guru.qa.rococo.utils.DataUtils;
-import io.qameta.allure.junit5.AllureJunit5;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-//@ExtendWith({ContextHolderExtension.class, AllureJunit5.class, BrowserExtension.class, HibernateCreateMuseumExtension.class})
-//@ExtendWith({ContextHolderExtension.class, AllureJunit5.class, BrowserExtension.class, HibernateCreteUserExtension.class,ApiLoginExtension.class})
-@ExtendWith({ContextHolderExtension.class, AllureJunit5.class, BrowserExtension.class, HibernateCreteUserExtension.class,ApiLoginExtension.class,HibernateCreateMuseumExtension.class })
-
-public class MuseumTests {
+public class MuseumTests extends BaseWebTest{
 
     //все вводится само
 

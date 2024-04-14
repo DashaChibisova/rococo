@@ -1,38 +1,24 @@
 package guru.qa.rococo.test;
 
 import com.codeborne.selenide.Selenide;
-import guru.qa.rococo.db.model.PaintingEntity;
-import guru.qa.rococo.db.repository.ArtistRepository;
-import guru.qa.rococo.db.repository.ArtistRepositoryHibernate;
 import guru.qa.rococo.db.repository.PaintingRepository;
 import guru.qa.rococo.db.repository.PaintingRepositoryHibernate;
 import guru.qa.rococo.jupiter.annotation.*;
-import guru.qa.rococo.jupiter.extension.*;
 import guru.qa.rococo.jupiter.model.ArtistJson;
 import guru.qa.rococo.jupiter.model.MuseumJson;
 import guru.qa.rococo.jupiter.model.PaintingJson;
 import guru.qa.rococo.page.ArtistPage;
 import guru.qa.rococo.page.MainPage;
 import guru.qa.rococo.page.PaintingPage;
-import guru.qa.rococo.page.message.SuccessMsgAddArtist;
 import guru.qa.rococo.page.message.SuccessMsgAddPainting;
-import guru.qa.rococo.page.message.SuccessMsgEditArtist;
 import guru.qa.rococo.page.message.SuccessMsgEditPainting;
 import guru.qa.rococo.utils.DataUtils;
-import io.qameta.allure.junit5.AllureJunit5;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-//@ExtendWith({ContextHolderExtension.class, AllureJunit5.class, BrowserExtension.class, HibernateCreatePaintingExtension.class})
-//@ExtendWith({ContextHolderExtension.class, AllureJunit5.class, BrowserExtension.class, HibernateCreteUserExtension.class,ApiLoginExtension.class, HibernateCreateArtistExtension.class, HibernateCreateMuseumExtension.class})
-@ExtendWith({ContextHolderExtension.class, AllureJunit5.class, BrowserExtension.class, HibernateCreteUserExtension.class,ApiLoginExtension.class, HibernateCreateArtistExtension.class, HibernateCreateMuseumExtension.class,  HibernateCreatePaintingExtension.class})
-
-public class PaintingTests {
+public class PaintingTests extends BaseWebTest {
 
     // отдельно тест на пагинацию и на пустые значения
 

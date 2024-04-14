@@ -5,6 +5,7 @@ import guru.qa.rococo.db.repository.ArtistRepository;
 import guru.qa.rococo.db.repository.ArtistRepositoryHibernate;
 import guru.qa.rococo.jupiter.annotation.ApiLogin;
 import guru.qa.rococo.jupiter.annotation.Artist;
+import guru.qa.rococo.jupiter.annotation.TestPainting;
 import guru.qa.rococo.jupiter.annotation.TestUser;
 import guru.qa.rococo.jupiter.extension.*;
 import guru.qa.rococo.jupiter.model.ArtistJson;
@@ -21,11 +22,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-//@ExtendWith({ContextHolderExtension.class, AllureJunit5.class, BrowserExtension.class, HibernateCreateArtistExtension.class})
-//@ExtendWith({ContextHolderExtension.class, AllureJunit5.class, BrowserExtension.class, HibernateCreteUserExtension.class,ApiLoginExtension.class})
-@ExtendWith({ContextHolderExtension.class, AllureJunit5.class, BrowserExtension.class, HibernateCreteUserExtension.class,ApiLoginExtension.class,HibernateCreateArtistExtension.class })
-
-public class ArtistTests {
+public class ArtistTests extends BaseWebTest{
 
     // отдельно тест на пагинацию и на пустые значения
 
@@ -41,6 +38,7 @@ public class ArtistTests {
     @Test
     @DisplayName("Add artist without authorization not allowed")
     @Artist()
+    @TestPainting()
     void checkWithoutAuthorizationNotAddArtist(ArtistJson[] artistJson) {
         Selenide.open(MainPage.PAGE_URL, MainPage.class);
         new MainPage()
