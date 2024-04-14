@@ -22,7 +22,6 @@ public record PaintingJson(
         String artist) {
 
 
-
     public static @Nonnull
     PaintingJson fromEntity(@Nonnull PaintingEntity entity) {
         return new PaintingJson(

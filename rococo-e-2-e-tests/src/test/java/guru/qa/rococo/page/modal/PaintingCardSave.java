@@ -9,7 +9,7 @@ import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
-public class PaintingCardSave extends BaseComponent<PaintingCardSave>{
+public class PaintingCardSave extends BaseComponent<PaintingCardSave> {
 
     public PaintingCardSave() {
         super($(".card"));
@@ -87,7 +87,7 @@ public class PaintingCardSave extends BaseComponent<PaintingCardSave>{
     @Step("Click close button")
     public PaintingCardSave closeBtnClick() {
         closeBtn.click();
-    return this;
+        return this;
     }
 
     @Step("Check that page is disappear")

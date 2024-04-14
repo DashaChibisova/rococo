@@ -5,9 +5,8 @@ import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class ArtistCard extends BaseComponent<ArtistCard>{
+public class ArtistCard extends BaseComponent<ArtistCard> {
 
     public ArtistCard() {
         super($(".card"));
@@ -54,13 +53,13 @@ public class ArtistCard extends BaseComponent<ArtistCard>{
     @Step("Click add button")
     public ArtistCard addBtnClick() {
         addBtn.click();
-    return this;
+        return this;
     }
 
     @Step("Click close button")
     public ArtistCard closeBtnClick() {
         closeBtn.click();
-    return this;
+        return this;
     }
 
     @Step("Check that page is disappear")

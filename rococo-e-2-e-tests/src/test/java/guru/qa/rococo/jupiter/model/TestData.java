@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.UUID;
 
 public record TestData(
-    @JsonIgnore String password,
-    @JsonIgnore UUID authId
+        @JsonIgnore String password,
+        @JsonIgnore UUID authId
 
-    ) {
+) {
 }

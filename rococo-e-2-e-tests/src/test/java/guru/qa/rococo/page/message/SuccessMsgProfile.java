@@ -4,12 +4,12 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public enum SuccessMsgProfile implements Msg {
-  PROFILE_MSG("Профиль обновлен");
+    PROFILE_MSG("Профиль обновлен");
 
-  private final String msg;
+    private final String msg;
 
-  @Override
-  public String getMessage() {
-    return msg;
-  }
+    @Override
+    public String getMessage() {
+        return msg;
+    }
 }

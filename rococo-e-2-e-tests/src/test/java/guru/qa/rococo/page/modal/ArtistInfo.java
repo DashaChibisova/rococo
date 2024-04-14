@@ -7,7 +7,7 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 
-public class ArtistInfo extends BaseComponent<ArtistInfo>{
+public class ArtistInfo extends BaseComponent<ArtistInfo> {
 
     public ArtistInfo() {
         super($(".card"));

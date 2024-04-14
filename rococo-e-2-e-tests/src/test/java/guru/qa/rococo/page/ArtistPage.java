@@ -3,16 +3,14 @@ package guru.qa.rococo.page;
 import com.codeborne.selenide.SelenideElement;
 import guru.qa.rococo.page.modal.ArtistCard;
 import guru.qa.rococo.page.modal.ArtistInfo;
-import guru.qa.rococo.page.modal.MuseumCardSave;
 import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byTitle;
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
 import static guru.qa.rococo.condition.PhotoCondition.photoFromClasspath;
 
-public class ArtistPage extends BasePage<ArtistPage>{
+public class ArtistPage extends BasePage<ArtistPage> {
 
     private final SelenideElement pageContent = $("#page-content"); //id
     private final SelenideElement addArtistBtn = $("#page-content .variant-filled-primary");
@@ -48,8 +46,8 @@ public class ArtistPage extends BasePage<ArtistPage>{
     @Step("Search for artist by name")
     public ArtistPage artistVisible(String name) {
         artistDataTable.$$("li")
-                        .find(text(name))
-                        .shouldHave(appear);
+                .find(text(name))
+                .shouldHave(appear);
         return this;
     }
 

@@ -4,12 +4,12 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public enum SuccessMsgAddArtist implements Msg {
-  ARTIST_MSG("Добавлен художник: ");
+    ARTIST_MSG("Добавлен художник: ");
 
-  private final String msg;
+    private final String msg;
 
-  @Override
-  public String getMessage() {
-    return msg;
-  }
+    @Override
+    public String getMessage() {
+        return msg;
+    }
 }

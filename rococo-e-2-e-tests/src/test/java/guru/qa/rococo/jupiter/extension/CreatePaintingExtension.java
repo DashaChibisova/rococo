@@ -1,11 +1,8 @@
 package guru.qa.rococo.jupiter.extension;
 
-import guru.qa.rococo.jupiter.annotation.TestMuseum;
 import guru.qa.rococo.jupiter.annotation.TestPainting;
-import guru.qa.rococo.jupiter.model.ArtistJson;
 import guru.qa.rococo.jupiter.model.MuseumJson;
 import guru.qa.rococo.jupiter.model.PaintingJson;
-import guru.qa.rococo.jupiter.model.UserJson;
 import org.junit.jupiter.api.extension.*;
 import org.junit.platform.commons.support.AnnotationSupport;
 
@@ -49,14 +46,15 @@ public abstract class CreatePaintingExtension implements BeforeEachCallback, Par
 
 
     public abstract PaintingJson createPainting(TestPainting painting) throws IOException;
+
     public abstract void deletePainting(PaintingJson painting);
 
     @Override
     public boolean supportsParameter(ParameterContext parameterContext, ExtensionContext extensionContext) throws ParameterResolutionException {
         return AnnotationSupport.findAnnotation(extensionContext.getRequiredTestMethod(), TestPainting.class)
                 .isPresent() &&
-                (parameterContext.getParameter().getType().isAssignableFrom(PaintingJson.class)  ||
-                parameterContext.getParameter().getType().isAssignableFrom(PaintingJson[].class));
+                (parameterContext.getParameter().getType().isAssignableFrom(PaintingJson.class) ||
+                        parameterContext.getParameter().getType().isAssignableFrom(PaintingJson[].class));
     }
 
     @Override
@@ -73,7 +71,7 @@ public abstract class CreatePaintingExtension implements BeforeEachCallback, Par
     public void afterTestExecution(ExtensionContext extensionContext) throws Exception {
         List<PaintingJson> paintingJsons = extensionContext.getStore(CREATE_PAINTING_NAMESPACE)
                 .get(extensionContext.getUniqueId(), List.class);
-        if(paintingJsons != null) {
+        if (paintingJsons != null) {
             for (PaintingJson paintingJson : paintingJsons) {
                 deletePainting(paintingJson);
             }

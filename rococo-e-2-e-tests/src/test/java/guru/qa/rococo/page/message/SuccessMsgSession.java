@@ -4,12 +4,12 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public enum SuccessMsgSession implements Msg {
-  SESSION_MSG("Сессия завершена");
+    SESSION_MSG("Сессия завершена");
 
-  private final String msg;
+    private final String msg;
 
-  @Override
-  public String getMessage() {
-    return msg;
-  }
+    @Override
+    public String getMessage() {
+        return msg;
+    }
 }

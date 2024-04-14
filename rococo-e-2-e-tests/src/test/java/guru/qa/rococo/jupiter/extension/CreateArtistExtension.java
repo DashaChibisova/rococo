@@ -1,10 +1,7 @@
 package guru.qa.rococo.jupiter.extension;
 
-import guru.qa.rococo.jupiter.annotation.ApiLogin;
 import guru.qa.rococo.jupiter.annotation.Artist;
-import guru.qa.rococo.jupiter.annotation.TestUser;
 import guru.qa.rococo.jupiter.model.ArtistJson;
-import guru.qa.rococo.jupiter.model.UserJson;
 import org.junit.jupiter.api.extension.*;
 import org.junit.platform.commons.support.AnnotationSupport;
 
@@ -39,14 +36,15 @@ public abstract class CreateArtistExtension implements BeforeEachCallback, Param
     }
 
     public abstract ArtistJson createArtist(Artist artist) throws IOException;
+
     public abstract void deleteArtist(UUID artistId);
 
     @Override
     public boolean supportsParameter(ParameterContext parameterContext, ExtensionContext extensionContext) throws ParameterResolutionException {
         return AnnotationSupport.findAnnotation(extensionContext.getRequiredTestMethod(), Artist.class)
                 .isPresent() &&
-                (parameterContext.getParameter().getType().isAssignableFrom(ArtistJson.class)  ||
-                parameterContext.getParameter().getType().isAssignableFrom(ArtistJson[].class));
+                (parameterContext.getParameter().getType().isAssignableFrom(ArtistJson.class) ||
+                        parameterContext.getParameter().getType().isAssignableFrom(ArtistJson[].class));
     }
 
     @Override
@@ -63,7 +61,7 @@ public abstract class CreateArtistExtension implements BeforeEachCallback, Param
     public void afterTestExecution(ExtensionContext extensionContext) throws Exception {
         List<ArtistJson> artistJsons = extensionContext.getStore(CREATE_ARTIST_NAMESPACE)
                 .get(extensionContext.getUniqueId(), List.class);
-        if(artistJsons != null) {
+        if (artistJsons != null) {
             for (ArtistJson artistJson : artistJsons) {
                 deleteArtist(artistJson.id());
             }

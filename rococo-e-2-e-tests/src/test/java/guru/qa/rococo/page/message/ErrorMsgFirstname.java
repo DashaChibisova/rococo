@@ -4,12 +4,12 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public enum ErrorMsgFirstname implements Msg {
-  FIRSTNAME_MSG("First name can`t be longer than 30 characters");
+    FIRSTNAME_MSG("First name can`t be longer than 30 characters");
 
-  private final String msg;
+    private final String msg;
 
-  @Override
-  public String getMessage() {
-    return msg;
-  }
+    @Override
+    public String getMessage() {
+        return msg;
+    }
 }

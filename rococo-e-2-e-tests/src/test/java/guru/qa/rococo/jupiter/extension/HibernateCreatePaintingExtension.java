@@ -1,6 +1,5 @@
 package guru.qa.rococo.jupiter.extension;
 
-import guru.qa.rococo.db.model.ArtistEntity;
 import guru.qa.rococo.db.model.PaintingEntity;
 import guru.qa.rococo.db.repository.*;
 import guru.qa.rococo.jupiter.annotation.Artist;
@@ -10,7 +9,6 @@ import guru.qa.rococo.jupiter.model.ArtistJson;
 import guru.qa.rococo.jupiter.model.MuseumJson;
 import guru.qa.rococo.jupiter.model.PaintingJson;
 import guru.qa.rococo.utils.DataUtils;
-import org.junit.jupiter.api.extension.ExtensionContext;
 
 import java.io.File;
 import java.io.IOException;
@@ -67,7 +65,7 @@ public class HibernateCreatePaintingExtension extends CreatePaintingExtension {
     private byte[] encodedFileBytes(String path) throws IOException {
         File fi = new File(path);
         byte[] fileContent = Files.readAllBytes(fi.toPath());
-        String encodedFile = "data:image/png;base64," +Base64.getEncoder().encodeToString(fileContent);
+        String encodedFile = "data:image/png;base64," + Base64.getEncoder().encodeToString(fileContent);
         return encodedFile.getBytes(StandardCharsets.UTF_8);
     }
 

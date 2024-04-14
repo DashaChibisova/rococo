@@ -1,17 +1,8 @@
 package guru.qa.rococo.jupiter.extension;
 
-import guru.qa.rococo.db.model.Authority;
-import guru.qa.rococo.db.model.AuthorityEntity;
-import guru.qa.rococo.db.model.UserAuthEntity;
-import guru.qa.rococo.db.model.UserEntity;
-import guru.qa.rococo.db.repository.UserRepository;
-import guru.qa.rococo.db.repository.UserRepositoryHibernate;
 import guru.qa.rococo.jupiter.annotation.ApiLogin;
-import guru.qa.rococo.jupiter.annotation.DbUser;
 import guru.qa.rococo.jupiter.annotation.TestUser;
-import guru.qa.rococo.jupiter.annotation.User;
 import guru.qa.rococo.jupiter.model.UserJson;
-import guru.qa.rococo.utils.DataUtils;
 import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -45,6 +36,7 @@ public abstract class CreateUserExtension implements BeforeEachCallback, Paramet
     }
 
     public abstract UserJson createUser(TestUser user);
+
     public abstract void deleteUser(UUID authId, UUID userdataId);
 
     @Override
@@ -63,7 +55,7 @@ public abstract class CreateUserExtension implements BeforeEachCallback, Paramet
     public void afterTestExecution(ExtensionContext extensionContext) throws Exception {
         UserJson createdUser = extensionContext.getStore(CREATE_USER_NAMESPACE)
                 .get(extensionContext.getUniqueId(), UserJson.class);
-        if(createdUser != null) {
+        if (createdUser != null) {
             deleteUser(createdUser.testData().authId(), createdUser.id());
         }
     }

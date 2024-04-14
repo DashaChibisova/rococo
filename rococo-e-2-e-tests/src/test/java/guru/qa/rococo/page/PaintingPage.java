@@ -1,8 +1,6 @@
 package guru.qa.rococo.page;
 
 import com.codeborne.selenide.SelenideElement;
-import guru.qa.rococo.page.modal.MuseumCardSave;
-import guru.qa.rococo.page.modal.MuseumInfo;
 import guru.qa.rococo.page.modal.PaintingCardSave;
 import guru.qa.rococo.page.modal.PaintingInfo;
 import io.qameta.allure.Step;
@@ -39,7 +37,7 @@ public class PaintingPage extends BasePage<PaintingPage> {
     }
 
     @Step("Search for painting by name")
-    public  PaintingPage paintingVisible(String name) {
+    public PaintingPage paintingVisible(String name) {
         paintingDataTable.$$("li")
                 .find(text(name))
                 .shouldHave(appear);

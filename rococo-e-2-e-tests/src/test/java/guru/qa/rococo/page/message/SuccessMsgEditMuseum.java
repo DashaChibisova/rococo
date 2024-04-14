@@ -4,12 +4,12 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public enum SuccessMsgEditMuseum implements Msg {
-  MUSEUM_MSG("Обновлен музей: ");
+    MUSEUM_MSG("Обновлен музей: ");
 
-  private final String msg;
+    private final String msg;
 
-  @Override
-  public String getMessage() {
-    return msg;
-  }
+    @Override
+    public String getMessage() {
+        return msg;
+    }
 }

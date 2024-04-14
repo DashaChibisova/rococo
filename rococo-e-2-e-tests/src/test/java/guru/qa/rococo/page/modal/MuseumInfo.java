@@ -6,7 +6,7 @@ import io.qameta.allure.Step;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
 
-public class MuseumInfo extends BaseComponent<MuseumInfo>{
+public class MuseumInfo extends BaseComponent<MuseumInfo> {
 
     public MuseumInfo() {
         super($(".card"));

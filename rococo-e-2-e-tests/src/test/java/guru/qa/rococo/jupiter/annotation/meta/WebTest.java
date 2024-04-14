@@ -11,6 +11,6 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-@ExtendWith({ContextHolderExtension.class, AllureJunit5.class, BrowserExtension.class, HibernateCreteUserExtension.class, ApiLoginExtension.class, HibernateCreateArtistExtension.class, HibernateCreateMuseumExtension.class,  HibernateCreatePaintingExtension.class})
+@ExtendWith({ContextHolderExtension.class, AllureJunit5.class, BrowserExtension.class, HibernateCreteUserExtension.class, ApiLoginExtension.class, HibernateCreateArtistExtension.class, HibernateCreateMuseumExtension.class, HibernateCreatePaintingExtension.class})
 public @interface WebTest {
 }

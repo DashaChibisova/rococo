@@ -15,39 +15,39 @@ import java.util.UUID;
 @Table(name = "painting")
 public class PaintingEntity implements Serializable {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name = "id", nullable = false, columnDefinition = "UUID default gen_random_uuid()")
-  private UUID id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false, columnDefinition = "UUID default gen_random_uuid()")
+    private UUID id;
 
-  @Column(nullable = false)
-  private String title;
+    @Column(nullable = false)
+    private String title;
 
-  @Column(nullable = false)
-  private String description;
+    @Column(nullable = false)
+    private String description;
 
-  @Column(name = "content", columnDefinition = "bytea")
-  private byte[] content;
+    @Column(name = "content", columnDefinition = "bytea")
+    private byte[] content;
 
-  @Column(name = "museum")
-  private UUID museum;
+    @Column(name = "museum")
+    private UUID museum;
 
-  @Column(name = "artist")
-  private UUID artist;
+    @Column(name = "artist")
+    private UUID artist;
 
-  @Override
-  public final boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null) return false;
-    Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
-    Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
-    if (thisEffectiveClass != oEffectiveClass) return false;
-    PaintingEntity that = (PaintingEntity) o;
-    return getId() != null && Objects.equals(getId(), that.getId());
-  }
+    @Override
+    public final boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+        Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
+        Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
+        if (thisEffectiveClass != oEffectiveClass) return false;
+        PaintingEntity that = (PaintingEntity) o;
+        return getId() != null && Objects.equals(getId(), that.getId());
+    }
 
-  @Override
-  public final int hashCode() {
-    return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
-  }
+    @Override
+    public final int hashCode() {
+        return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
+    }
 }

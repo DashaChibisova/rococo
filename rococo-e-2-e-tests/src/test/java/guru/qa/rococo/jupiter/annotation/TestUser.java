@@ -8,10 +8,10 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface TestUser {
-  boolean fake() default false;
+    boolean fake() default false;
 
-  String username() default "";
+    String username() default "";
 
-  String password() default "";
+    String password() default "";
 
 }

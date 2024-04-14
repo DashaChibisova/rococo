@@ -10,7 +10,7 @@ import static com.codeborne.selenide.Selectors.byTitle;
 import static com.codeborne.selenide.Selenide.$;
 import static guru.qa.rococo.condition.PhotoCondition.photoFromClasspath;
 
-public class MuseumPage extends BasePage<MuseumPage>{
+public class MuseumPage extends BasePage<MuseumPage> {
     private final SelenideElement pageContent = $("#page-content"); //id
     private final SelenideElement addMuseumBtn = $("#page-content .variant-filled-primary");
     private final SelenideElement museumDataTable = $("#page-content .grid");
@@ -37,7 +37,7 @@ public class MuseumPage extends BasePage<MuseumPage>{
     }
 
     @Step("Search for museum by name")
-    public  MuseumPage museumVisible(String name) {
+    public MuseumPage museumVisible(String name) {
         museumDataTable.$$("li")
                 .find(text(name))
                 .shouldHave(appear);

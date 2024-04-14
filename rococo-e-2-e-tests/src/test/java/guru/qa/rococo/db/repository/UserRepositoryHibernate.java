@@ -13,54 +13,53 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static guru.qa.rococo.db.Database.*;
-import static guru.qa.rococo.db.Database.ARTIST;
 
 public class UserRepositoryHibernate extends JpaService implements UserRepository {
 
-  private final PasswordEncoder pe = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    private final PasswordEncoder pe = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
-  public UserRepositoryHibernate() {
-    super(
-        Map.of(
-                AUTH, new ThreadLocalEntityManager(EmfProvider.INSTANCE.emf(AUTH)),
-                USERDATA, new ThreadLocalEntityManager(EmfProvider.INSTANCE.emf(USERDATA))
-        )
-    );
-  }
+    public UserRepositoryHibernate() {
+        super(
+                Map.of(
+                        AUTH, new ThreadLocalEntityManager(EmfProvider.INSTANCE.emf(AUTH)),
+                        USERDATA, new ThreadLocalEntityManager(EmfProvider.INSTANCE.emf(USERDATA))
+                )
+        );
+    }
 
-  @Override
-  public UserAuthEntity createInAuth(UserAuthEntity user) {
-    String originalPassword = user.getPassword();
-    user.setPassword(pe.encode(originalPassword));
-    persist(AUTH, user);
-    return user;
-  }
+    @Override
+    public UserAuthEntity createInAuth(UserAuthEntity user) {
+        String originalPassword = user.getPassword();
+        user.setPassword(pe.encode(originalPassword));
+        persist(AUTH, user);
+        return user;
+    }
 
-  @Override
-  public Optional<UserAuthEntity> findByIdInAuth(UUID id) {
-    return Optional.of(entityManager(AUTH).find(UserAuthEntity.class, id));
-  }
+    @Override
+    public Optional<UserAuthEntity> findByIdInAuth(UUID id) {
+        return Optional.of(entityManager(AUTH).find(UserAuthEntity.class, id));
+    }
 
-  @Override
-  public UserEntity createInUserdata(UserEntity user) {
-    persist(USERDATA, user);
-    return user;
-  }
+    @Override
+    public UserEntity createInUserdata(UserEntity user) {
+        persist(USERDATA, user);
+        return user;
+    }
 
-  @Override
-  public Optional<UserEntity> findByIdInUserdata(UUID id) {
-    return Optional.of(entityManager(USERDATA).find(UserEntity.class, id));
-  }
+    @Override
+    public Optional<UserEntity> findByIdInUserdata(UUID id) {
+        return Optional.of(entityManager(USERDATA).find(UserEntity.class, id));
+    }
 
-  @Override
-  public void deleteInAuthById(UUID id) {
-    UserAuthEntity toBeDeleted = findByIdInAuth(id).get();
-    remove(AUTH, toBeDeleted);
-  }
+    @Override
+    public void deleteInAuthById(UUID id) {
+        UserAuthEntity toBeDeleted = findByIdInAuth(id).get();
+        remove(AUTH, toBeDeleted);
+    }
 
-  @Override
-  public void deleteInUserdataById(UUID id) {
-    UserEntity toBeDeleted = Optional.of(entityManager(USERDATA).find(UserEntity.class, id)).get();
-    remove(USERDATA, toBeDeleted);
-  }
+    @Override
+    public void deleteInUserdataById(UUID id) {
+        UserEntity toBeDeleted = Optional.of(entityManager(USERDATA).find(UserEntity.class, id)).get();
+        remove(USERDATA, toBeDeleted);
+    }
 }

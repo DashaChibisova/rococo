@@ -1,7 +1,6 @@
 package guru.qa.rococo.jupiter.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import guru.qa.rococo.db.model.ArtistEntity;
 import guru.qa.rococo.db.model.MuseumEntity;
 
 import javax.annotation.Nonnull;

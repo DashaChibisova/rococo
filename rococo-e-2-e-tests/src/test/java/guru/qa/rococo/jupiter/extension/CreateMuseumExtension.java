@@ -1,9 +1,6 @@
 package guru.qa.rococo.jupiter.extension;
 
-import guru.qa.rococo.db.model.MuseumEntity;
-import guru.qa.rococo.jupiter.annotation.Artist;
 import guru.qa.rococo.jupiter.annotation.TestMuseum;
-import guru.qa.rococo.jupiter.model.ArtistJson;
 import guru.qa.rococo.jupiter.model.MuseumJson;
 import org.junit.jupiter.api.extension.*;
 import org.junit.platform.commons.support.AnnotationSupport;
@@ -39,14 +36,15 @@ public abstract class CreateMuseumExtension implements BeforeEachCallback, Param
     }
 
     public abstract MuseumJson createMuseum(TestMuseum museum) throws IOException;
+
     public abstract void deleteMuseum(UUID museumId);
 
     @Override
     public boolean supportsParameter(ParameterContext parameterContext, ExtensionContext extensionContext) throws ParameterResolutionException {
         return AnnotationSupport.findAnnotation(extensionContext.getRequiredTestMethod(), TestMuseum.class)
                 .isPresent() &&
-                (parameterContext.getParameter().getType().isAssignableFrom(MuseumJson.class)  ||
-                parameterContext.getParameter().getType().isAssignableFrom(MuseumJson[].class));
+                (parameterContext.getParameter().getType().isAssignableFrom(MuseumJson.class) ||
+                        parameterContext.getParameter().getType().isAssignableFrom(MuseumJson[].class));
     }
 
     @Override
@@ -63,10 +61,10 @@ public abstract class CreateMuseumExtension implements BeforeEachCallback, Param
     public void afterTestExecution(ExtensionContext extensionContext) throws Exception {
         List<MuseumJson> museumJsons = extensionContext.getStore(CREATE_MUSEUM_NAMESPACE)
                 .get(extensionContext.getUniqueId(), List.class);
-        if(museumJsons != null) {
-        for (MuseumJson museumJson : museumJsons) {
-            deleteMuseum(museumJson.id());
-        }
+        if (museumJsons != null) {
+            for (MuseumJson museumJson : museumJsons) {
+                deleteMuseum(museumJson.id());
+            }
         }
     }
 

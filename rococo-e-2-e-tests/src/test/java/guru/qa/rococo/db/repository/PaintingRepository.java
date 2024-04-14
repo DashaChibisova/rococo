@@ -1,7 +1,5 @@
 package guru.qa.rococo.db.repository;
 
-
-import guru.qa.rococo.db.model.ArtistEntity;
 import guru.qa.rococo.db.model.PaintingEntity;
 
 import java.util.UUID;
