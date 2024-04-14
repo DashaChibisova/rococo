@@ -15,7 +15,7 @@ public class MainPage extends BasePage<MainPage> {
 
   private final SelenideElement shellHeaderContent = $("#shell-header"); //id $(".app-bar")
 
-//  private final SelenideElement paintingBtn = $("a[href*='/painting']"); //*???
+  private final SelenideElement paintingBtn = $("#shell-header a[href*='/painting']"); //*???
   private final SelenideElement artistBtn = $("a[href*='/artist']");
   private final SelenideElement museumBtn = $("#shell-header a[href*='/museum']");
 
@@ -36,7 +36,7 @@ public class MainPage extends BasePage<MainPage> {
 
   @Step("Open painting page from header")
   public PaintingPage toPaintingPageFromHeader() {
-    shellHeaderContent.shouldHave(text("Картины")).click();
+    paintingBtn.shouldHave(text("Картины")).click();
     return new PaintingPage();
   }
 

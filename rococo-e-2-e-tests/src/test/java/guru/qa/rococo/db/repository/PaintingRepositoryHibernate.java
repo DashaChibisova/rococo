@@ -4,33 +4,29 @@ import guru.qa.rococo.db.EmfProvider;
 import guru.qa.rococo.db.jpa.JpaService;
 import guru.qa.rococo.db.jpa.ThreadLocalEntityManager;
 import guru.qa.rococo.db.model.ArtistEntity;
-import guru.qa.rococo.db.model.UserAuthEntity;
-import guru.qa.rococo.db.model.UserEntity;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import guru.qa.rococo.db.model.PaintingEntity;
 
-import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
 import static guru.qa.rococo.db.Database.*;
 
-public class ArtistRepositoryHibernate extends JpaService implements ArtistRepository {
+public class PaintingRepositoryHibernate extends JpaService implements PaintingRepository {
 
-  public ArtistRepositoryHibernate() {
-    super(ARTIST, new ThreadLocalEntityManager(EmfProvider.INSTANCE.emf(ARTIST)));
+  public PaintingRepositoryHibernate() {
+    super(PAINTING, new ThreadLocalEntityManager(EmfProvider.INSTANCE.emf(PAINTING)));
   }
 
   @Override
-  public ArtistEntity createInArtist(ArtistEntity artist) {
-    persist(ARTIST, artist);
-    return artist;
+  public PaintingEntity createInPainting(PaintingEntity painting) {
+    persist(PAINTING, painting);
+    return painting;
   }
 
   @Override
-  public void deleteInArtistById(UUID id) {
-    ArtistEntity toBeDeleted = Optional.of(entityManager(ARTIST).find(ArtistEntity.class, id)).get();
-    remove(ARTIST, toBeDeleted);
+  public void deleteInPaintingById(UUID id) {
+    PaintingEntity toBeDeleted = Optional.of(entityManager(PAINTING).find(PaintingEntity.class, id)).get();
+    remove(PAINTING, toBeDeleted);
   }
 
 //  @Override

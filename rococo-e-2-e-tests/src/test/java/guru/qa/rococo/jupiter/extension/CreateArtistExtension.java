@@ -63,8 +63,10 @@ public abstract class CreateArtistExtension implements BeforeEachCallback, Param
     public void afterTestExecution(ExtensionContext extensionContext) throws Exception {
         List<ArtistJson> artistJsons = extensionContext.getStore(CREATE_ARTIST_NAMESPACE)
                 .get(extensionContext.getUniqueId(), List.class);
-        for (ArtistJson artistJson : artistJsons) {
-            deleteArtist(artistJson.id());
+        if(artistJsons != null) {
+            for (ArtistJson artistJson : artistJsons) {
+                deleteArtist(artistJson.id());
+            }
         }
     }
 

@@ -21,4 +21,6 @@ public @interface Artist {
     String photoPath() default "";
 
     int count() default 1;
+
+    boolean fake() default false;
 }

@@ -1,28 +1,36 @@
 package guru.qa.rococo.test;
 
 import com.codeborne.selenide.Selenide;
+import guru.qa.rococo.db.model.PaintingEntity;
 import guru.qa.rococo.db.repository.ArtistRepository;
 import guru.qa.rococo.db.repository.ArtistRepositoryHibernate;
-import guru.qa.rococo.jupiter.annotation.ApiLogin;
-import guru.qa.rococo.jupiter.annotation.Artist;
-import guru.qa.rococo.jupiter.annotation.TestUser;
+import guru.qa.rococo.db.repository.PaintingRepository;
+import guru.qa.rococo.db.repository.PaintingRepositoryHibernate;
+import guru.qa.rococo.jupiter.annotation.*;
 import guru.qa.rococo.jupiter.extension.*;
 import guru.qa.rococo.jupiter.model.ArtistJson;
+import guru.qa.rococo.jupiter.model.MuseumJson;
+import guru.qa.rococo.jupiter.model.PaintingJson;
 import guru.qa.rococo.page.ArtistPage;
 import guru.qa.rococo.page.MainPage;
+import guru.qa.rococo.page.PaintingPage;
 import guru.qa.rococo.page.message.SuccessMsgAddArtist;
+import guru.qa.rococo.page.message.SuccessMsgAddPainting;
 import guru.qa.rococo.page.message.SuccessMsgEditArtist;
+import guru.qa.rococo.page.message.SuccessMsgEditPainting;
 import guru.qa.rococo.utils.DataUtils;
 import io.qameta.allure.junit5.AllureJunit5;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import java.util.UUID;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-//@ExtendWith({ContextHolderExtension.class, AllureJunit5.class, BrowserExtension.class, HibernateCreateArtistExtension.class})
-//@ExtendWith({ContextHolderExtension.class, AllureJunit5.class, BrowserExtension.class, HibernateCreteUserExtension.class,ApiLoginExtension.class})
-@ExtendWith({ContextHolderExtension.class, AllureJunit5.class, BrowserExtension.class, HibernateCreteUserExtension.class,ApiLoginExtension.class,HibernateCreateArtistExtension.class })
+//@ExtendWith({ContextHolderExtension.class, AllureJunit5.class, BrowserExtension.class, HibernateCreatePaintingExtension.class})
+//@ExtendWith({ContextHolderExtension.class, AllureJunit5.class, BrowserExtension.class, HibernateCreteUserExtension.class,ApiLoginExtension.class, HibernateCreateArtistExtension.class, HibernateCreateMuseumExtension.class})
+@ExtendWith({ContextHolderExtension.class, AllureJunit5.class, BrowserExtension.class, HibernateCreteUserExtension.class,ApiLoginExtension.class, HibernateCreateArtistExtension.class, HibernateCreateMuseumExtension.class,  HibernateCreatePaintingExtension.class})
 
 public class PaintingTests {
 
@@ -42,77 +50,80 @@ public class PaintingTests {
 //    длина на вводимые символы
 
     @Test
-    @DisplayName("Add artist without authorization not allowed")
-    @Artist()
-    void checkWithoutAuthorizationNotAddArtist(ArtistJson[] artistJson) {
+    @DisplayName("Add painting without authorization not allowed")
+    @TestPainting()
+    void checkWithoutAuthorizationNotAddPainting(PaintingJson[] paintingJsons) {
         Selenide.open(MainPage.PAGE_URL, MainPage.class);
         new MainPage()
                 .waitForPageLoaded()
-                .toArtistPageFromHeader();
-        new ArtistPage()
+                .toPaintingPageFromHeader();
+        new PaintingPage()
                 .waitForPageLoaded()
-                .btnAddArtistIsAbsent()
-                .artistVisible(artistJson[0].name())
-                .selectArtist(artistJson[0].name())
-                .getArtistInfo()
-                .checkCardArtistWithoutAuthorization(artistJson[0].name(), artistJson[0].biography());
-
+                .btnAddPaintingIsAbsent()
+                .paintingVisible(paintingJsons[0].title())
+                .selectPainting(paintingJsons[0].title())
+                .getPaintingInfo()
+                .checkCardPaintingWithoutAuthorization(paintingJsons[0].title(), paintingJsons[0].description());
     }
 
     @Test
-    @DisplayName("Check search artist")
-    @Artist(count = 3)
-    void checkSearchArtist(ArtistJson[] artistJson) {
+    @DisplayName("Check search painting")
+    @TestPainting(count = 3)
+    void checkSearchPainting(PaintingJson[] paintingJsons) {
         Selenide.open(MainPage.PAGE_URL, MainPage.class);
-        String artistSearchName = artistJson[0].name();
+        String paintingSearchName = paintingJsons[0].title();
 
         new MainPage()
                 .waitForPageLoaded()
-                .toArtistPageFromHeader();
-        new ArtistPage()
+                .toPaintingPageFromHeader();
+        new PaintingPage()
                 .waitForPageLoaded()
-                .searchArtist(artistSearchName)
-                .artistVisible(artistJson[0].name());
-        assertEquals(new ArtistPage().artistSize(), 1);
+                .searchPainting(paintingSearchName)
+                .paintingVisible(paintingJsons[0].title());
+        assertEquals(new PaintingPage().paintingSize(), 1);
     }
 
     @Test
     @DisplayName("")
     @ApiLogin(user = @TestUser) //не регает, только поле нажатия войти заходит
-    void checkAddArtist() {
-         ArtistRepository artistRepository = new ArtistRepositoryHibernate();
+    @TestMuseum
+    @Artist
+    void checkAddPainting(ArtistJson[] artistJsons, MuseumJson[] museumJsons) {
+         PaintingRepository artistRepository = new PaintingRepositoryHibernate();
 
         Selenide.open(MainPage.PAGE_URL, MainPage.class);
-        String name = DataUtils.generateRandomName();
+        String title = DataUtils.generateRandomName();
 
         new MainPage()
                 .waitForPageLoaded()
                 .toLoginPageDelete() // delete
-                .toArtistPageFromHeader();
-        new ArtistPage()
+                .toPaintingPageFromHeader();
+        new PaintingPage()
                 .waitForPageLoaded()
-                        .addArtistClick()
-                .getCardArtist()
-                .waitForNewArtistLoaded()
-                .setName(name)
-                .setBiography(DataUtils.generateRandomString(20))
-                .addPhoto("images/profile/artist.png")
+                        .addPaintingClick()
+                .getPaintingCardSave()
+                .waitForNewPaintingLoaded()
+                .setTitle(title)
+                .setDescription(DataUtils.generateRandomSentence(10))
+                .addPhoto("images/museum/museum1.png")
+                .selectAuthor(artistJsons[0].name())
+                .selectMuseum(museumJsons[0].title())
                 .addBtnClick();
-        new ArtistPage()
-                .artistVisible(name)
-                .checkMessageName(SuccessMsgAddArtist.ARTIST_MSG, name)
-                .artistVisible(name)
-                .checkAvatar("images/profile/artist.png");
+        new PaintingPage()
+                .paintingVisible(title)
+                .checkMessageName(SuccessMsgAddPainting.PAINTING_MSG, title) // Добавлена картины!!!
+                .paintingVisible(title)
+                .checkAvatar("images/museum/museum1.png");
 
 //        artistRepository.deleteInArtistByName(name);
         // удалить артиста не работает решить ошибки
 
     }
 
-    @Test
-    @DisplayName("Check close button on create artist")
+    @Test //----
+    @DisplayName("Check close button on create painting")
     @ApiLogin(user = @TestUser) //не регает, только поле нажатия войти заходит
-    void checkCloseBtnOnAddArtist() {
+    void checkCloseBtnOnAddPainting() {
         Selenide.open(MainPage.PAGE_URL, MainPage.class);
 
         new MainPage()
@@ -132,56 +143,60 @@ public class PaintingTests {
 
     //(баг при редактировании биографии на 10 символов)
     @Test
-    @DisplayName("Check update name, biography, photo")
+    @DisplayName("Check update title, biography, content")
     @ApiLogin(user = @TestUser) //не регает, только поле нажатия войти заходит
-    @Artist()
-    void checkUpdateDataAddArtist(ArtistJson[] artistJson) {
+    @TestPainting()
+    void checkUpdateDataAddPainting(PaintingJson[] paintingJsons) {
         Selenide.open(MainPage.PAGE_URL, MainPage.class);
-        String name = DataUtils.generateRandomName();
+        String title = DataUtils.generateRandomName();
 
         new MainPage()
                 .waitForPageLoaded()
                 .toLoginPageDelete() // delete
-                .toArtistPageFromHeader();
-        new ArtistPage()
+                .toPaintingPageFromHeader();
+        new PaintingPage()
                 .waitForPageLoaded()
-                .selectArtist(artistJson[0].name())
-                .getArtistInfo()
-                .nameArtist(artistJson[0].name())
+                .selectPainting(paintingJsons[0].title())
+                .getPaintingInfo()
+                .titlePainting(paintingJsons[0].title())
                 .editClick()
-                .getCardArtist()
-                .setName(name)
+                .getCardPainting()
+                .setTitle(title)
                 .addBtnClick();
-        new ArtistPage()
-                .checkMessageName(SuccessMsgEditArtist.ARTIST_MSG, name)
-                .getArtistInfo()
-                .nameArtist(name);
+        new PaintingPage()
+                .checkMessageName(SuccessMsgEditPainting.PAINTING_MSG, title)
+                .getPaintingInfo()
+                .titlePainting(title);
     }
 
     @Test
     @DisplayName("name/biography can`t be longer than 3/10 characters")
     @ApiLogin(user = @TestUser) //не регает, только поле нажатия войти заходит
-    void checkInvalideDataForAddArtistDisplayedError() {
+    @Artist
+    @TestMuseum
+    void checkInvalideDataForAddPaintingDisplayedError(ArtistJson[] artistJsons, MuseumJson[] museumJsons) {
         Selenide.open(MainPage.PAGE_URL, MainPage.class);
         new MainPage()
                 .waitForPageLoaded()
                 .toLoginPageDelete() // delete
-                .toArtistPageFromHeader();
-        new ArtistPage()
+                .toPaintingPageFromHeader();
+        new PaintingPage()
                 .waitForPageLoaded()
-                .addArtistClick()
-                .getCardArtist()
-                .waitForNewArtistLoaded()
-                .setName(DataUtils.generateRandomString(2))
-                .setBiography(DataUtils.generateRandomString(4))
-                .addPhoto("images/profile/artist.png")
+                .addPaintingClick()
+                .getPaintingCardSave()
+                .waitForNewPaintingLoaded()
+                .setTitle(DataUtils.generateRandomString(2))
+                .setDescription(DataUtils.generateRandomString(4))
+                .addPhoto("images/museum/museum1.png")
+                .selectAuthor(artistJsons[0].name())
+                .selectMuseum(museumJsons[0].title())
                 .addBtnClick()
-                .errorArtistLengthChar();
+                .errorPaintingLengthChar();
 
     }
 
     //ЕДоделать как сделаю добавление картин!!!!
-    @Test
+    @Test//----
     @DisplayName("")
     @ApiLogin(user = @TestUser) //не регает, только поле нажатия войти заходит
     @Artist()

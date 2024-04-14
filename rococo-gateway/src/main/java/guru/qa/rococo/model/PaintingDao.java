@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public record PaintingDao(
         ArrayList<PaintingJson> content,
-        String pageable,
+        PageDto pageable,
         int totalPages,
         int totalElements,
         boolean last,

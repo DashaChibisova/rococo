@@ -16,6 +16,13 @@ public interface PaintingRepository extends JpaRepository<PaintingEntity, UUID> 
             @Nonnull Pageable pageable
     );
 
+
+    @Nonnull
+    Page<PaintingEntity> findAllByTitleContainsIgnoreCase(
+            @Nonnull String title,
+            @Nonnull Pageable pageable
+    );
+
 //    @Nonnull
 //    List<PaintingEntity> findAllByIdArtist(
 //            @Nonnull UUID artist

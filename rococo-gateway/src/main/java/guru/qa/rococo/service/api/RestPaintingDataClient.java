@@ -35,10 +35,13 @@ public class RestPaintingDataClient {
   }
 
   public @Nonnull
-  Page<PaintingJson> getPaintings(@Nonnull Pageable pageable, @Nonnull String name) {
+  Page<PaintingJson> getPaintings(@Nonnull Pageable pageable, @Nonnull String title) {
     MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
     params.add("size", String.valueOf(pageable.getPageSize()));
     params.add("page", String.valueOf(pageable.getPageNumber()));
+    if(title != null) {
+      params.add("title", title);
+    }
     URI uri = UriComponentsBuilder.fromHttpUrl(rococoPaintingBaseUri + "/painting").queryParams(params).build().toUri();
 
     PaintingDao paintingDao = Optional.ofNullable(
@@ -49,9 +52,9 @@ public class RestPaintingDataClient {
                     .bodyToMono(PaintingDao.class)
                     .block()
     ).orElseThrow(() -> new NoRestResponseException(
-            "No REST List<CountryJson> response is given [/country Route]"
+            "No REST List<PaintingJson> response is given [/painting Route]"
     ));
-    return new PageImpl<>(paintingDao.content());
+    return new PageImpl<>(paintingDao.content(), pageable, paintingDao.totalElements());
   }
 
   public @Nonnull

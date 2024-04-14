@@ -25,9 +25,8 @@ public class PaintingController {
     }
 
     @GetMapping("/painting")
-    public Page<PaintingJson> getAllPainting(@RequestParam(required = false) String name,
-                                             @PageableDefault Pageable pageable) {
-        return paintingDataClient.getPaintings(pageable, name);
+    public Page<PaintingJson> getAllPainting(@PageableDefault Pageable pageable, String title) {
+        return paintingDataClient.getPaintings(pageable, title);
     }
 
 

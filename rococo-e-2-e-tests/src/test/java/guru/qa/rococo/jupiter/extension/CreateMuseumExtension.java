@@ -63,8 +63,10 @@ public abstract class CreateMuseumExtension implements BeforeEachCallback, Param
     public void afterTestExecution(ExtensionContext extensionContext) throws Exception {
         List<MuseumJson> museumJsons = extensionContext.getStore(CREATE_MUSEUM_NAMESPACE)
                 .get(extensionContext.getUniqueId(), List.class);
+        if(museumJsons != null) {
         for (MuseumJson museumJson : museumJsons) {
             deleteMuseum(museumJson.id());
+        }
         }
     }
 

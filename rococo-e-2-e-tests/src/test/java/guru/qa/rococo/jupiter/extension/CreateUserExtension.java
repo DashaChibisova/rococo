@@ -63,7 +63,9 @@ public abstract class CreateUserExtension implements BeforeEachCallback, Paramet
     public void afterTestExecution(ExtensionContext extensionContext) throws Exception {
         UserJson createdUser = extensionContext.getStore(CREATE_USER_NAMESPACE)
                 .get(extensionContext.getUniqueId(), UserJson.class);
-        deleteUser(createdUser.testData().authId(), createdUser.id());
+        if(createdUser != null) {
+            deleteUser(createdUser.testData().authId(), createdUser.id());
+        }
     }
 
 }

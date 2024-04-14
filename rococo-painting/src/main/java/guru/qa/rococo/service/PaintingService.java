@@ -41,13 +41,21 @@ public class PaintingService {
     @Transactional
     public @Nonnull
     Page<PaintingJson> getAll(@Nonnull Pageable pageable
-                           ) {
+            ,  String title) {
+        if (title.equals("notSorted")) {
 
-        List<PaintingJson> paintingJsons = paintingRepository.findAll(pageable)
+            List<PaintingJson> paintingJsons = paintingRepository.findAll(pageable)
                     .stream()
                     .map(this::fromEntity)
                     .toList();
-            return new PageImpl<>(paintingJsons);
+            return new PageImpl<>(paintingJsons, pageable, paintingRepository.findAll().size());
+        }
+     else {
+        List<PaintingJson> paintingJsons = paintingRepository.findAllByTitleContainsIgnoreCase(title, pageable).stream()
+                .map(this::fromEntity)
+                .toList();
+        return new PageImpl<>(paintingJsons, pageable, paintingRepository.findAll().size());
+    }
     }
 
     @Transactional
