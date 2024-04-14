@@ -23,8 +23,8 @@ public interface PaintingRepository extends JpaRepository<PaintingEntity, UUID> 
             @Nonnull Pageable pageable
     );
 
-//    @Nonnull
-//    List<PaintingEntity> findAllByIdArtist(
-//            @Nonnull UUID artist
-//    );
+    @Nonnull
+    List<PaintingEntity> findAllByArtist(
+            @Nonnull UUID artist
+    );
 }

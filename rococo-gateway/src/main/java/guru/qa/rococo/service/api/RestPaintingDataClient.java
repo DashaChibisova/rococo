@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Mono;
@@ -114,7 +115,8 @@ public class RestPaintingDataClient {
     ).orElseThrow(() -> new NoRestResponseException(
             "No REST List<MuseumJson> response is given [/museum Route]"
     ));
-    return new PageImpl<>(paintingDao.content());
-  }
+    return new PageImpl<>(paintingDao.content(), pageable, paintingDao.totalElements());
+
+    }
 }
 

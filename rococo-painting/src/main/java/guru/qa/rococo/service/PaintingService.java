@@ -104,7 +104,7 @@ public class PaintingService {
                 .stream()
                 .map(this::fromEntity)
                 .toList();
-        return new PageImpl<>(paintingJsons);
+        return new PageImpl<>(paintingJsons,pageable, paintingRepository.findAllByArtist(id).size());
     }
 
 
