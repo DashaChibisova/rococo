@@ -91,7 +91,7 @@ public class PaintingTests extends BaseWebTest {
                 .waitForNewPaintingLoaded()
                 .setTitle(title)
                 .setDescription(DataUtils.generateRandomSentence(10))
-                .addPhoto("images/museum/museum1.png")
+                .addPhoto("images/painting.png")
                 .selectAuthor(artistJsons[0].name())
                 .selectMuseum(museumJsons[0].title())
                 .addBtnClick();
@@ -99,7 +99,7 @@ public class PaintingTests extends BaseWebTest {
                 .paintingVisible(title)
                 .checkMessageName(SuccessMsgAddPainting.PAINTING_MSG, title) // Добавлена картины!!!
                 .paintingVisible(title)
-                .checkAvatar("images/museum/museum1.png");
+                .checkAvatar("images/painting.png");
 
 //        artistRepository.deleteInArtistByName(name);
         // удалить артиста не работает решить ошибки
@@ -173,7 +173,7 @@ public class PaintingTests extends BaseWebTest {
                 .waitForNewPaintingLoaded()
                 .setTitle(DataUtils.generateRandomString(2))
                 .setDescription(DataUtils.generateRandomString(4))
-                .addPhoto("images/museum/museum1.png")
+                .addPhoto("images/painting.png")
                 .selectAuthor(artistJsons[0].name())
                 .selectMuseum(museumJsons[0].title())
                 .addBtnClick()

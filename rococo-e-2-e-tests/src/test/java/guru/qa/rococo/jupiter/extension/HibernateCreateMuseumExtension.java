@@ -37,7 +37,7 @@ public class HibernateCreateMuseumExtension extends CreateMuseumExtension {
                 : museum.country();
 
         byte[] photo = museum.photoPath().isEmpty()
-                ? encodedFileBytes("src/test/resources/images/profile/duck.jpg")
+                ? encodedFileBytes("src/test/resources/images/museum.png")
                 : encodedFileBytes(museum.photoPath());
 
         CountryEntity countryEntity = new CountryEntity();

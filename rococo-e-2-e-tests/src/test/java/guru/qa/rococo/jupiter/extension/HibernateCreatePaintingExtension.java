@@ -42,7 +42,7 @@ public class HibernateCreatePaintingExtension extends CreatePaintingExtension {
                 : painting.description();
 
         byte[] content = painting.content().isEmpty()
-                ? encodedFileBytes("src/test/resources/images/profile/duck.jpg")
+                ? encodedFileBytes("src/test/resources/images/painting.png")
                 : encodedFileBytes(painting.content());
 
         PaintingEntity paintingEntity = new PaintingEntity();

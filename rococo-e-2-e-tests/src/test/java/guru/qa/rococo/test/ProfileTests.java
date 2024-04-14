@@ -27,11 +27,11 @@ public class ProfileTests extends BaseWebTest {
                 .goToProfile();
         new ProfilePage()
                 .waitForPageLoaded()
-                .addAvatar("images/profile/duck.jpg")
+                .addAvatar("images/profile.jpg")
                 .updateClick()
                 .checkMessage(SuccessMsgProfile.PROFILE_MSG);
         new MainPage()
-                .checkAvatar("images/profile/duck.jpg");
+                .checkAvatar("images/profile.jpg");
     }
 
     @Test
@@ -44,7 +44,7 @@ public class ProfileTests extends BaseWebTest {
                 .goToProfile();
         new ProfilePage()
                 .waitForPageLoaded()
-                .addAvatar("images/profile/7.png")
+                .addAvatar("images/887kb.png")
                 .updateClick()
                 .checkMessage(ErrorMsgAvatar.PROFILE_MSG);
         new MainPage()

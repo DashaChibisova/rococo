@@ -88,14 +88,14 @@ public class MuseumTests extends BaseWebTest{
                 .setTitle(title)
                 .setCity(DataUtils.generateRandomCity())
                 .selectCountry("Австрия")
-                .addPhoto("images/museum/museum1.png")
+                .addPhoto("images/museum.png")
                 .setDescription(DataUtils.generateRandomSentence(7))
                 .addBtnClick();
         new MuseumPage()
                 .museumVisible(title)
                 .checkMessageName(SuccessMsgAddMuseum.MUSEUM_MSG, title)
                 .museumVisible(title)
-                .checkAvatar("images/museum/museum1.png");
+                .checkAvatar("images/museum.png");
 
 //        artistRepository.deleteInArtistByName(name);
         // удалить артиста не работает решить ошибки
@@ -167,7 +167,7 @@ public class MuseumTests extends BaseWebTest{
                 .selectCountry("Австрия")
                 .setDescription(DataUtils.generateRandomString(4))
                 .setCity(DataUtils.generateRandomString(2))
-                .addPhoto("images/museum/museum1.png")
+                .addPhoto("images/museum.png")
                 .addBtnClick()
                 .errorMuseumLengthChar();
     }

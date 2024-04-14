@@ -91,13 +91,13 @@ public class ArtistTests extends BaseWebTest{
                 .waitForNewArtistLoaded()
                 .setName(name)
                 .setBiography(DataUtils.generateRandomString(20))
-                .addPhoto("images/profile/artist.png")
+                .addPhoto("images/artist.png")
                 .addBtnClick();
         new ArtistPage()
                 .artistVisible(name)
                 .checkMessageName(SuccessMsgAddArtist.ARTIST_MSG, name)
                 .artistVisible(name)
-                .checkAvatar("images/profile/artist.png");
+                .checkAvatar("images/artist.png");
 
 //        artistRepository.deleteInArtistByName(name);
         // удалить артиста не работает решить ошибки
@@ -169,7 +169,7 @@ public class ArtistTests extends BaseWebTest{
                 .waitForNewArtistLoaded()
                 .setName(DataUtils.generateRandomString(2))
                 .setBiography(DataUtils.generateRandomString(4))
-                .addPhoto("images/profile/artist.png")
+                .addPhoto("images/artist.png")
                 .addBtnClick()
                 .errorArtistLengthChar();
 

@@ -44,7 +44,7 @@ public class HibernateCreateArtistExtension extends CreateArtistExtension {
 
 
         byte[] photo = artist.photoPath().isEmpty()
-                ? encodedFileBytes("src/test/resources/images/profile/duck.jpg")
+                ? encodedFileBytes("src/test/resources/images/artist.png")
                 : encodedFileBytes(artist.photoPath());
 
         ArtistEntity artistEntity = new ArtistEntity();
