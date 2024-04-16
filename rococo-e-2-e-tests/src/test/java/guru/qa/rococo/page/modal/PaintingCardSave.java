@@ -2,12 +2,13 @@ package guru.qa.rococo.page.modal;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import guru.qa.rococo.page.PaintingPage;
 import io.qameta.allure.Step;
 
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import static guru.qa.rococo.condition.PhotoCondition.photoFromClasspath;
 
 public class PaintingCardSave extends BaseComponent<PaintingCardSave> {
 
@@ -101,6 +102,20 @@ public class PaintingCardSave extends BaseComponent<PaintingCardSave> {
         getSelf().should(visible).shouldHave(text("Название не может быть короче 3 символов"));
         getSelf().should(visible).shouldHave(text("Описание не может быть короче 10 символов"));
         return new PaintingCardSave();
+    }
+
+    @Step("Add painting")
+    public PaintingCardSave checkAvatarPainting(String imageName) {
+        getSelf().$$("li .rounded-lg")
+                .find(photoFromClasspath(imageName))
+                .shouldHave(appear);
+        return this;
+    }
+
+    @Step("Check painting title")
+    public PaintingCardSave titlePainting(String title) {
+        getSelf().should(appear).shouldHave(text(title));
+        return this;
     }
 }
 

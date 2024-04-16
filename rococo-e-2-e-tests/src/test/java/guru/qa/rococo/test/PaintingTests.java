@@ -70,12 +70,12 @@ public class PaintingTests extends BaseWebTest {
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("Check add painting")
     @ApiLogin(user = @TestUser) //не регает, только поле нажатия войти заходит
     @TestMuseum
     @Artist
     void checkAddPainting(ArtistJson[] artistJsons, MuseumJson[] museumJsons) {
-         PaintingRepository artistRepository = new PaintingRepositoryHibernate();
+         PaintingRepository paintingRepository = new PaintingRepositoryHibernate();
 
         Selenide.open(MainPage.PAGE_URL, MainPage.class);
         String title = DataUtils.generateRandomName();
@@ -101,12 +101,11 @@ public class PaintingTests extends BaseWebTest {
                 .paintingVisible(title)
                 .checkAvatar("images/painting.png");
 
-//        artistRepository.deleteInArtistByName(name);
-        // удалить артиста не работает решить ошибки
+        paintingRepository.deletePaintingByTitle(title);
 
     }
 
-    @Test //----
+    @Test
     @DisplayName("Check close button on create painting")
     @ApiLogin(user = @TestUser) //не регает, только поле нажатия войти заходит
     void checkCloseBtnOnAddPainting() {
@@ -116,20 +115,20 @@ public class PaintingTests extends BaseWebTest {
                 .waitForPageLoaded()
                 .toLoginPageDelete() // delete
                 .toArtistPageFromHeader();
-        new ArtistPage()
+        new PaintingPage()
                 .waitForPageLoaded()
-                .addArtistClick()
-                .getCardArtist()
-                .waitForNewArtistLoaded()
-                .setName(DataUtils.generateRandomName())
+                .addPaintingClick()
+                .getPaintingCardSave()
+                .waitForNewPaintingLoaded()
+                .setTitle(DataUtils.generateRandomName())
                 .closeBtnClick()
-                .waitForNewArtistDisappear();
+                .waitForNewPaintingDisappear();
     }
 
 
     //(баг при редактировании биографии на 10 символов)
     @Test
-    @DisplayName("Check update title, biography, content")
+    @DisplayName("Check update title, description, content")
     @ApiLogin(user = @TestUser) //не регает, только поле нажатия войти заходит
     @TestPainting()
     void checkUpdateDataAddPainting(PaintingJson[] paintingJsons) {
@@ -156,7 +155,7 @@ public class PaintingTests extends BaseWebTest {
     }
 
     @Test
-    @DisplayName("name/biography can`t be longer than 3/10 characters")
+    @DisplayName("Name/description can`t be longer than 3/10 characters")
     @ApiLogin(user = @TestUser) //не регает, только поле нажатия войти заходит
     @Artist
     @TestMuseum
@@ -180,30 +179,4 @@ public class PaintingTests extends BaseWebTest {
                 .errorPaintingLengthChar();
 
     }
-
-    //ЕДоделать как сделаю добавление картин!!!!
-    @Test//----
-    @DisplayName("")
-    @ApiLogin(user = @TestUser) //не регает, только поле нажатия войти заходит
-    @Artist()
-    void checkAddPaintingOnArtist(ArtistJson[] artistJson) {
-        Selenide.open(MainPage.PAGE_URL, MainPage.class);
-        new MainPage()
-                .waitForPageLoaded()
-                .toLoginPageDelete() // delete
-                .toArtistPageFromHeader();
-        new ArtistPage()
-                .waitForPageLoaded()
-                .selectArtist(artistJson[0].name())
-                .getArtistInfo()
-                .checkEmptyListPainting()
-                .addPaintingClick()
-        ;
-/// ЕДоделать как сделаю добавление картин!!!! замокать что нет данных
-
-
-
-    }
-
-
 }

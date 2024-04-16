@@ -1,6 +1,10 @@
 package guru.qa.rococo.test;
 
 import com.codeborne.selenide.Selenide;
+import guru.qa.rococo.db.repository.PaintingRepository;
+import guru.qa.rococo.db.repository.PaintingRepositoryHibernate;
+import guru.qa.rococo.db.repository.UserRepository;
+import guru.qa.rococo.db.repository.UserRepositoryHibernate;
 import guru.qa.rococo.page.LoginPage;
 import guru.qa.rococo.page.MainPage;
 import guru.qa.rococo.page.RegisterPage;
@@ -35,11 +39,13 @@ public class RegistrationTests extends BaseWebTest {
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("Registration be success")
     void checkRegistrationBeSuccess() {
-        String password = DataUtils.generateRandomString(20);
-        String username = DataUtils.generateRandomString(10);
+        String password = DataUtils.generateRandomString(11);
+        String username = DataUtils.generateRandomString(11);
         Selenide.open(MainPage.PAGE_URL, MainPage.class);
+        UserRepository userRepository = new UserRepositoryHibernate();
+
         new MainPage()
                 .toLoginPage();
         new LoginPage()
@@ -49,17 +55,21 @@ public class RegistrationTests extends BaseWebTest {
                 .setUsername(username)
                 .setPassword(password)
                 .setPasswordRepeat(password)
-                .submitClick();
+                .submitClick()
+                .goInSystemClick();
         new LoginPage()
                 .waitForPageLoaded()
                 .setLogin(username)
                 .setPassword(password)
                 .submit();
         new MainPage()
-                .avatarNotSelected();    }
+                .avatarNotSelected();
+        userRepository.deleteUserAuthByName(username);
+        userRepository.deleteUserdataByName(username);
+    }
 
     @Test
-    @DisplayName("")
+    @DisplayName("Different password displayed error")
     void checkDifferentPasswordDisplayedError() {
         String password = DataUtils.generateRandomString(20);
         String password2 = DataUtils.generateRandomString(20);

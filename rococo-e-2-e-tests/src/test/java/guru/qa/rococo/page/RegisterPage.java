@@ -13,6 +13,7 @@ public class RegisterPage extends BasePage<RegisterPage> {
     private final SelenideElement inputPassword = $("input[name='password']");
     private final SelenideElement inputPasswordSubmit = $("input[name='passwordSubmit']");
     private final SelenideElement signUpBtn = $("button[type='submit']");
+    private final SelenideElement goInSystem = $(".form__submit");
     private final SelenideElement registerForm = $("#register-form");
 
     @Step("Set username")
@@ -34,8 +35,8 @@ public class RegisterPage extends BasePage<RegisterPage> {
     }
 
     @Step("Click on button sign")
-    public void signUpClick() {
-        signUpBtn.click();
+    public void goInSystemClick() {
+        goInSystem.shouldHave(text("Войти в систему")).click();
     }
 
     @Step("Click on button submit")

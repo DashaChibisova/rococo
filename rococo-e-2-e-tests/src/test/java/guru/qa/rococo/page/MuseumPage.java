@@ -11,6 +11,8 @@ import static com.codeborne.selenide.Selenide.$;
 import static guru.qa.rococo.condition.PhotoCondition.photoFromClasspath;
 
 public class MuseumPage extends BasePage<MuseumPage> {
+    public static final String PAGE_URL = CFG.frontUrl() + "/museum";
+
     private final SelenideElement pageContent = $("#page-content"); //id
     private final SelenideElement addMuseumBtn = $("#page-content .variant-filled-primary");
     private final SelenideElement museumDataTable = $("#page-content .grid");

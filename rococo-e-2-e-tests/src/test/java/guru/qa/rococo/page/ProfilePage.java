@@ -1,6 +1,7 @@
 package guru.qa.rococo.page;
 
 import com.codeborne.selenide.SelenideElement;
+import guru.qa.rococo.page.modal.PaintingCardSave;
 import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Condition.text;
@@ -8,8 +9,6 @@ import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 
 public class ProfilePage extends BasePage<ProfilePage> {
-
-    public static final String PAGE_URL = CFG.frontUrl() + "/profile";
 
     private final SelenideElement inputFirstname = $("input[name='firstname']");
     private final SelenideElement inputSurname = $("input[name='surname']");
@@ -53,14 +52,20 @@ public class ProfilePage extends BasePage<ProfilePage> {
     }
 
     @Step("Close click")
-    public MainPage closeProfile() {
+    public ProfilePage closeProfile() {
         closeBtn.click();
-        return new MainPage();
+        return this;
     }
 
     @Step("Unauthorization click")
     public ProfilePage notAuthorization() {
         notAuthorizationBtn.click();
+        return this;
+    }
+
+    @Step("Check that page is disappear")
+    public ProfilePage waitForProfileDisappear() {
+        inputFirstname.shouldNotBe(visible);
         return this;
     }
 

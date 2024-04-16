@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public enum SuccessMsgAddPainting implements Msg {
-    PAINTING_MSG("Добавлена картины: ");
+    PAINTING_MSG("Добавлена картина: ");
 
     private final String msg;
 

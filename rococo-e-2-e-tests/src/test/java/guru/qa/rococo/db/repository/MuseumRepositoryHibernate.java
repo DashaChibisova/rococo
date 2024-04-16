@@ -3,7 +3,9 @@ package guru.qa.rococo.db.repository;
 import guru.qa.rococo.db.EmfProvider;
 import guru.qa.rococo.db.jpa.JpaService;
 import guru.qa.rococo.db.jpa.ThreadLocalEntityManager;
+import guru.qa.rococo.db.model.ArtistEntity;
 import guru.qa.rococo.db.model.MuseumEntity;
+import io.qameta.allure.Step;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -16,15 +18,36 @@ public class MuseumRepositoryHibernate extends JpaService implements MuseumRepos
         super(MUSEUM, new ThreadLocalEntityManager(EmfProvider.INSTANCE.emf(MUSEUM)));
     }
 
+    @Step("Create museum")
     @Override
     public MuseumEntity createInMuseum(MuseumEntity museum) {
         persist(MUSEUM, museum);
         return museum;
     }
 
+    @Step("Delete museum by id")
     @Override
     public void deleteInMuseumById(UUID id) {
         MuseumEntity toBeDeleted = Optional.of(entityManager(MUSEUM).find(MuseumEntity.class, id)).get();
         remove(MUSEUM, toBeDeleted);
+    }
+
+    @Step("Find museum by title")
+    @Override
+    public MuseumEntity findMuseumByTitle(String title) {
+        return entityManager(MUSEUM)
+                .createQuery("""
+            FROM MuseumEntity 
+            WHERE title = :title
+            """, MuseumEntity.class)
+                .setParameter("title", title)
+                .getSingleResult();
+
+    }
+
+    @Step("Delete museum by title")
+    @Override
+    public void deleteMuseumByTitle(String title) {
+        deleteInMuseumById(findMuseumByTitle(title).getId());
     }
 }

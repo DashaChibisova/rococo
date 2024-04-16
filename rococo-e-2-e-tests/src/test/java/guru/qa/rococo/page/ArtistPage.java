@@ -11,6 +11,7 @@ import static com.codeborne.selenide.Selenide.$;
 import static guru.qa.rococo.condition.PhotoCondition.photoFromClasspath;
 
 public class ArtistPage extends BasePage<ArtistPage> {
+    public static final String PAGE_URL = CFG.frontUrl() + "/artist";
 
     private final SelenideElement pageContent = $("#page-content"); //id
     private final SelenideElement addArtistBtn = $("#page-content .variant-filled-primary");

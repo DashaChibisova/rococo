@@ -21,7 +21,7 @@ public class MuseumTests extends BaseWebTest{
 
     //все вводится само
 
-    // отдельно тест на пагинацию и на пустые значения
+    // отдельно тест на пагинацию и на пустые значения и размер файлов
 
 //   + без авторизации нельзя добавить, можно только смотерть
 //         +   можно редактировать с авторизаций (без картин)
@@ -97,9 +97,7 @@ public class MuseumTests extends BaseWebTest{
                 .museumVisible(title)
                 .checkAvatar("images/museum.png");
 
-//        artistRepository.deleteInArtistByName(name);
-        // удалить артиста не работает решить ошибки
-
+        museumRepository.deleteMuseumByTitle(title);
     }
 
     @Test

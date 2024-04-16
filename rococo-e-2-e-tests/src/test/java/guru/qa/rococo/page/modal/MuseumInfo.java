@@ -13,11 +13,9 @@ public class MuseumInfo extends BaseComponent<MuseumInfo> {
     }
 
     private final SelenideElement editBtn = $("button[data-testid='edit-museum']");
-    private final SelenideElement addPaintingUnderPhoto = $(".card .flex .variant-filled-primary");
     private final SelenideElement addPaintingUnderPainting = $(".card .rounded-container-token");
     private final SelenideElement cardHeader = $(".card .card-header");
     private final SelenideElement contentInfo = $(".card .grid");
-    private final SelenideElement contentInfo2 = $(".card .grid");
     protected final MuseumCardSave museumCardSave = new MuseumCardSave();
 
 
@@ -70,18 +68,5 @@ public class MuseumInfo extends BaseComponent<MuseumInfo> {
         cardHeader.should(visible).shouldHave(text(title));
         return this;
     }
-
-//    @Step("Check museum photo")
-//    public MuseumInfo checkPhoto(String imageName) {
-//        contentInfo2.$$("img").find(photoFromClasspath(imageName))
-//                .shouldHave(appear);
-//        return this;
-//    }
-
-//    @Step("Check that page is disappear")
-//    public ArtistInfo waitForNewArtistDisappear() {
-//        getSelf().shouldNotBe(visible);
-//        return this;
-//    }
 }
 

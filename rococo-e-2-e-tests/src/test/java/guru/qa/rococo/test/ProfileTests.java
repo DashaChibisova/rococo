@@ -61,9 +61,8 @@ public class ProfileTests extends BaseWebTest {
                 .goToProfile();
         new ProfilePage()
                 .waitForPageLoaded()
-                .closeProfile();
-        new MainPage();
-//                .avatarNotSelected(); waitForPageLoaded
+                .closeProfile()
+                .waitForProfileDisappear();
     }
 
     @Test
@@ -96,8 +95,6 @@ public class ProfileTests extends BaseWebTest {
                 .setFirstnameUser(name)
                 .updateClick()
                 .checkMessage(massage);
-        new MainPage();
-//                .avatarNotSelected();
     }
 
     @ParameterizedTest
@@ -113,8 +110,6 @@ public class ProfileTests extends BaseWebTest {
                 .setSurnameUser(name)
                 .updateClick()
                 .checkMessage(massage);
-        new MainPage();
-//                .avatarNotSelected();
     }
 
     static Stream<Arguments> testCasesFirstname() {

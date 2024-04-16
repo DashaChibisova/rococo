@@ -1,5 +1,6 @@
 package guru.qa.rococo.db.repository;
 
+import guru.qa.rococo.db.model.PaintingEntity;
 import guru.qa.rococo.db.model.UserAuthEntity;
 import guru.qa.rococo.db.model.UserEntity;
 
@@ -20,5 +21,12 @@ public interface UserRepository {
 
     void deleteInUserdataById(UUID id);
 
+    UserAuthEntity findUserAuthByName(String name);
+
+    void deleteUserAuthByName(String name);
+
+    UserEntity findUserdataByName(String name);
+
+    void deleteUserdataByName(String name);
 
 }

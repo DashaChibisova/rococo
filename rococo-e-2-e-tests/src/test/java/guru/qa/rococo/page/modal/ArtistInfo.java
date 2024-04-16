@@ -15,10 +15,11 @@ public class ArtistInfo extends BaseComponent<ArtistInfo> {
 
     private final SelenideElement editBtn = $("button[data-testid='edit-artist']");
     private final SelenideElement addPaintingUnderPhoto = $(".card .flex .variant-filled-primary");
-    private final SelenideElement addPaintingUnderPainting = $(".card .rounded-container-token");
+    private final SelenideElement addPaintingUnderPainting = $(".card .rounded-container-token .btn");
     private final SelenideElement cardHeader = $(".card .card-header");
     private final SelenideElement biographyInfo = $(".card .grid");
     protected final ArtistCard artistCard = new ArtistCard();
+    protected final PaintingCardSave paintingCard = new PaintingCardSave();
 
 
     @Step("Edit button click")
@@ -27,7 +28,7 @@ public class ArtistInfo extends BaseComponent<ArtistInfo> {
         return this;
     }
 
-    @Step("Add painting click")
+    @Step("Add artist click")
     public ArtistInfo addPaintingClick() {
         addPaintingUnderPainting.shouldHave(text("Добавить картину")).click();
         return this;
@@ -50,6 +51,13 @@ public class ArtistInfo extends BaseComponent<ArtistInfo> {
         return artistCard;
     }
 
+
+    @Step("Get new painting fragment")
+    public PaintingCardSave getPaintingCard() {
+        return paintingCard;
+    }
+
+
     @Step("Check card without authorization")
     public ArtistInfo checkCardArtistWithoutAuthorization(String name, String biography) {
         editBtn.shouldNotBe(visible);
@@ -65,11 +73,5 @@ public class ArtistInfo extends BaseComponent<ArtistInfo> {
         getSelf().should(visible).shouldHave(text("Пока что список картин этого художника пуст."));
         return this;
     }
-
-//    @Step("Check that page is disappear")
-//    public ArtistInfo waitForNewArtistDisappear() {
-//        getSelf().shouldNotBe(visible);
-//        return this;
-//    }
 }
 
