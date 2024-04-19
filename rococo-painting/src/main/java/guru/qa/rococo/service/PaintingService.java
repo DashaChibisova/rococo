@@ -38,7 +38,7 @@ public class PaintingService {
         this.restArtistDataClient = restArtistDataClient;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public @Nonnull
     Page<PaintingJson> getAll(@Nonnull Pageable pageable
             , String title) {
@@ -57,7 +57,7 @@ public class PaintingService {
         }
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public @Nonnull
     PaintingJson getCurrentPainting(@Nonnull UUID id) {
         return fromEntity(paintingRepository.getReferenceById(id));
@@ -96,7 +96,7 @@ public class PaintingService {
         }
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public @Nonnull
     Page<PaintingJson> getPaintingByAuthorId(@Nonnull UUID id, @Nonnull Pageable pageable) {
         List<PaintingJson> paintingJsons = paintingRepository.findAllByArtist(id, pageable)

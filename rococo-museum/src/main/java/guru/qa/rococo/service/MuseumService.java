@@ -39,7 +39,7 @@ public class MuseumService {
         this.geoRepository = geoRepository;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public @Nonnull
     Page<MuseumJson> getAll(@Nonnull Pageable pageable, String title
     ) {
@@ -58,7 +58,7 @@ public class MuseumService {
         }
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public @Nonnull
     MuseumJson getCurrentAMuseum(@Nonnull UUID id) {
         return MuseumJson.fromEntity(museumRepository.getReferenceById(id));

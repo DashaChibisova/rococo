@@ -25,7 +25,7 @@ public class CountryService {
         this.сountryRepository = сountryRepository;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public @Nonnull
     Page<CountryJson> getAll(@Nonnull Pageable pageable,
                              String name) {

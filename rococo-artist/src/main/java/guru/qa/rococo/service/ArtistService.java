@@ -53,7 +53,7 @@ public class ArtistService {
         }
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public @Nonnull
     Page<ArtistJson> allArtists(@Nonnull Pageable pageable,
                                 String name) {
@@ -74,7 +74,7 @@ public class ArtistService {
     }
 
 
-    @Transactional
+    @Transactional(readOnly = true)
     public @Nonnull
     ArtistJson getCurrentArtist(@Nonnull UUID id) {
         return ArtistJson.fromEntity(artistRepository.getReferenceById(id));
