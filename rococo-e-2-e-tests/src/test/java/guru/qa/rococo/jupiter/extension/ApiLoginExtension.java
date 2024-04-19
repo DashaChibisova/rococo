@@ -29,7 +29,11 @@ public class ApiLoginExtension implements BeforeEachCallback, AfterTestExecution
         ApiLogin apiLogin = AnnotationSupport.findAnnotation(
                 extensionContext.getRequiredTestMethod(),
                 ApiLogin.class
-        ).orElse(null);
+        ).orElse(
+                AnnotationSupport
+                        .findAnnotation(extensionContext.getRequiredTestClass(), ApiLogin.class)
+                        .orElse(null)
+        );
 
         final String login;
         final String password;

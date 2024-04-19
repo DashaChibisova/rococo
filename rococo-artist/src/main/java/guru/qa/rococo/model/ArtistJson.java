@@ -2,8 +2,8 @@ package guru.qa.rococo.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import guru.qa.rococo.data.ArtistEntity;
+import jakarta.annotation.Nonnull;
 
-import javax.annotation.Nonnull;
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
