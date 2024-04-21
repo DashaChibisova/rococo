@@ -13,8 +13,10 @@ import guru.qa.rococo.page.PaintingPage;
 import guru.qa.rococo.page.message.SuccessMsgAddPainting;
 import guru.qa.rococo.page.message.SuccessMsgEditPainting;
 import guru.qa.rococo.utils.DataUtils;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtensionContext;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -114,7 +116,7 @@ public class PaintingTests extends BaseWebTest {
         new MainPage()
                 .waitForPageLoaded()
                 .toLoginPageDelete() // delete
-                .toArtistPageFromHeader();
+                .toPaintingPageFromHeader();
         new PaintingPage()
                 .waitForPageLoaded()
                 .addPaintingClick()

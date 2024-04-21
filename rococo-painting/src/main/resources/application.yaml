@@ -89,7 +89,7 @@ spring:
     password: secret
 
 rococo-userdata:
-  base-uri: 'http://userdata.niffler.dc:8089'
+  base-uri: 'http://userdata.rococo.dc:8089'
 ---
 spring:
   config:

@@ -16,7 +16,7 @@ public class DockerConfig implements Config {
 
   @Override
   public String frontUrl() {
-    return "http://frontend.niffler.dc";
+    return "http://frontend.rococo.dc";
   }
 
   @Override
@@ -36,6 +36,6 @@ public class DockerConfig implements Config {
 
   @Override
   public String jdbcHost() {
-    return "niffler-all-db";
+    return "rococo-all-db";
   }
 }

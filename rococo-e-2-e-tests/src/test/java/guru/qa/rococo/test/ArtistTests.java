@@ -15,6 +15,7 @@ import guru.qa.rococo.page.MainPage;
 import guru.qa.rococo.page.PaintingPage;
 import guru.qa.rococo.page.message.SuccessMsgAddArtist;
 import guru.qa.rococo.page.message.SuccessMsgAddPainting;
+import guru.qa.rococo.page.message.SuccessMsgAddPaintingArtist;
 import guru.qa.rococo.page.message.SuccessMsgEditArtist;
 import guru.qa.rococo.utils.DataUtils;
 import io.qameta.allure.junit5.AllureJunit5;
@@ -200,7 +201,7 @@ public class ArtistTests extends BaseWebTest{
                 .addPhoto("images/painting.png")
                 .addBtnClick();
         new ArtistPage()
-                .checkMessageName(SuccessMsgAddPainting.PAINTING_MSG, namePainting);
+                .checkMessageName(SuccessMsgAddPaintingArtist.PAINTING_MSG, namePainting);
         new ArtistPage()
                 .getArtistInfo()
                 .getPaintingCard()
