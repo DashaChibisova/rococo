@@ -1,4 +1,4 @@
-package guru.qa.rococo.test;
+package guru.qa.rococo.test.web;
 
 import com.codeborne.selenide.Selenide;
 import guru.qa.rococo.db.repository.PaintingRepository;
@@ -7,16 +7,13 @@ import guru.qa.rococo.jupiter.annotation.*;
 import guru.qa.rococo.jupiter.model.ArtistJson;
 import guru.qa.rococo.jupiter.model.MuseumJson;
 import guru.qa.rococo.jupiter.model.PaintingJson;
-import guru.qa.rococo.page.ArtistPage;
 import guru.qa.rococo.page.MainPage;
 import guru.qa.rococo.page.PaintingPage;
 import guru.qa.rococo.page.message.SuccessMsgAddPainting;
 import guru.qa.rococo.page.message.SuccessMsgEditPainting;
 import guru.qa.rococo.utils.DataUtils;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtensionContext;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

@@ -1,8 +1,6 @@
-package guru.qa.rococo.test;
+package guru.qa.rococo.test.web;
 
 import com.codeborne.selenide.Selenide;
-import guru.qa.rococo.db.repository.PaintingRepository;
-import guru.qa.rococo.db.repository.PaintingRepositoryHibernate;
 import guru.qa.rococo.db.repository.UserRepository;
 import guru.qa.rococo.db.repository.UserRepositoryHibernate;
 import guru.qa.rococo.page.LoginPage;

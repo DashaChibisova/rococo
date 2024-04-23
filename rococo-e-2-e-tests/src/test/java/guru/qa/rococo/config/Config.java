@@ -12,8 +12,7 @@ public interface Config {
 
   String authUrl();
 
-
-  String artistUrl();
+  String gatewayUrl();
 
   String userdataUrl();
 

@@ -41,59 +41,6 @@ allure {
     }
 }
 
-//configurations {
-//    jaxb
-//}
-//
-//tasks.register('genJaxb') {
-//    ext.sourcesDir = "${buildDir}/generated-sources/jaxb"
-//    ext.classesDir = "${buildDir}/classes/jaxb"
-//    ext.schema = "${userdataWsdlUrl}"
-//
-//    outputs.dir classesDir
-//
-//    doLast() {
-//        project.ant {
-//            taskdef name: "xjc", classname: "com.sun.tools.xjc.XJCTask",
-//                    classpath: configurations.jaxb.asPath
-//            mkdir(dir: sourcesDir)
-//            mkdir(dir: classesDir)
-//
-//            xjc(destdir: sourcesDir, schema: schema, package: "guru.qa.rococo.userdata.wsdl") {
-//                arg(value: "-wsdl")
-//                produces(dir: sourcesDir, includes: "**/*.java")
-//            }
-//
-//            javac(destdir: classesDir, source: 17, target: 17, debug: true,
-//                    debugLevel: "lines,vars,source",
-//                    classpath: configurations.jaxb.asPath) {
-//                src(path: sourcesDir)
-//                include(name: "**/*.java")
-//                include(name: "*.java")
-//            }
-//
-//            copy(todir: classesDir) {
-//                fileset(dir: sourcesDir, erroronmissingdir: false) {
-//                    exclude(name: "**/*.java")
-//                }
-//            }
-//        }
-//    }
-//}
-//
-//genJaxb.onlyIf {
-//    !project.hasProperty("skipjaxb")
-//}
-//
-//sourceSets {
-//    main {
-//        java {
-//            srcDir 'src/main/java'
-//            srcDir 'build/generated-sources/jaxb'
-//        }
-//    }
-//}
-
 dependencies {
     // Logs
     testImplementation "ch.qos.logback:logback-classic:${logbackVersion}"
@@ -128,17 +75,6 @@ dependencies {
     testImplementation 'commons-io:commons-io:2.11.0'
     testImplementation 'com.google.code.findbugs:jsr305:3.0.2'
     testImplementation 'com.github.vertical-blank:sql-formatter:2.0.3'
-    // gRPC
-//    testImplementation "io.grpc:grpc-protobuf:${grpcVersion}"
-//    testImplementation "io.grpc:grpc-stub:${grpcVersion}"
-//    testImplementation "io.grpc:grpc-netty:${grpcVersion}"
-//    testImplementation "com.google.protobuf:protobuf-java:${protobufVersion}"
-//    compileOnly 'jakarta.annotation:jakarta.annotation-api:1.3.5' // Java 9+ compatibility - Do NOT update to 2.0.0
-    // SOAP
-//    testImplementation "com.sun.xml.messaging.saaj:saaj-impl:${saajVersion}"
-//    implementation "jakarta.xml.bind:jakarta.xml.bind-api:${jakartaXmlBind}"
-////    implementation(files(genJaxb.classesDir).builtBy(genJaxb))
-////    jaxb "org.glassfish.jaxb:jaxb-xjc:${project.ext.glassfishJaxbVersion}"
     // Kafka
     testImplementation "org.apache.kafka:kafka-clients:${kafkaClientsVersion}"
     // Wiremock
@@ -163,7 +99,7 @@ test {
     useJUnitPlatform()
     retry {
         maxRetries = 2
-        maxFailures = 20 // Optional attribute
+        maxFailures = 20
     }
 }
 

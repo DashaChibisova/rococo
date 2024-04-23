@@ -19,8 +19,8 @@ public class LocalConfig implements Config {
   }
 
   @Override
-  public String artistUrl(){
-    return "http://127.0.0.1:3000";
+  public String gatewayUrl() {
+    return "http://127.0.0.1:8080";
   }
 
   @Override

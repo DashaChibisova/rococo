@@ -1,4 +1,4 @@
-package guru.qa.rococo.test;
+package guru.qa.rococo.test.web;
 
 import guru.qa.rococo.jupiter.annotation.ApiLogin;
 
