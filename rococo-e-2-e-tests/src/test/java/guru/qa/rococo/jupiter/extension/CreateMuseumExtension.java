@@ -26,7 +26,6 @@ public abstract class CreateMuseumExtension implements BeforeEachCallback, Param
             TestMuseum museumData = museum.get();
             List<MuseumJson> museumJsonList = new ArrayList<>();
 
-
             for (int i = 0; i < museumData.count(); i++) {
                 museumJsonList.add(createMuseum(museumData));
             }

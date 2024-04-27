@@ -23,27 +23,14 @@ public abstract class CreatePaintingExtension implements BeforeEachCallback, Par
         if (painting.isPresent()) {
             TestPainting paintingData = painting.get();
             List<PaintingJson> paintingJsonList = new ArrayList<>();
-//            Map<PaintingJson, List<UserJson>> createdUsers = new HashMap<>();
 
             for (int i = 0; i < paintingData.count(); i++) {
-
                 paintingJsonList.add(createPainting(paintingData));
-//                paintingJsonList.add(getCreatedArtist(extensionContext, ));
-//                paintingJsonList.add(createArtist(paintingData));
             }
             extensionContext.getStore(CREATE_PAINTING_NAMESPACE)
                     .put(extensionContext.getUniqueId(), paintingJsonList);
         }
     }
-
-//    private static ArtistJson getCreatedArtist(ExtensionContext extensionContext) {
-//        return extensionContext.getStore(CreateArtistExtension.CREATE_ARTIST_NAMESPACE).get(extensionContext.getUniqueId(), ArtistJson.class);
-//    }
-//
-//    private static MuseumJson getCreatedMuseum(ExtensionContext extensionContext) {
-//        return extensionContext.getStore(CreateMuseumExtension.CREATE_MUSEUM_NAMESPACE).get(extensionContext.getUniqueId(), MuseumJson.class);
-//    }
-
 
     public abstract PaintingJson createPainting(TestPainting painting) throws IOException;
 

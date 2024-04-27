@@ -1,12 +1,11 @@
 package guru.qa.rococo.api;
 
 
+import guru.qa.rococo.jupiter.model.ArtistList;
 import guru.qa.rococo.jupiter.model.ArtistJson;
 import retrofit2.Call;
 import retrofit2.http.*;
 
-import java.awt.print.Pageable;
-import java.util.List;
 import java.util.UUID;
 
 public interface GatewayApi {
@@ -20,7 +19,7 @@ public interface GatewayApi {
                                  @Body ArtistJson artist);
 
     @GET("/api/artist")
-    Call<PagedList<ArtistJson>> getAllArtist(@Header("Authorization") String bearerToken,
+    Call<ArtistList> getAllArtist(
                                  @Query("page") int page, @Query("size") int size,  @Query("name") String name);
 
     @GET("/api/artist/{id}")

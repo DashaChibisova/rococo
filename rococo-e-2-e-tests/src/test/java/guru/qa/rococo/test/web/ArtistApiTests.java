@@ -1,8 +1,8 @@
-package guru.qa.rococo.test.api;
+package guru.qa.rococo.test.web;
 
 import guru.qa.rococo.jupiter.annotation.*;
+import guru.qa.rococo.jupiter.model.ArtistList;
 import guru.qa.rococo.jupiter.model.ArtistJson;
-import guru.qa.rococo.test.web.BaseApiTest;
 import guru.qa.rococo.utils.DataUtils;
 import guru.qa.rococo.utils.FileUtils;
 import io.qameta.allure.Allure;
@@ -36,7 +36,7 @@ public class ArtistApiTests extends BaseApiTest {
 
     @Test
     @DisplayName("Save current artist")
-    @ApiLogin(user = @TestUser) //init true
+    @ApiLogin(user = @TestUser)
     void saveArtistsWithTokenShouldBeReturned(@Token String bearerToken) throws Exception {
         ArtistJson artistJsons = new ArtistJson(
                 null,
@@ -140,6 +140,48 @@ public class ArtistApiTests extends BaseApiTest {
             Assertions.assertEquals(
                     artistJsons.id(),
                     response.id()
+            );
+        });
+
+    }
+
+    @Test
+    @Artist(count = 5)
+    @DisplayName("Get all artist returned by page")
+    void checkPaginOnGetAllArtist(@Token String bearerToken, ArtistJson[] artist) throws Exception {
+        ArtistList responseOnePage = gatewayApiClient.getAllArtist(0,1,"");
+        ArtistList responseToPage = gatewayApiClient.getAllArtist(1,1,"");
+
+
+        Allure.step("Check size one page", () -> {
+            Assertions.assertEquals(
+                    1,
+                    responseOnePage.content().size()
+
+            );
+        });
+
+        Allure.step("Check id one page", () -> {
+            Assertions.assertEquals(
+                    artist[0].id(),
+                    responseOnePage.content().get(0).id()
+
+            );
+        });
+
+        Allure.step("Check size two page", () -> {
+            Assertions.assertEquals(
+                    1,
+                    responseToPage.content().size()
+
+            );
+        });
+
+        Allure.step("Check id two page", () -> {
+            Assertions.assertEquals(
+                    artist[1].id(),
+                    responseToPage.content().get(0).id()
+
             );
         });
 

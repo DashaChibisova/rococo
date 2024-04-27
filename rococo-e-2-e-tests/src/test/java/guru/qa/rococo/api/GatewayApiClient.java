@@ -1,9 +1,8 @@
 package guru.qa.rococo.api;
 
 import guru.qa.rococo.api.interceptor.CodeInterceptor;
+import guru.qa.rococo.jupiter.model.ArtistList;
 import guru.qa.rococo.jupiter.model.ArtistJson;
-import retrofit2.Call;
-import retrofit2.http.*;
 
 import java.util.UUID;
 
@@ -24,8 +23,8 @@ public class GatewayApiClient  extends RestClient {
                 .body();
     }
 
-    public PagedList<ArtistJson> getAllArtist(String bearerToken, int page, int size, String name) throws Exception {
-        return gatewayApi.getAllArtist(bearerToken, page, size, name).execute()
+    public ArtistList getAllArtist(int page, int size, String name) throws Exception {
+        return gatewayApi.getAllArtist( page, size, name).execute()
                 .body();
     }
 
