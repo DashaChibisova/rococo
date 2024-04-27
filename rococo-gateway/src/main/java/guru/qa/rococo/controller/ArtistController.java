@@ -31,14 +31,12 @@ public class ArtistController {
     }
 
     @PatchMapping("/artist")
-    public ArtistJson userUpdateInfo(@AuthenticationPrincipal Jwt principal,
-                                     @Valid @RequestBody ArtistJson artist) {
+    public ArtistJson userUpdateInfo(@RequestBody ArtistJson artist) {
         return artistDataClient.updateArtistInfo(artist);
     }
 
     @PostMapping("/artist")
-    public ArtistJson saveArtists(@AuthenticationPrincipal Jwt principal,
-                                  @Valid @RequestBody ArtistJson artist) {
+    public ArtistJson saveArtists(@RequestBody ArtistJson artist) {
         return artistDataClient.saveArtists(artist);
     }
 
