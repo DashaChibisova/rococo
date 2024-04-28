@@ -7,13 +7,10 @@ java --version
 
 front=""
 front_image=""
-if [[ "$1" = "gql" ]]; then
-  front="./rococo-frontend-gql/";
-  front_image="${IMAGE_PREFIX}/${FRONT_IMAGE_NAME_GQL}-${PROFILE}:latest";
-else
-  front="./rococo-frontend/";
-  front_image="${IMAGE_PREFIX}/${FRONT_IMAGE_NAME}-${PROFILE}:latest";
-fi
+
+front="./rococo-client/";
+front_image="${IMAGE_PREFIX}/${FRONT_IMAGE_NAME}-${PROFILE}:latest";
+
 
 FRONT_IMAGE="$front_image" PREFIX="${IMAGE_PREFIX}" PROFILE="${PROFILE}" docker-compose down
 
@@ -37,7 +34,7 @@ if [ "$1" = "push" ] || [ "$2" = "push" ]; then
   bash ./docker-build.sh ${PROFILE} push
 else
   echo "### Build images (front: $front) ###"
-  bash ./gradlew -Pskipjaxb jibDockerBuild -x :rococo-e-2-e-tests:test
+  bash ./gradlew -Pskipjaxb -Djib.dockerClient.executable=/usr/local/bin/docker jibDockerBuild -x :rococo-e-2-e-tests:test
   cd "$front" || exit
   bash ./docker-build.sh ${PROFILE}
 fi

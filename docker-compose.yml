@@ -52,7 +52,7 @@ services:
 
   auth.rococo.dc:
     container_name: auth.rococo.dc
-    image: ${PREFIX}/rococo-auth-${PROFILE}:latest
+    image: ${PREFIX}/rococo-auth:latest
     ports:
       - "9000:9000"
     healthcheck:
@@ -106,7 +106,7 @@ services:
     container_name: museum.rococo.dc
     image: ${PREFIX}/rococo-museum-${PROFILE}:latest
     ports:
-      - "8093:8093"
+      - "8098:8098"
     restart: always
     depends_on:
       rococo-all-db:
@@ -119,13 +119,13 @@ services:
     container_name: painting.rococo.dc
     image: ${PREFIX}/rococo-painting-${PROFILE}:latest
     ports:
-      - "8093:8093"
+      - "8095:8095"
     restart: always
     depends_on:
       rococo-all-db:
         condition: service_healthy
     networks:
-      - painting-network
+      - rococo-network
     dns_search: .
 
   userdata.rococo.dc:
@@ -142,7 +142,7 @@ services:
     dns_search: .
 
   frontend.rococo.dc:
-    container_name: frontend.rococo.dc
+    container_name: client.rococo.dc
     image: "${FRONT_IMAGE}"
     ports:
       - "80:80"

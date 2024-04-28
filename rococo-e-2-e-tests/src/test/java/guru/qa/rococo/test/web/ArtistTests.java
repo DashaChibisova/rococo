@@ -146,7 +146,7 @@ public class ArtistTests extends BaseWebTest{
     @DisplayName("Name/biography can`t be longer than 3/10 characters")
     @ApiLogin(user = @TestUser) //не регает, только поле нажатия войти заходит
     void checkInvalideDataForAddArtistDisplayedError() {
-        Selenide.open(MainPage.PAGE_URL, MainPage.class);
+       // Selenide.open(MainPage.PAGE_URL, MainPage.class);
         new MainPage()
                 .waitForPageLoaded()
                 .toLoginPageDelete() // delete

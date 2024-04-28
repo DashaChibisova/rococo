@@ -62,6 +62,34 @@ public class ArtistApiTests extends BaseApiTest {
         });
     }
 
+    @Test
+    @DisplayName("Save current artist")
+    @ApiLogin(user = @TestUser)
+    void saveArtistsWithTokenShouldBeReturned2(@Token String bearerToken) throws Exception {
+        ArtistJson artistJsons = new ArtistJson(
+                null,
+                DataUtils.generateRandomString(2),
+                DataUtils.generateRandomSentence(6),
+                FileUtils.encodedFileBytes("src/test/resources/images/artist.png").toString()
+        );
+
+        ArtistJson response = gatewayApiClient.saveArtists(bearerToken, artistJsons);
+
+        Allure.step("Check name", () -> {
+            Assertions.assertEquals(
+                    artistJsons.name(),
+                    response.name()
+            );
+        });
+
+        Allure.step("Check biography", () -> {
+            Assertions.assertEquals(
+                    artistJsons.biography(),
+                    response.biography()
+            );
+        });
+    }
+
     @Test // не работает выбрасывать искл
     @DisplayName("Dont save artist without authorization")
     void saveArtistsWithoutTokenNotAllowed() throws Exception {

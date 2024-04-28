@@ -69,7 +69,11 @@ spring:
 rococo-userdata:
   base-uri: 'http://userdata.rococo.dc:8089'
 rococo-front:
-  base-uri: 'http://frontend.rococo.dc'
+  base-uri: 'http://client.rococo.dc'
 rococo-artist:
-  base-uri: 'http://127.0.0.1:8093'
+  base-uri: 'http://artist.rococo.dc:8093'
+rococo-museum:
+  base-uri: 'http://museum.rococo.dc:8098'
+rococo-painting:
+  base-uri: 'http://painting.rococo.dc:8095'
 ---

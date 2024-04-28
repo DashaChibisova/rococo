@@ -93,7 +93,7 @@ spring:
     username: postgres
     password: secret
 rococo-front:
-  base-uri: 'http://frontend.rococo.dc'
+  base-uri: 'http://client.rococo.dc'
 rococo-auth:
   base-uri: 'http://auth.rococo.dc:9000'
 oauth2:
