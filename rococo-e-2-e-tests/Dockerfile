@@ -9,4 +9,4 @@ COPY ./rococo-e-2-e-tests ./rococo-e-2-e-tests
 COPY ./build.gradle ./
 COPY ./settings.gradle ./
 
-CMD chmod +x ./rococo-e-2-e-tests/send_results.sh; ./gradlew test -Dtest.env=docker -Drepository=jpa; bash ./rococo-e-2-e-tests/send_results.sh
+CMD chmod +x ./rococo-e-2-e-tests/send_results.sh; ./gradlew test -Dtest.env=docker; bash ./rococo-e-2-e-tests/send_results.sh
