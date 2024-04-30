@@ -96,6 +96,9 @@ tasks.register('printVersion') {
 }
 
 test {
+    options {
+        systemProperties(System.getProperties())
+    }
     useJUnitPlatform()
     retry {
         maxRetries = 2
