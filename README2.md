@@ -34,9 +34,7 @@ docker volume create pgdata
 Dmitriis-MacBook-Pro  rococo % bash localenv.sh
 ```
 
-#### 5. Установить одну из программ для визуальной работы с Postgres
-
-Например, DBeaver или Datagrip. Мы рекомендуем бесплатную PgAdmin 4.
+#### 5. Установить одну из программ для визуальной работы с DBeaver
 
 #### 6. Подключиться к БД postgres (host: localhost, port: 5432, user: postgres, pass: secret, database name: postgres) из PgAdmin и создать пустые БД микросервисов
 
@@ -53,7 +51,7 @@ create
     database "rococo-auth" with owner postgres;
 ```
 
-#### 7. Установить Java версии 17 или новее. Это необходимо, т.к. проект не поддерживает версии <17
+#### 7. Установить Java версии 17.
 
 #### 8. Установить пакетый менеджер для сборки front-end npm
 
@@ -107,14 +105,8 @@ Dmitriis-MacBook-Pro niffler-auth % gradle bootRun --args='--spring.profiles.act
 
 #### 4. Прописать в etc/hosts элиас для Docker-имени
 
-#### frontend:  127.0.0.1 frontend.niffler.dc,
-
-#### auth:      127.0.0.1 auth.niffler.dc
-
-#### gateway:   127.0.0.1 gateway.niffler.dc
-
 ```posh
-Dmitriis-MacBook-Pro niffler % vi /etc/hosts
+Dmitriis-MacBook-Pro rococo % vi /etc/hosts
 ```
 
 ```posh
@@ -125,102 +117,38 @@ Dmitriis-MacBook-Pro niffler % vi /etc/hosts
 # when the system is booting.  Do not change this entry.
 ##
 127.0.0.1       localhost
-127.0.0.1       frontend.niffler.dc
-127.0.0.1       auth.niffler.dc
-127.0.0.1       gateway.niffler.dc
+127.0.0.1       client.rococo.dc
+127.0.0.1       auth.rococo.dc
+127.0.0.1       gateway.rococo.dc
 ```
 
 #### 5. Перейти в корневой каталог проекта
 
 ```posh
-Dmitriis-MacBook-Pro niffler % cd niffler
+Dmitriis-MacBook-Pro rococo % cd rococo
 ```
 
-#### 6. Запустить все сервисы, если необходим фронтенд GraphQL, то это указывается аргументом к скрипту:
-
+#### 6. Запустить все сервисы
 для REST:
 
 ```posh
-Dmitriis-MacBook-Pro  niffler % bash docker-compose-dev.sh
-```
-
-для GraphQL:
-
-```posh
-Dmitriis-MacBook-Pro  niffler % bash docker-compose-dev.sh gql
+Dmitriis-MacBook-Pro  rococo % bash docker-compose-dev.sh
 ```
 
 Текущая версия docker-compose-dev.sh удалит все старые Docker контейнеры в системе, поэтому если у вас есть созданные
-контейнеры для других проектов - отредактируйте строку ```posh docker rm $(docker ps -a -q)```, чтобы включить в grep
-только те контейнеры, что непосредственно относятся к niffler.
+контейнеры для других проектов - отредактируйте строку ```posh docker rm $(docker ps -a -q)```
 
-Niffler при запуске в докере будет работать для вас по адресу http://frontend.niffler.dc:80, этот порт НЕ НУЖНО
-указывать
-в браузере, таким образом переходить напрямую по ссылке http://frontend.niffler.dc
+Переходить напрямую по ссылке http://client.rococo.dc
 
-Если при выполнении скрипта вы получили ошибку
-
-```
-* What went wrong:
-Execution failed for task ':niffler-auth:jibDockerBuild'.
-> com.google.cloud.tools.jib.plugins.common.BuildStepsExecutionException: 
-Build to Docker daemon failed, perhaps you should make sure your credentials for 'registry-1.docker.io...
-```
-
-То необходимо убедиться, что в `$USER/.docker/config.json` файле отсутствует запись `"credsStore": "desktop"`
-При наличии такого ключа в json, его надо удалить
-
-# Создание своего docker repository для форка Niffler и сборка своих докер контейнеров
-
-#### 1. Войти в свою УЗ на https://hub.docker.com/ и последовательно создать публичные репозитории
-
-- niffler-frontend
-- niffler-frontend-gql
-- niffler-userdata
-- niffler-spend
-- niffler-gateway
-- niffler-currency
-- niffler-auth
-
-Допустим, что ваш username на https://hub.docker.com - *foobazz*
-
-#### 2. заменить в файле docker.properties (в корне проекта) IMAGE_PREFIX=qaguru на IMAGE_PREFIX=foobazz
-
-- где foobazz - ваш юзернэйм на https://hub.docker.com/
-
-#### 3. заменить в файле build.gradle (в корне проекта) imagePrefix = "qaguru" на imagePrefix = "foobazz"
-
-- где foobazz - ваш юзернэйм на https://hub.docker.com/
-
-#### 4. Перейти в корневой каталог проекта
-
-```posh
-Dmitriis-MacBook-Pro niffler % cd niffler
-```
-
-#### 5. Собрать все имеджи, запушить и запустить niffler одной командой, если необходим фронтенд GraphQL, то это указывается аргументом к скрипту:
-
-для REST:
-
-```posh
-Dmitriis-MacBook-Pro  niffler % bash docker-compose-dev.sh push
-```
-
-для GraphQL:
-
-```posh
-Dmitriis-MacBook-Pro  niffler % bash docker-compose-dev.sh gql push
-```
-
-# Запуск e-2-e тестов в Docker network изолированно Niffler в докере:
+# Запуск e-2-e тестов в Docker network изолированно Rococo в докере:
 
 #### 1. Перейти в корневой каталог проекта
 
 ```posh
-Dmitriis-MacBook-Pro niffler % cd niffler
+Dmitriis-MacBook-Pro rococo % cd rococo
 ```
 
-#### 2. Запустить все сервисы и тесты, если необходим фронтенд GraphQL, то это указывается аргументом к скрипту:
+#### 2. Запустить все сервисы и тесты:
 
 для REST:
 
@@ -228,14 +156,6 @@ Dmitriis-MacBook-Pro niffler % cd niffler
 Dmitriis-MacBook-Pro  niffler % bash docker-compose-e2e.sh
 ```
 
-для GraphQL:
-
-```posh
-Dmitriis-MacBook-Pro  niffler % bash docker-compose-e2e.sh gql
-```
-
 #### 3. Selenoid UI доступен по адресу: http://localhost:9090/
 
 #### 4. Allure доступен по адресу: http://localhost:5050/allure-docker-service/projects/niffler-e-2-e-tests/reports/latest/index.html
-
-![Enjoy the Niffler](/niffler-frontend/public/images/niffler-logo.png)
