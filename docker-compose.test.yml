@@ -1,7 +1,7 @@
 version: '3.9'
 
 services:
-  niffler-all-db:
+  rococo-all-db:
     container_name: rococo-all-db
     image: postgres:15.1
     environment:
@@ -59,9 +59,9 @@ services:
       - "9000:9000"
     healthcheck:
       test: "wget --spider http://localhost:9000/actuator/health || exit 1"
-      interval: 5s
-      timeout: 5s
-      retries: 10
+      interval: 15s
+      timeout: 15s
+      retries: 15
     restart: always
     depends_on:
       rococo-all-db:

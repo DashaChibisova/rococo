@@ -29,7 +29,7 @@ fi
 
 ARCH=$(uname -m)
 
-bash ./gradlew -Pskipjaxb jibDockerBuild -x :rococo-e-2-e-tests:test
+bash ./gradlew -Pskipjaxb -Djib.dockerClient.executable=/usr/local/bin/docker jibDockerBuild -x :rococo-e-2-e-tests:test
 
 if [ "$ARCH" = "arm64" ] || [ "$ARCH" = "aarch64" ]; then
   docker_arch="linux/arm64"
