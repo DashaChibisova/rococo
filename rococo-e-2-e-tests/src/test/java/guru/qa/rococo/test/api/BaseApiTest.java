@@ -1,4 +1,4 @@
-package guru.qa.rococo.test.web;
+package guru.qa.rococo.test.api;
 
 import guru.qa.rococo.api.GatewayApiClient;
 import guru.qa.rococo.config.Config;

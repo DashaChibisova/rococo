@@ -1,4 +1,4 @@
-package guru.qa.rococo.test.web;
+package guru.qa.rococo.test.api;
 
 import guru.qa.rococo.jupiter.annotation.*;
 import guru.qa.rococo.jupiter.model.ArtistList;
@@ -42,10 +42,10 @@ public class ArtistApiTests extends BaseApiTest {
                 null,
                 DataUtils.generateRandomUsername(),
                 DataUtils.generateRandomSentence(6),
-                FileUtils.encodedFileBytes("src/test/resources/images/artist.png").toString()
+                FileUtils.encodedFileBytes("images/artist.png").toString()
         );
 
-        ArtistJson response = gatewayApiClient.saveArtists(bearerToken, artistJsons);
+        ArtistJson response = gatewayApiClient.saveArtists(bearerToken, artistJsons).body();
 
         Allure.step("Check name", () -> {
             Assertions.assertEquals(
@@ -70,10 +70,10 @@ public class ArtistApiTests extends BaseApiTest {
                 null,
                 DataUtils.generateRandomString(2),
                 DataUtils.generateRandomSentence(6),
-                FileUtils.encodedFileBytes("src/test/resources/images/artist.png").toString()
+                FileUtils.encodedFileBytes("images/artist.png").toString()
         );
 
-        ArtistJson response = gatewayApiClient.saveArtists(bearerToken, artistJsons);
+        ArtistJson response = gatewayApiClient.saveArtists(bearerToken, artistJsons).body();
 
         Allure.step("Check name", () -> {
             Assertions.assertEquals(
@@ -90,21 +90,20 @@ public class ArtistApiTests extends BaseApiTest {
         });
     }
 
-    @Test // не работает выбрасывать искл
+    @Test
     @DisplayName("Dont save artist without authorization")
     void saveArtistsWithoutTokenNotAllowed() throws Exception {
         ArtistJson artistJsons = new ArtistJson(
                 UUID.randomUUID(),
                 DataUtils.generateRandomUsername(),
                 DataUtils.generateRandomSentence(6),
-                FileUtils.encodedFileBytes("src/test/resources/images/artist.png").toString()
+                FileUtils.encodedFileBytes("images/artist.png").toString()
         );
-
-        ArtistJson response = gatewayApiClient.saveArtists(null, artistJsons);
-        Allure.step("Check id", () -> {
+        int code = gatewayApiClient.saveArtists("", artistJsons).raw().code();
+        Allure.step("Check code", () -> {
             Assertions.assertEquals(
-                    artistJsons.id(),
-                    response.id()
+                    401,
+                    code
             );
         });
         
@@ -125,7 +124,7 @@ public class ArtistApiTests extends BaseApiTest {
                 artist[0].photo()
         );
 
-        ArtistJson response = gatewayApiClient.userUpdateInfoArtist(bearerToken, artistJsons);
+        ArtistJson response = gatewayApiClient.userUpdateInfoArtist(bearerToken, artistJsons).body();
 
         Allure.step("Check id", () -> {
             Assertions.assertEquals(
@@ -149,7 +148,7 @@ public class ArtistApiTests extends BaseApiTest {
         });
     }
 
-    @Test // не работает выбрасывать искл
+    @Test
     @Artist()
     @DisplayName("Dont update artist without authorization")
     void userUpdateInfoArtistWithoutTokenNotAllowed(ArtistJson[] artist) throws Exception {
@@ -163,11 +162,11 @@ public class ArtistApiTests extends BaseApiTest {
                 artist[0].photo()
         );
 
-        ArtistJson response = gatewayApiClient.userUpdateInfoArtist(null, artistJsons);
-        Allure.step("Check id", () -> {
+        int code = gatewayApiClient.userUpdateInfoArtist(null, artistJsons).raw().code();
+        Allure.step("Check code", () -> {
             Assertions.assertEquals(
-                    artistJsons.id(),
-                    response.id()
+                    401,
+                    code
             );
         });
 

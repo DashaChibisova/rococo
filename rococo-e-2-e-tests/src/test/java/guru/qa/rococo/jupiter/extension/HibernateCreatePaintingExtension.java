@@ -9,9 +9,11 @@ import guru.qa.rococo.jupiter.model.ArtistJson;
 import guru.qa.rococo.jupiter.model.MuseumJson;
 import guru.qa.rococo.jupiter.model.PaintingJson;
 import guru.qa.rococo.utils.DataUtils;
+import guru.qa.rococo.utils.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Base64;
@@ -40,8 +42,8 @@ public class HibernateCreatePaintingExtension extends CreatePaintingExtension {
                 : painting.description();
 
         byte[] content = painting.content().isEmpty()
-                ? encodedFileBytes("src/test/resources/images/painting.png")
-                : encodedFileBytes(painting.content());
+                ?  FileUtils.encodedFileBytes("images/painting.png")
+                :  FileUtils.encodedFileBytes(painting.content());
 
         PaintingEntity paintingEntity = new PaintingEntity();
         paintingEntity.setTitle(title);
@@ -61,12 +63,4 @@ public class HibernateCreatePaintingExtension extends CreatePaintingExtension {
         hibernateCreateArtistExtension.deleteArtist(UUID.fromString(painting.artist()));
         hibernateCreateMuseumExtension.deleteMuseum(UUID.fromString(painting.museum()));
     }
-
-    private byte[] encodedFileBytes(String path) throws IOException {
-        File fi = new File(path);
-        byte[] fileContent = Files.readAllBytes(fi.toPath());
-        String encodedFile = "data:image/png;base64," + Base64.getEncoder().encodeToString(fileContent);
-        return encodedFile.getBytes(StandardCharsets.UTF_8);
-    }
-
 }

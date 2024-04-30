@@ -9,9 +9,11 @@ import guru.qa.rococo.db.repository.MuseumRepositoryHibernate;
 import guru.qa.rococo.jupiter.annotation.TestMuseum;
 import guru.qa.rococo.jupiter.model.MuseumJson;
 import guru.qa.rococo.utils.DataUtils;
+import guru.qa.rococo.utils.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Base64;
@@ -37,8 +39,8 @@ public class HibernateCreateMuseumExtension extends CreateMuseumExtension {
                 : museum.country();
 
         byte[] photo = museum.photoPath().isEmpty()
-                ? encodedFileBytes("src/test/resources/images/museum.png")
-                : encodedFileBytes(museum.photoPath());
+                ?  FileUtils.encodedFileBytes("images/museum.png")
+                :  FileUtils.encodedFileBytes(museum.photoPath());
 
         CountryEntity countryEntity = new CountryEntity();
         countryEntity.setName(country);
@@ -61,12 +63,5 @@ public class HibernateCreateMuseumExtension extends CreateMuseumExtension {
     @Override
     public void deleteMuseum(UUID museumId) {
         museumRepository.deleteInMuseumById(museumId);
-    }
-
-    private byte[] encodedFileBytes(String path) throws IOException {
-        File fi = new File(path);
-        byte[] fileContent = Files.readAllBytes(fi.toPath());
-        String encodedFile = "data:image/png;base64," + Base64.getEncoder().encodeToString(fileContent);
-        return encodedFile.getBytes(StandardCharsets.UTF_8);
     }
 }

@@ -6,11 +6,14 @@ import guru.qa.rococo.db.repository.ArtistRepositoryHibernate;
 import guru.qa.rococo.jupiter.annotation.Artist;
 import guru.qa.rococo.jupiter.model.ArtistJson;
 import guru.qa.rococo.utils.DataUtils;
+import guru.qa.rococo.utils.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.UUID;
 
@@ -29,8 +32,8 @@ public class HibernateCreateArtistExtension extends CreateArtistExtension {
 
 
         byte[] photo = artist.photoPath().isEmpty()
-                ? encodedFileBytes("src/test/resources/images/artist.png")
-                : encodedFileBytes(artist.photoPath());
+                ?  FileUtils.encodedFileBytes("images/artist.png")
+                :  FileUtils.encodedFileBytes(artist.photoPath());
 
         ArtistEntity artistEntity = new ArtistEntity();
         artistEntity.setName(name);
@@ -46,13 +49,4 @@ public class HibernateCreateArtistExtension extends CreateArtistExtension {
     public void deleteArtist(UUID artistId) {
         artistRepository.deleteInArtistById(artistId);
     }
-
-    private byte[] encodedFileBytes(String path) throws IOException {
-        File fi = new File(path);
-        byte[] fileContent = Files.readAllBytes(fi.toPath());
-        String encodedFile = "data:image/png;base64," + Base64.getEncoder().encodeToString(fileContent);
-        return encodedFile.getBytes(StandardCharsets.UTF_8);
-    }
-
-
 }
