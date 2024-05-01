@@ -3,7 +3,7 @@ package guru.qa.rococo.model;
 public record PageDto(
         int pageNumber,
         int pageSize,
-        SortDao sort,
+        SortDto sort,
         int offset,
         boolean paged,
         boolean unpaged

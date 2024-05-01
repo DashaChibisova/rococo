@@ -4,9 +4,11 @@ import guru.qa.rococo.db.EmfProvider;
 import guru.qa.rococo.db.jpa.JpaService;
 import guru.qa.rococo.db.jpa.ThreadLocalEntityManager;
 import guru.qa.rococo.db.model.ArtistEntity;
+import guru.qa.rococo.db.model.CountryEntity;
 import guru.qa.rococo.db.model.MuseumEntity;
 import io.qameta.allure.Step;
 
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -41,6 +43,19 @@ public class MuseumRepositoryHibernate extends JpaService implements MuseumRepos
             WHERE title = :title
             """, MuseumEntity.class)
                 .setParameter("title", title)
+                .getSingleResult();
+
+    }
+
+    @Step("Find museum by title")
+    @Override
+    public CountryEntity findCountryByName(String name) {
+        return entityManager(MUSEUM)
+                .createQuery("""
+            FROM CountryEntity
+            WHERE name = :name
+            """, CountryEntity.class)
+                .setParameter("name", name)
                 .getSingleResult();
 
     }

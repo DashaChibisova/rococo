@@ -1,6 +1,6 @@
 package guru.qa.rococo.model;
 
-public record SortDao(
+public record SortDto(
         boolean empty,
         boolean sorted,
         boolean unsorted

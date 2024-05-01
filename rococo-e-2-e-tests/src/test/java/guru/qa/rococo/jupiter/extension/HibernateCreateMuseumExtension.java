@@ -35,15 +35,14 @@ public class HibernateCreateMuseumExtension extends CreateMuseumExtension {
                 ? DataUtils.generateRandomCity()
                 : museum.city();
         String country = museum.country().isEmpty()
-                ? DataUtils.generateRandomCountry()
+                ? "Азербайджан"
                 : museum.country();
 
         byte[] photo = museum.photoPath().isEmpty()
                 ?  FileUtils.encodedFileBytes("images/museum.png")
                 :  FileUtils.encodedFileBytes(museum.photoPath());
 
-        CountryEntity countryEntity = new CountryEntity();
-        countryEntity.setName(country);
+        CountryEntity countryEntity = museumRepository.findCountryByName(country);
 
         GeoEntity geoEntity = new GeoEntity();
         geoEntity.setCity(city);

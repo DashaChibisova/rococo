@@ -61,6 +61,7 @@ public class RegistrationTests extends BaseWebTest {
                 .setPassword(password)
                 .submit();
         new MainPage()
+                .toMainPageByLoginBtn()
                 .avatarNotSelected();
         userRepository.deleteUserAuthByName(username);
         userRepository.deleteUserdataByName(username);

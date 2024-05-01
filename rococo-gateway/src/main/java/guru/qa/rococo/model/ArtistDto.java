@@ -10,7 +10,7 @@ public record ArtistDto(
         boolean last,
         int size,
         int number,
-        SortDao sort,
+        SortDto sort,
         int numberOfElements,
         boolean first,
         boolean empty

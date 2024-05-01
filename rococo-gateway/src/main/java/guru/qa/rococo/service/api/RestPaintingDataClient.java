@@ -44,12 +44,12 @@ public class RestPaintingDataClient {
         }
         URI uri = UriComponentsBuilder.fromHttpUrl(rococoPaintingBaseUri + "/painting").queryParams(params).build().toUri();
 
-        PaintingDao paintingDao = Optional.ofNullable(
+        PaintingDto paintingDao = Optional.ofNullable(
                 webClient.get()
                         .uri(uri)
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
-                        .bodyToMono(PaintingDao.class)
+                        .bodyToMono(PaintingDto.class)
                         .block()
         ).orElseThrow(() -> new NoRestResponseException(
                 "No REST List<PaintingJson> response is given [/painting Route]"
@@ -104,12 +104,12 @@ public class RestPaintingDataClient {
         params.add("page", String.valueOf(pageable.getPageNumber()));
         URI uri = UriComponentsBuilder.fromHttpUrl(rococoPaintingBaseUri + "/painting/author/" + id).build().toUri();
 
-        PaintingDao paintingDao = Optional.ofNullable(
+        PaintingDto paintingDao = Optional.ofNullable(
                 webClient.get()
                         .uri(uri)
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
-                        .bodyToMono(PaintingDao.class)
+                        .bodyToMono(PaintingDto.class)
                         .block()
         ).orElseThrow(() -> new NoRestResponseException(
                 "No REST List<MuseumJson> response is given [/museum Route]"

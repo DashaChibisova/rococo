@@ -2,15 +2,15 @@ package guru.qa.rococo.model;
 
 import java.util.ArrayList;
 
-public record CountryDao(
-        ArrayList<CountryJson> content,
-        String pageable,
+public record PaintingDto(
+        ArrayList<PaintingJson> content,
+        PageDto pageable,
         int totalPages,
         int totalElements,
         boolean last,
         int size,
         int number,
-        SortDao sort,
+        SortDto sort,
         int numberOfElements,
         boolean first,
         boolean empty

@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
@@ -35,14 +37,14 @@ public class CountryService {
                     .stream()
                     .map(CountryJson::fromEntity)
                     .toList();
-            return new PageImpl<>(countryJsons);
+            return new PageImpl<>(countryJsons, pageable, сountryRepository.findAll().size());
 
         } else {
 
             List<CountryJson> countryJsons = сountryRepository.findAllByNameContainsIgnoreCase(name, pageable).stream()
                     .map(CountryJson::fromEntity)
                     .toList();
-            return new PageImpl<>(countryJsons);
+            return new PageImpl<>(countryJsons, pageable, сountryRepository.findAll().size());
         }
     }
 

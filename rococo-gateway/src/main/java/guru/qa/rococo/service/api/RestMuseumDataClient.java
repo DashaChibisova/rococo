@@ -40,17 +40,17 @@ public class RestMuseumDataClient {
         params.add("page", String.valueOf(pageable.getPageNumber()));
         URI uri = UriComponentsBuilder.fromHttpUrl(rococoMuseumBaseUri + "/country").queryParams(params).build().toUri();
 
-        CountryDao artistDao = Optional.ofNullable(
+        CountryDto artistDao = Optional.ofNullable(
                 webClient.get()
                         .uri(uri)
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
-                        .bodyToMono(CountryDao.class)
+                        .bodyToMono(CountryDto.class)
                         .block()
         ).orElseThrow(() -> new NoRestResponseException(
                 "No REST List<CountryJson> response is given [/country Route]"
         ));
-        return new PageImpl<>(artistDao.content());
+        return new PageImpl<>(artistDao.content(), pageable, artistDao.totalElements());
     }
 
     public @Nonnull
@@ -63,12 +63,12 @@ public class RestMuseumDataClient {
         }
         URI uri = UriComponentsBuilder.fromHttpUrl(rococoMuseumBaseUri + "/museum").queryParams(params).build().toUri();
 
-        MuseumDao museumDao = Optional.ofNullable(
+        MuseumDto museumDao = Optional.ofNullable(
                 webClient.get()
                         .uri(uri)
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
-                        .bodyToMono(MuseumDao.class)
+                        .bodyToMono(MuseumDto.class)
                         .block()
         ).orElseThrow(() -> new NoRestResponseException(
                 "No REST List<MuseumJson> response is given [/museum Route]"
