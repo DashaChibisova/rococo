@@ -19,21 +19,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PaintingTests extends BaseWebTest {
 
-    // отдельно тест на пагинацию и на пустые значения
-
-//   + без авторизации нельзя добавить, можно только смотерть
-//         +   можно редактировать с авторизаций (без картин)
-//           + можно добавлять с getАвторизацией
-      //  + поиск не работает Даша тупая- починила
-    // + пустой список
-    //если не добавлено что-то из параметров то нельзя сохранить
-    // +yевалидные данные
-    //добавление картины (если есть музеи то список, если нет, то другая модалка)
-
-//    при создании картины выбрать из существующих художников и выбрать где храниться оригинал
-//    при создании картины нет существующих художников и нет храниться оригинал
-//    длина на вводимые символы
-
     @Test
     @DisplayName("Add painting without authorization not allowed")
     @TestPainting()
@@ -70,7 +55,7 @@ public class PaintingTests extends BaseWebTest {
 
     @Test
     @DisplayName("Check add painting")
-    @ApiLogin(user = @TestUser) //не регает, только поле нажатия войти заходит
+    @ApiLogin(user = @TestUser)
     @TestMuseum
     @Artist
     void checkAddPainting(ArtistJson[] artistJsons, MuseumJson[] museumJsons) {
@@ -81,7 +66,7 @@ public class PaintingTests extends BaseWebTest {
 
         new MainPage()
                 .waitForPageLoaded()
-                .toLoginPageDelete() // delete
+                .toMainPageByLoginBtn()
                 .toPaintingPageFromHeader();
         new PaintingPage()
                 .waitForPageLoaded()
@@ -106,13 +91,13 @@ public class PaintingTests extends BaseWebTest {
 
     @Test
     @DisplayName("Check close button on create painting")
-    @ApiLogin(user = @TestUser) //не регает, только поле нажатия войти заходит
+    @ApiLogin(user = @TestUser)
     void checkCloseBtnOnAddPainting() {
         Selenide.open(MainPage.PAGE_URL, MainPage.class);
 
         new MainPage()
                 .waitForPageLoaded()
-                .toLoginPageDelete() // delete
+                .toMainPageByLoginBtn()
                 .toPaintingPageFromHeader();
         new PaintingPage()
                 .waitForPageLoaded()
@@ -124,11 +109,9 @@ public class PaintingTests extends BaseWebTest {
                 .waitForNewPaintingDisappear();
     }
 
-
-    //(баг при редактировании биографии на 10 символов)
     @Test
     @DisplayName("Check update title, description, content")
-    @ApiLogin(user = @TestUser) //не регает, только поле нажатия войти заходит
+    @ApiLogin(user = @TestUser)
     @TestPainting()
     void checkUpdateDataAddPainting(PaintingJson[] paintingJsons) {
         Selenide.open(MainPage.PAGE_URL, MainPage.class);
@@ -136,7 +119,7 @@ public class PaintingTests extends BaseWebTest {
 
         new MainPage()
                 .waitForPageLoaded()
-                .toLoginPageDelete() // delete
+                .toMainPageByLoginBtn()
                 .toPaintingPageFromHeader();
         new PaintingPage()
                 .waitForPageLoaded()
@@ -155,14 +138,14 @@ public class PaintingTests extends BaseWebTest {
 
     @Test
     @DisplayName("Name/description can`t be longer than 3/10 characters")
-    @ApiLogin(user = @TestUser) //не регает, только поле нажатия войти заходит
+    @ApiLogin(user = @TestUser)
     @Artist
     @TestMuseum
     void checkInvalideDataForAddPaintingDisplayedError(ArtistJson[] artistJsons, MuseumJson[] museumJsons) {
         Selenide.open(MainPage.PAGE_URL, MainPage.class);
         new MainPage()
                 .waitForPageLoaded()
-                .toLoginPageDelete() // delete
+                .toMainPageByLoginBtn()
                 .toPaintingPageFromHeader();
         new PaintingPage()
                 .waitForPageLoaded()

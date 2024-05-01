@@ -34,7 +34,8 @@ if [ "$1" = "push" ] || [ "$2" = "push" ]; then
   bash ./docker-build.sh ${PROFILE} push
 else
   echo "### Build images (front: $front) ###"
-  bash ./gradlew -Pskipjaxb -Djib.dockerClient.executable=/usr/local/bin/docker jibDockerBuild -x :rococo-e-2-e-tests:test
+  bash ./gradlew -Pskipjaxb  jibDockerBuild -x :rococo-e-2-e-tests:test
+#  bash ./gradlew -Pskipjaxb -Djib.dockerClient.executable=/usr/local/bin/docker jibDockerBuild -x :rococo-e-2-e-tests:test
   cd "$front" || exit
   bash ./docker-build.sh ${PROFILE}
 fi

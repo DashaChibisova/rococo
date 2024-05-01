@@ -16,10 +16,10 @@ public class MainPage extends BasePage<MainPage> {
     private final SelenideElement shellHeaderContent = $("#shell-header"); //id $(".app-bar")
 
     private final SelenideElement paintingBtn = $("#shell-header a[href*='/painting']"); //*???
-    private final SelenideElement artistBtn = $("a[href*='/artist']");
+    private final SelenideElement artistBtn = $("li:has(a[href*='/artist'])");
     private final SelenideElement museumBtn = $("#shell-header a[href*='/museum']");
 
-    private final SelenideElement lightSwitch = $("//a[@title='Toggle Dark Mode']");
+    private final SelenideElement lightSwitch = $("a[title='Toggle Dark Mode']");
     private final SelenideElement submitBtn = $(".variant-filled-primary");
     private final SelenideElement avatarBtn = $(".btn-icon");
     private final SelenideElement avatarImage = $(".avatar-image");
@@ -40,7 +40,7 @@ public class MainPage extends BasePage<MainPage> {
         return new PaintingPage();
     }
 
-    @Step("Open artist page from heade")
+    @Step("Open artist page from header")
     public ArtistPage toArtistPageFromHeader() {
         artistBtn.shouldHave(text("Художники")).click();
         return new ArtistPage();
@@ -84,8 +84,9 @@ public class MainPage extends BasePage<MainPage> {
     }
 
     @Step("Open login page from header")
-    public MainPage toLoginPageDelete() {
+    public MainPage toMainPageByLoginBtn() {
         submitBtn.shouldHave(text("Войти")).click();
+        avatarBtn.shouldBe(visible);
         return this;
     }
 

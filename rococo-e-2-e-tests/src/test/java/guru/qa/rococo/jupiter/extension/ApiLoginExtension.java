@@ -64,7 +64,7 @@ public class ApiLoginExtension implements BeforeEachCallback, AfterTestExecution
             authApiClient.doLogin(extensionContext, login, password);
 
             if (initBrowser) {
-                Selenide.open(CFG.frontUrl());
+                Selenide.open(CFG.authUrl());
                 SessionStorage sessionStorage = Selenide.sessionStorage();
                 sessionStorage.setItem(
                         "codeChallenge", getCodChallenge(extensionContext)
@@ -79,7 +79,6 @@ public class ApiLoginExtension implements BeforeEachCallback, AfterTestExecution
                 WebDriverRunner.getWebDriver().manage().addCookie(
                         jsessionCookie()
                 );
-                Selenide.refresh();
             }
         }
     }

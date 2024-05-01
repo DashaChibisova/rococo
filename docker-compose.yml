@@ -12,9 +12,9 @@ services:
       - ./postgres:/docker-entrypoint-initdb.d
     healthcheck:
       test: [ "CMD", "pg_isready", "-U", "postgres", "-d", "postgres" ]
-      interval: 3s
-      timeout: 3s
-      retries: 5
+      interval: 6s
+      timeout: 10s
+      retries: 10
     ports:
       - "5432:5432"
     networks:

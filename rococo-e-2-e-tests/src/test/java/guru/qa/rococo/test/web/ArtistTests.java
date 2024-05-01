@@ -22,17 +22,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ArtistTests extends BaseWebTest{
 
-    // отдельно тест на пагинацию и на пустые значения
-
-//   + без авторизации нельзя добавить, можно только смотерть
-//         +   можно редактировать с авторизаций (без картин)
-//           + можно добавлять с getАвторизацией
-      //  + поиск не работает Даша тупая- починила
-    // + пустой список
-    //если не добавлено что-то из параметров то нельзя сохранить
-    // +yевалидные данные
-    //добавление картины (если есть музеи то список, если нет, то другая модалка)
-
     @Test
     @DisplayName("Add artist without authorization not allowed")
     @Artist()
@@ -64,7 +53,7 @@ public class ArtistTests extends BaseWebTest{
 
     @Test
     @DisplayName("Check add artist on page artist")
-    @ApiLogin(user = @TestUser) //не регает, только поле нажатия войти заходит
+    @ApiLogin(user = @TestUser)
     void checkAddArtist() {
          ArtistRepository artistRepository = new ArtistRepositoryHibernate();
 
@@ -73,7 +62,7 @@ public class ArtistTests extends BaseWebTest{
 
         new MainPage()
                 .waitForPageLoaded()
-                .toLoginPageDelete() // delete
+                .toMainPageByLoginBtn()
                 .toArtistPageFromHeader();
         new ArtistPage()
                 .waitForPageLoaded()
@@ -94,13 +83,13 @@ public class ArtistTests extends BaseWebTest{
 
     @Test
     @DisplayName("Check close button on create artist")
-    @ApiLogin(user = @TestUser) //не регает, только поле нажатия войти заходит
+    @ApiLogin(user = @TestUser)
     void checkCloseBtnOnAddArtist() {
         Selenide.open(MainPage.PAGE_URL, MainPage.class);
 
         new MainPage()
                 .waitForPageLoaded()
-                .toLoginPageDelete() // delete
+                .toMainPageByLoginBtn()
                 .toArtistPageFromHeader();
         new ArtistPage()
                 .waitForPageLoaded()
@@ -112,11 +101,9 @@ public class ArtistTests extends BaseWebTest{
                 .waitForNewArtistDisappear();
     }
 
-
-    //(баг при редактировании биографии на 10 символов)
     @Test
     @DisplayName("Check update name, biography, photo")
-    @ApiLogin(user = @TestUser) //не регает, только поле нажатия войти заходит
+    @ApiLogin(user = @TestUser)
     @Artist()
     void checkUpdateDataAddArtist(ArtistJson[] artistJson) {
         Selenide.open(MainPage.PAGE_URL, MainPage.class);
@@ -124,7 +111,7 @@ public class ArtistTests extends BaseWebTest{
 
         new MainPage()
                 .waitForPageLoaded()
-                .toLoginPageDelete() // delete
+                .toMainPageByLoginBtn()
                 .toArtistPageFromHeader();
         new ArtistPage()
                 .waitForPageLoaded()
@@ -144,12 +131,12 @@ public class ArtistTests extends BaseWebTest{
 
     @Test
     @DisplayName("Name/biography can`t be longer than 3/10 characters")
-    @ApiLogin(user = @TestUser) //не регает, только поле нажатия войти заходит
+    @ApiLogin(user = @TestUser)
     void checkInvalideDataForAddArtistDisplayedError() {
-       // Selenide.open(MainPage.PAGE_URL, MainPage.class);
+        Selenide.open(MainPage.PAGE_URL, MainPage.class);
         new MainPage()
                 .waitForPageLoaded()
-                .toLoginPageDelete() // delete
+                .toMainPageByLoginBtn()
                 .toArtistPageFromHeader();
         new ArtistPage()
                 .waitForPageLoaded()
@@ -167,7 +154,7 @@ public class ArtistTests extends BaseWebTest{
     //ЕДоделать как сделаю добавление картин!!!!
     @Test
     @DisplayName("Check add painting artist")
-    @ApiLogin(user = @TestUser) //не регает, только поле нажатия войти заходит
+    @ApiLogin(user = @TestUser)
     @Artist()
     @TestMuseum
     void checkAddPaintingOnArtist(ArtistJson[] artistJson, MuseumJson[] museumJsons) {
@@ -178,7 +165,7 @@ public class ArtistTests extends BaseWebTest{
         Selenide.open(MainPage.PAGE_URL, MainPage.class);
         new MainPage()
                 .waitForPageLoaded()
-                .toLoginPageDelete() // delete
+                .toMainPageByLoginBtn()
                 .toArtistPageFromHeader();
         new ArtistPage()
                 .waitForPageLoaded()

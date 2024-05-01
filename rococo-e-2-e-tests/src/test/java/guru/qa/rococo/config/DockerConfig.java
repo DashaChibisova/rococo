@@ -2,6 +2,10 @@ package guru.qa.rococo.config;
 
 import com.codeborne.selenide.Configuration;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class DockerConfig implements Config {
 
@@ -11,11 +15,23 @@ public class DockerConfig implements Config {
   }
 
   static {
+    DesiredCapabilities capabilities = new DesiredCapabilities();
+    ChromeOptions options = new ChromeOptions();
+    options.addArguments("--no-sandbox");
+    capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+    Map<String, Object> selenoidOptions = new HashMap<>();
+    selenoidOptions.put("enableVNC", true);
+    selenoidOptions.put("enableVideo", false);
+    selenoidOptions.put("timeout", 20000L);
+    selenoidOptions.put("sessionTimeout", "20m");
+    capabilities.setCapability("selenoid:options", selenoidOptions);
     Configuration.remote = "http://selenoid:4444/wd/hub";
     Configuration.browser = "chrome";
     Configuration.browserVersion = "117.0";
-    Configuration.browserCapabilities = new ChromeOptions().addArguments("--no-sandbox");
+    Configuration.browserCapabilities = capabilities;
     Configuration.browserSize = "1980x1024";
+    Configuration.headless = false;
+    Configuration.timeout = 20000L;
   }
 
   @Override

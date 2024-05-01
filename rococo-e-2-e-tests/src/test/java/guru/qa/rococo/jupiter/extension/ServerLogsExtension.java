@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 
 public class ServerLogsExtension implements SuiteExtension {
 
-  private final String pathToAllureResults = "/Users/ruacbr/Developer/ed/rococo/rococo-e-2-e-tests/build/allure-results";
+  private final String pathToAllureResults = "./build/allure-results";
   private final ObjectMapper om = new ObjectMapper();
 
   @Override

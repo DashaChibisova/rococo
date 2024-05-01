@@ -19,19 +19,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MuseumTests extends BaseWebTest{
 
-    //все вводится само
-
-    // отдельно тест на пагинацию и на пустые значения и размер файлов
-
-//   + без авторизации нельзя добавить, можно только смотерть
-//         +   можно редактировать с авторизаций (без картин)
-//           + можно добавлять с getАвторизацией
-      //  + поиск не работает Даша тупая- починила
-    // + пустой список
-    //если не добавлено что-то из параметров то нельзя сохранить
-    // +yевалидные данные
-    //добавление картины (если есть музеи то список, если нет, то другая модалка)
-
     @Test
     @DisplayName("Add museum without authorization not allowed")
     @TestMuseum()
@@ -69,7 +56,7 @@ public class MuseumTests extends BaseWebTest{
 
     @Test
     @DisplayName("Check add museum")
-    @ApiLogin(user = @TestUser) //не регает, только поле нажатия войти заходит
+    @ApiLogin(user = @TestUser)
     void checkAddMuseum() {
          MuseumRepository museumRepository = new MuseumRepositoryHibernate();
 
@@ -78,7 +65,7 @@ public class MuseumTests extends BaseWebTest{
 
         new MainPage()
                 .waitForPageLoaded()
-                .toLoginPageDelete() // delete
+                .toMainPageByLoginBtn()
                 .toMuseumPageFromContent();
         new MuseumPage()
                 .waitForPageLoaded()
@@ -102,13 +89,13 @@ public class MuseumTests extends BaseWebTest{
 
     @Test
     @DisplayName("Check close button on create museum")
-    @ApiLogin(user = @TestUser) //не регает, только поле нажатия войти заходит
+    @ApiLogin(user = @TestUser)
     void checkCloseBtnOnAddMuseum() {
         Selenide.open(MainPage.PAGE_URL, MainPage.class);
 
         new MainPage()
                 .waitForPageLoaded()
-                .toLoginPageDelete() // delete
+                .toMainPageByLoginBtn()
                 .toMuseumPageFromContent();
         new MuseumPage()
                 .waitForPageLoaded()
@@ -122,7 +109,7 @@ public class MuseumTests extends BaseWebTest{
 
     @Test
     @DisplayName("Check update title, description")
-    @ApiLogin(user = @TestUser) //не регает, только поле нажатия войти заходит
+    @ApiLogin(user = @TestUser)
     @TestMuseum()
     void checkUpdateDataAddMuseum(MuseumJson[] museumJsons) {
         Selenide.open(MainPage.PAGE_URL, MainPage.class);
@@ -130,7 +117,7 @@ public class MuseumTests extends BaseWebTest{
 
         new MainPage()
                 .waitForPageLoaded()
-                .toLoginPageDelete() // delete
+                .toMainPageByLoginBtn()
                 .toMuseumPageFromContent();
         new MuseumPage()
                 .waitForPageLoaded()
@@ -149,12 +136,12 @@ public class MuseumTests extends BaseWebTest{
 
     @Test
     @DisplayName("Title/city/description can`t be longer than 3/10/3 characters")
-    @ApiLogin(user = @TestUser) //не регает, только поле нажатия войти заходит
+    @ApiLogin(user = @TestUser)
     void checkInvalideDataForAddArtistDisplayedError() {
         Selenide.open(MainPage.PAGE_URL, MainPage.class);
         new MainPage()
                 .waitForPageLoaded()
-                .toLoginPageDelete() // delete
+                .toMainPageByLoginBtn()
                 .toMuseumPageFromContent();
         new MuseumPage()
                 .waitForPageLoaded()

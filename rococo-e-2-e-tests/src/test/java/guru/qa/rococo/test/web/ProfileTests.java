@@ -1,5 +1,6 @@
 package guru.qa.rococo.test.web;
 
+import com.codeborne.selenide.Selenide;
 import guru.qa.rococo.jupiter.annotation.ApiLogin;
 
 import guru.qa.rococo.jupiter.annotation.TestUser;
@@ -20,10 +21,12 @@ public class ProfileTests extends BaseWebTest {
 
     @Test
     @DisplayName("Add avatar")
-    @ApiLogin(user = @TestUser) //не регает, только поле нажатия войти заходит
+    @ApiLogin(user = @TestUser)
     void avatarShouldBeDisplayedInMainPage() {
+        Selenide.open(MainPage.PAGE_URL, MainPage.class);
+
         new MainPage()
-                .toLoginPageDelete() // delete
+                .toMainPageByLoginBtn()
                 .goToProfile();
         new ProfilePage()
                 .waitForPageLoaded()
@@ -36,11 +39,12 @@ public class ProfileTests extends BaseWebTest {
 
     @Test
     @DisplayName("Avatar not updated due to size ")
-    @ApiLogin(user = @TestUser) //не регает, только поле нажатия войти заходит
-    void avatarNotUpdateFailedMessageDisplayed(UserJson user) {
-        System.out.println(user.username());
+    @ApiLogin(user = @TestUser)
+    void avatarNotUpdateFailedMessageDisplayed() {
+        Selenide.open(MainPage.PAGE_URL, MainPage.class);
+
         new MainPage()
-                .toLoginPageDelete() // delete
+                .toMainPageByLoginBtn()
                 .goToProfile();
         new ProfilePage()
                 .waitForPageLoaded()
@@ -53,11 +57,12 @@ public class ProfileTests extends BaseWebTest {
 
     @Test
     @DisplayName("Profile button closing profile")
-    @ApiLogin(user = @TestUser) //не регает, только поле нажатия войти заходит
+    @ApiLogin(user = @TestUser)
     void checkCloseBtnDisappiarProfile(UserJson user) {
-        System.out.println(user.username());
+        Selenide.open(MainPage.PAGE_URL, MainPage.class);
+
         new MainPage()
-                .toLoginPageDelete() // delete
+                .toMainPageByLoginBtn()
                 .goToProfile();
         new ProfilePage()
                 .waitForPageLoaded()
@@ -66,12 +71,12 @@ public class ProfileTests extends BaseWebTest {
     }
 
     @Test
-    @DisplayName("Profile go from unauthorization zone")
-    @ApiLogin(user = @TestUser) //не регает, только поле нажатия войти заходит
-    void checkGoToUnAuthorizationZoneFromProfile(UserJson user) {
-        System.out.println(user.username());
+    @DisplayName("Profile go from authorization zone")
+    @ApiLogin(user = @TestUser)
+    void checkGoToUnAuthorizationZoneFromProfile() {
+        Selenide.open(MainPage.PAGE_URL, MainPage.class);
         new MainPage()
-                .toLoginPageDelete() // delete
+                .toMainPageByLoginBtn()
                 .goToProfile();
         new ProfilePage()
                 .waitForPageLoaded()
@@ -84,11 +89,12 @@ public class ProfileTests extends BaseWebTest {
 
     @ParameterizedTest
     @DisplayName("Updated firstname ")
-    @ApiLogin(user = @TestUser) //не регает, только поле нажатия войти заходит
+    @ApiLogin(user = @TestUser)
     @MethodSource("testCasesFirstname")
     void checkFirstnameBeOrNotBeUpdatedMessageDisplayed(String name, Msg massage) {
+        Selenide.open(MainPage.PAGE_URL, MainPage.class);
         new MainPage()
-                .toLoginPageDelete() // delete
+                .toMainPageByLoginBtn()
                 .goToProfile();
         new ProfilePage()
                 .waitForPageLoaded()
@@ -99,11 +105,12 @@ public class ProfileTests extends BaseWebTest {
 
     @ParameterizedTest
     @DisplayName("Updated lastname")
-    @ApiLogin(user = @TestUser) //не регает, только поле нажатия войти заходит
+    @ApiLogin(user = @TestUser)
     @MethodSource("testCasesLastname")
     void checkLastnameBeUpdateFailedMessageDisplayed(String name, Msg massage) {
+        Selenide.open(MainPage.PAGE_URL, MainPage.class);
         new MainPage()
-                .toLoginPageDelete() // delete
+                .toMainPageByLoginBtn()
                 .goToProfile();
         new ProfilePage()
                 .waitForPageLoaded()
