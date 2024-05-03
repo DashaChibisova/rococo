@@ -47,7 +47,7 @@ public abstract class CreatePaintingExtension implements BeforeEachCallback, Par
     @Override
     public PaintingJson[] resolveParameter(ParameterContext parameterContext, ExtensionContext extensionContext) throws ParameterResolutionException {
         List<PaintingJson> paintingJsons = extensionContext.getStore(CREATE_PAINTING_NAMESPACE).get(extensionContext.getUniqueId(), List.class);
-        if (parameterContext.getParameter().getType().isAssignableFrom(MuseumJson[].class)) {
+        if (parameterContext.getParameter().getType().isAssignableFrom(PaintingJson[].class)) {
             return paintingJsons.stream().toList().toArray(new PaintingJson[0]);
         } else {
             return new PaintingJson[]{paintingJsons.get(0)};

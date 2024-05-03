@@ -3,12 +3,10 @@ package guru.qa.rococo.db.repository;
 import guru.qa.rococo.db.EmfProvider;
 import guru.qa.rococo.db.jpa.JpaService;
 import guru.qa.rococo.db.jpa.ThreadLocalEntityManager;
-import guru.qa.rococo.db.model.ArtistEntity;
 import guru.qa.rococo.db.model.CountryEntity;
 import guru.qa.rococo.db.model.MuseumEntity;
 import io.qameta.allure.Step;
 
-import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -45,6 +43,11 @@ public class MuseumRepositoryHibernate extends JpaService implements MuseumRepos
                 .setParameter("title", title)
                 .getSingleResult();
 
+    }
+
+    @Override
+    public MuseumEntity findMuseumById(UUID id) {
+        return entityManager(MUSEUM).find(MuseumEntity.class, id);
     }
 
     @Step("Find museum by title")

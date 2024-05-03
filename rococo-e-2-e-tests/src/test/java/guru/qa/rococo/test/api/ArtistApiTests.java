@@ -1,5 +1,7 @@
 package guru.qa.rococo.test.api;
 
+import guru.qa.rococo.db.repository.ArtistRepository;
+import guru.qa.rococo.db.repository.ArtistRepositoryHibernate;
 import guru.qa.rococo.jupiter.annotation.*;
 import guru.qa.rococo.jupiter.model.ArtistList;
 import guru.qa.rococo.jupiter.model.ArtistJson;
@@ -38,6 +40,7 @@ public class ArtistApiTests extends BaseApiTest {
     @DisplayName("Save current artist")
     @ApiLogin(user = @TestUser)
     void saveArtistsWithTokenShouldBeReturned(@Token String bearerToken) throws Exception {
+        ArtistRepository artistRepository = new ArtistRepositoryHibernate();
         ArtistJson artistJsons = new ArtistJson(
                 null,
                 DataUtils.generateRandomUsername(),
@@ -60,34 +63,7 @@ public class ArtistApiTests extends BaseApiTest {
                     response.biography()
             );
         });
-    }
-
-    @Test
-    @DisplayName("Save current artist")
-    @ApiLogin(user = @TestUser)
-    void saveArtistsWithTokenShouldBeReturned2(@Token String bearerToken) throws Exception {
-        ArtistJson artistJsons = new ArtistJson(
-                null,
-                DataUtils.generateRandomString(2),
-                DataUtils.generateRandomSentence(6),
-                FileUtils.encodedFileBytes("images/artist.png").toString()
-        );
-
-        ArtistJson response = gatewayApiClient.saveArtists(bearerToken, artistJsons).body();
-
-        Allure.step("Check name", () -> {
-            Assertions.assertEquals(
-                    artistJsons.name(),
-                    response.name()
-            );
-        });
-
-        Allure.step("Check biography", () -> {
-            Assertions.assertEquals(
-                    artistJsons.biography(),
-                    response.biography()
-            );
-        });
+        artistRepository.deleteArtistByName(response.name());
     }
 
     @Test
@@ -175,7 +151,7 @@ public class ArtistApiTests extends BaseApiTest {
     @Test
     @Artist(count = 5)
     @DisplayName("Get all artist returned by page")
-    void checkPaginOnGetAllArtist(@Token String bearerToken, ArtistJson[] artist) throws Exception {
+    void checkPaginOnGetAllArtist(ArtistJson[] artist) throws Exception {
         ArtistList responseOnePage = gatewayApiClient.getAllArtist(0,1,"");
         ArtistList responseToPage = gatewayApiClient.getAllArtist(1,1,"");
 

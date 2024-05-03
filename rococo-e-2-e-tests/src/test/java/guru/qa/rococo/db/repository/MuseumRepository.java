@@ -1,6 +1,5 @@
 package guru.qa.rococo.db.repository;
 
-import guru.qa.rococo.db.model.ArtistEntity;
 import guru.qa.rococo.db.model.CountryEntity;
 import guru.qa.rococo.db.model.MuseumEntity;
 
@@ -13,6 +12,8 @@ public interface MuseumRepository {
     void deleteInMuseumById(UUID id);
 
     MuseumEntity findMuseumByTitle(String title);
+
+    MuseumEntity findMuseumById(UUID id);
 
     CountryEntity findCountryByName(String name);
 

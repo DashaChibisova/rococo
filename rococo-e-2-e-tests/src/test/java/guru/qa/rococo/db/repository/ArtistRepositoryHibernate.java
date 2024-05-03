@@ -45,6 +45,11 @@ public class ArtistRepositoryHibernate extends JpaService implements ArtistRepos
 
     }
 
+    @Override
+    public ArtistEntity findArtistById(UUID id) {
+        return entityManager(ARTIST).find(ArtistEntity.class, id);
+    }
+
     @Step("Delete artist by name")
     @Override
     public void deleteArtistByName(String name) {

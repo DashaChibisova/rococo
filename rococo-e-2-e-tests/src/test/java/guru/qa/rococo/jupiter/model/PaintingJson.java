@@ -2,6 +2,8 @@ package guru.qa.rococo.jupiter.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import guru.qa.rococo.db.model.PaintingEntity;
+import guru.qa.rococo.db.repository.MuseumRepository;
+import guru.qa.rococo.db.repository.MuseumRepositoryHibernate;
 
 import javax.annotation.Nonnull;
 import java.nio.charset.StandardCharsets;
