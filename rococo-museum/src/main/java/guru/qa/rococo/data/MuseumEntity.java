@@ -13,7 +13,6 @@ import java.util.UUID;
 @Setter
 @Entity
 @Table(name = "museum", catalog = "rococo-museum")
-
 public class MuseumEntity implements Serializable {
 
     @Id

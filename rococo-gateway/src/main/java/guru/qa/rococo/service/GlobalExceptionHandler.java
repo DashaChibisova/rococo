@@ -1,6 +1,5 @@
 package guru.qa.rococo.service;
 
-import guru.qa.rococo.ex.NoRestResponseException;
 import guru.qa.rococo.model.ErrorJson;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpHeaders;

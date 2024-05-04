@@ -2,7 +2,6 @@ package guru.qa.rococo.service;
 
 import guru.qa.rococo.data.repository.CountryRepository;
 import guru.qa.rococo.model.CountryJson;
-import guru.qa.rococo.model.MuseumJson;
 import jakarta.annotation.Nonnull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,8 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.UUID;
-
 
 @Component
 public class CountryService {
