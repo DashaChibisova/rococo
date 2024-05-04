@@ -117,6 +117,7 @@ Dmitriis-MacBook-Pro rococo % vi /etc/hosts
 # when the system is booting.  Do not change this entry.
 ##
 127.0.0.1       localhost
+127.0.0.1       allure
 127.0.0.1       client.rococo.dc
 127.0.0.1       auth.rococo.dc
 127.0.0.1       gateway.rococo.dc
@@ -158,4 +159,4 @@ Dmitriis-MacBook-Pro  niffler % bash docker-compose-e2e.sh
 
 #### 3. Selenoid UI доступен по адресу: http://localhost:9090/
 
-#### 4. Allure доступен по адресу: http://localhost:5050/allure-docker-service/projects/niffler-e-2-e-tests/reports/latest/index.html
+#### 4. Allure доступен по адресу: http://localhost:5050/allure-docker-service/projects/rococo-e-2-e-tests/reports/latest/index.html

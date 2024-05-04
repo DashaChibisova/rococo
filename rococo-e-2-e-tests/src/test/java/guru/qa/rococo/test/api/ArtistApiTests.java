@@ -150,11 +150,9 @@ public class ArtistApiTests extends BaseApiTest {
 
     @Test
     @Artist(count = 5)
-    @DisplayName("Get all artist returned by page")
-    void checkPaginOnGetAllArtist(ArtistJson[] artist) throws Exception {
-        ArtistList responseOnePage = gatewayApiClient.getAllArtist(0,1,"");
-        ArtistList responseToPage = gatewayApiClient.getAllArtist(1,1,"");
-
+    @DisplayName("Search artist by name")
+    void checkSearchArtistByName(ArtistJson[] artist) throws Exception {
+        ArtistList responseOnePage = gatewayApiClient.getAllArtist(0,1,artist[0].name());
 
         Allure.step("Check size one page", () -> {
             Assertions.assertEquals(
@@ -164,29 +162,12 @@ public class ArtistApiTests extends BaseApiTest {
             );
         });
 
-        Allure.step("Check id one page", () -> {
+        Allure.step("Check name", () -> {
             Assertions.assertEquals(
-                    artist[0].id(),
-                    responseOnePage.content().get(0).id()
+                    artist[0].name(),
+                    responseOnePage.content().get(0).name()
 
             );
         });
-
-        Allure.step("Check size two page", () -> {
-            Assertions.assertEquals(
-                    1,
-                    responseToPage.content().size()
-
-            );
-        });
-
-        Allure.step("Check id two page", () -> {
-            Assertions.assertEquals(
-                    artist[1].id(),
-                    responseToPage.content().get(0).id()
-
-            );
-        });
-
     }
 }

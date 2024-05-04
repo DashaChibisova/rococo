@@ -151,7 +151,6 @@ public class ArtistTests extends BaseWebTest{
 
     }
 
-    //ЕДоделать как сделаю добавление картин!!!!
     @Test
     @DisplayName("Check add painting artist")
     @ApiLogin(user = @TestUser)

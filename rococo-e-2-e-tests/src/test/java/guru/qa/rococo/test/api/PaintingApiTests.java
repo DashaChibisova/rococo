@@ -220,101 +220,51 @@ public class PaintingApiTests extends BaseApiTest {
 
     @Test
     @TestPainting(count = 5)
-    @DisplayName("Get all painting returned by page")
-    void checkPaginOnGetAllPainting(PaintingJson[] paintingJsons) throws Exception {
-        PaintingList responseOnePage = gatewayApiClient.getAllPainting(0,1,"");
-        PaintingList responseToPage = gatewayApiClient.getAllPainting(1,1,"");
-
+    @DisplayName("Search all painting returned")
+    void checkSearchPaintingByTitle(PaintingJson[] paintingJsons) throws Exception {
+        PaintingList responseName = gatewayApiClient.getAllPainting(0,1,paintingJsons[0].title());
 
         Allure.step("Check size one page", () -> {
             Assertions.assertEquals(
                     1,
-                    responseOnePage.content().size()
+                    responseName.content().size()
 
             );
         });
 
-        Allure.step("Check id one page", () -> {
+        Allure.step("Check title", () -> {
             Assertions.assertEquals(
-                    paintingJsons[0].id(),
-                    responseOnePage.content().get(0).id()
+                    paintingJsons[0].title(),
+                    responseName.content().get(0).title()
 
             );
         });
+    }
 
-        Allure.step("Check size two page", () -> {
+    @Test
+    @DisplayName("Returned painting by author")
+    @ApiLogin(user = @TestUser)
+    @TestPainting(count = 5)
+    void paintingByAuthorShouldBeReturned(PaintingJson[] paintingJsons) throws Exception {
+
+        PaintingList painting = gatewayApiClient.getPaintingByAuthor(UUID.fromString(paintingJsons[0].artist()), 0, 2);
+
+        Allure.step("Check size one page", () -> {
             Assertions.assertEquals(
                     1,
-                    responseToPage.content().size()
+                    painting.content().size()
 
             );
         });
 
-        Allure.step("Check id two page", () -> {
+        Allure.step("Check id painting", () -> {
             Assertions.assertEquals(
-                    paintingJsons[1].id(),
-                    responseToPage.content().get(0).id()
-
+                    UUID.fromString(paintingJsons[0].artist()),
+                    painting.content().get(0).artist().id()
             );
         });
 
     }
-
-//    @Test
-//    @DisplayName("Returned painting by author")
-//    @ApiLogin(user = @TestUser)
-//    @Artist
-//    @TestMuseum
-//    void paintingByAuthorShouldBeReturned(@Token String bearerToken, MuseumJson[] museumJsons, ArtistJson[] artistJsons) throws Exception {
-//        PaintingRepository paintingRepository = new PaintingRepositoryHibernate();
-//        PaintingJson paintingJson = new PaintingJson(
-//                null,
-//                DataUtils.generateRandomUsername(),
-//                DataUtils.generateRandomSentence(6),
-//                FileUtils.encodedFileBytes("images/painting.png").toString(),
-//                null,
-//                null
-//        );
-//        PaintingResponce paintingOne = paintingJsonToPaintingResponce(museumJsons[0], artistJsons[0], paintingJson);
-//        PaintingResponce paintingTwo = paintingJsonToPaintingResponce(museumJsons[0], artistJsons[0], paintingJson);
-//        PaintingResponce paintingResponceOnePage = gatewayApiClient.savePainting(bearerToken, paintingOne).body();
-//        PaintingResponce paintingResponceTwoPage = gatewayApiClient.savePainting(bearerToken, paintingTwo).body();
-//        PaintingList paintingListOnePage = gatewayApiClient.getPaintingByAuthor(artistJsons[0].id(), 0, 1);
-//        PaintingList paintingListTwoPage = gatewayApiClient.getPaintingByAuthor(artistJsons[0].id(), 1, 1);
-//
-//        Allure.step("Check size one page", () -> {
-//            Assertions.assertEquals(
-//                    1,
-//                    paintingListOnePage.content().size()
-//
-//            );
-//        });
-//
-//        Allure.step("Check id one page painting", () -> {
-//            Assertions.assertEquals(
-//                    artistJsons[0].id(),
-//                    paintingListOnePage.content().get(0).id()
-//            );
-//        });
-//
-//        Allure.step("Check size two page", () -> {
-//            Assertions.assertEquals(
-//                    1,
-//                    paintingListTwoPage.content().size()
-//
-//            );
-//        });
-//
-//        Allure.step("Check id two page painting", () -> {
-//            Assertions.assertEquals(
-//                    artistJsons[0].id(),
-//                    paintingListTwoPage.content().get(1).id()
-//            );
-//        });
-//
-//        paintingRepository.deletePaintingByTitle(paintingResponceOnePage.title());
-//        paintingRepository.deletePaintingByTitle(paintingResponceTwoPage.title());
-//    }
 
 
     private PaintingResponce paintingJsonToPaintingResponce(MuseumJson museumJson, ArtistJson artistJson, PaintingJson paintingJson){

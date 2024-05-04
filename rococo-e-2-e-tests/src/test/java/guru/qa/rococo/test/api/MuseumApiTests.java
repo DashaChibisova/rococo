@@ -159,44 +159,25 @@ public class MuseumApiTests extends BaseApiTest {
 
     @Test
     @TestMuseum(count = 5)
-    @DisplayName("Get all museum returned by page")
-    void checkPaginOnGetAllMuseum(MuseumJson[] museumJsons) throws Exception {
-        MuseumList responseOnePage = gatewayApiClient.getAllMuseum(0,1,"");
-        MuseumList responseToPage = gatewayApiClient.getAllMuseum(1,1,"");
-
+    @DisplayName("Search museum by title")
+    void checkSearchMuseumByTitle(MuseumJson[] museumJsons) throws Exception {
+        MuseumList responseByTitle = gatewayApiClient.getAllMuseum(0,1,museumJsons[0].title());
 
         Allure.step("Check size one page", () -> {
             Assertions.assertEquals(
                     1,
-                    responseOnePage.content().size()
+                    responseByTitle.content().size()
 
             );
         });
 
-        Allure.step("Check id one page", () -> {
+        Allure.step("Check title", () -> {
             Assertions.assertEquals(
-                    museumJsons[0].id(),
-                    responseOnePage.content().get(0).id()
+                    museumJsons[0].title(),
+                    responseByTitle.content().get(0).title()
 
             );
         });
-
-        Allure.step("Check size two page", () -> {
-            Assertions.assertEquals(
-                    1,
-                    responseToPage.content().size()
-
-            );
-        });
-
-        Allure.step("Check id two page", () -> {
-            Assertions.assertEquals(
-                    museumJsons[1].id(),
-                    responseToPage.content().get(0).id()
-
-            );
-        });
-
     }
 
     @Test
