@@ -14,8 +14,8 @@ public class LoginPage extends BasePage<LoginPage> {
     private final SelenideElement loginInput = $("input[name='username']");
     private final SelenideElement passwordInput = $("input[name='password']");
     private final SelenideElement submitBtn = $("button[type='submit']");
-    private final SelenideElement registerBtn = $("a[href*='/register']"); //*???
-    private final SelenideElement formLogin = $("[action= '/login']"); //*???
+    private final SelenideElement registerBtn = $("a[href*='/register']");
+    private final SelenideElement formLogin = $("[action= '/login']");
 
     @Step("Check that page is loaded")
     public LoginPage waitForPageLoaded() {

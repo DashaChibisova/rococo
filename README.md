@@ -84,8 +84,8 @@ Dmitriis-MacBook-Pro rococo-client % npm run build:dev
 - Запустить сервис auth
 
 ```posh
-Dmitriis-MacBook-Pro niffler % cd rococo-auth
-Dmitriis-MacBook-Pro niffler-auth % gradle bootRun --args='--spring.profiles.active=local'
+Dmitriis-MacBook-Pro rococo % cd rococo-auth
+Dmitriis-MacBook-Pro rococo-auth % gradle bootRun --args='--spring.profiles.active=local'
 ```
 
 Или просто перейдя к main-классу приложения RococoAuthApplication выбрать run в IDEA (предварительно удостовериться что
@@ -117,10 +117,11 @@ Dmitriis-MacBook-Pro rococo % vi /etc/hosts
 # when the system is booting.  Do not change this entry.
 ##
 127.0.0.1       localhost
-127.0.0.1       allure
 127.0.0.1       client.rococo.dc
 127.0.0.1       auth.rococo.dc
 127.0.0.1       gateway.rococo.dc
+127.0.0.1       allure
+127.0.0.1       selenoid
 ```
 
 #### 5. Перейти в корневой каталог проекта
@@ -154,7 +155,7 @@ Dmitriis-MacBook-Pro rococo % cd rococo
 для REST:
 
 ```posh
-Dmitriis-MacBook-Pro  niffler % bash docker-compose-e2e.sh
+Dmitriis-MacBook-Pro  rococo % bash docker-compose-e2e.sh
 ```
 
 #### 3. Selenoid UI доступен по адресу: http://localhost:9090/

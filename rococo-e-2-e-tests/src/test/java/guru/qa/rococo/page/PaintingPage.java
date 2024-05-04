@@ -13,7 +13,7 @@ import static guru.qa.rococo.condition.PhotoCondition.photoFromClasspath;
 public class PaintingPage extends BasePage<PaintingPage> {
     public static final String PAGE_URL = CFG.frontUrl() + "/painting";
 
-    private final SelenideElement pageContent = $("#page-content"); //id
+    private final SelenideElement pageContent = $("#page-content");
     private final SelenideElement addPaintingBtn = $("#page-content .variant-filled-primary");
     private final SelenideElement paintingDataTable = $("#page-content .grid");
     private final SelenideElement searchLine = $("input[type='search']");

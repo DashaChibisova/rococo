@@ -3,19 +3,18 @@ package guru.qa.rococo.page;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
 import static guru.qa.rococo.condition.PhotoCondition.photoFromClasspath;
 
 public class MainPage extends BasePage<MainPage> {
     public static final String PAGE_URL = CFG.frontUrl();
 
-    private final SelenideElement pageContent = $("#page-content"); //id
+    private final SelenideElement pageContent = $("#page-content");
 
-    private final SelenideElement shellHeaderContent = $("#shell-header"); //id $(".app-bar")
+    private final SelenideElement shellHeaderContent = $("#shell-header");
 
-    private final SelenideElement paintingBtn = $("#shell-header a[href*='/painting']"); //*???
+    private final SelenideElement paintingBtn = $("#shell-header a[href*='/painting']");
     private final SelenideElement artistBtn = $("li:has(a[href*='/artist'])");
     private final SelenideElement museumBtn = $("#shell-header a[href*='/museum']");
 
@@ -46,7 +45,6 @@ public class MainPage extends BasePage<MainPage> {
         return new ArtistPage();
     }
 
-    //отличие от museumBtn
     @Step("Open museum page from content")
     public MuseumPage toMuseumPageFromContent() {
         museumBtn.shouldHave(text("Музеи")).click();
@@ -87,13 +85,6 @@ public class MainPage extends BasePage<MainPage> {
     public MainPage toMainPageByLoginBtn() {
         submitBtn.shouldHave(text("Войти")).click();
         avatarBtn.shouldBe(visible);
-        return this;
-    }
-
-
-    @Step("Light switch click")
-    public MainPage lightSwitchClick() {
-        lightSwitch.click();
         return this;
     }
 

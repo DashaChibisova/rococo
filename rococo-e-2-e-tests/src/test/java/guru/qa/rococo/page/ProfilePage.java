@@ -18,7 +18,7 @@ public class ProfilePage extends BasePage<ProfilePage> {
 
     private final SelenideElement avatarInput = $("input[type='file']");
 
-    private final SelenideElement profileCard = $(".card");//??
+    private final SelenideElement profileCard = $(".card");
 
     @Step("Check that page is loaded")
     public ProfilePage waitForPageLoaded() {
