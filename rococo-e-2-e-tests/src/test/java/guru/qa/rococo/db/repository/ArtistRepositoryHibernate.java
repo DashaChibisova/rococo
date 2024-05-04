@@ -5,7 +5,6 @@ import guru.qa.rococo.db.jpa.JpaService;
 import guru.qa.rococo.db.jpa.ThreadLocalEntityManager;
 import guru.qa.rococo.db.model.ArtistEntity;
 import io.qameta.allure.Step;
-import jakarta.persistence.NoResultException;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -34,14 +33,14 @@ public class ArtistRepositoryHibernate extends JpaService implements ArtistRepos
 
     @Step("Find artist by name")
     @Override
-  public ArtistEntity findArtistByName(String name) {
-          return entityManager(ARTIST)
-                  .createQuery("""
-            FROM ArtistEntity 
-            WHERE name = :name
-            """, ArtistEntity.class)
-                  .setParameter("name", name)
-                  .getSingleResult();
+    public ArtistEntity findArtistByName(String name) {
+        return entityManager(ARTIST)
+                .createQuery("""
+                        FROM ArtistEntity 
+                        WHERE name = :name
+                        """, ArtistEntity.class)
+                .setParameter("name", name)
+                .getSingleResult();
 
     }
 

@@ -24,7 +24,7 @@ public class ArtistTests extends BaseWebTest{
 
     @Test
     @DisplayName("Add artist without authorization not allowed")
-    @Artist()
+    @TestArtist()
     @TestPainting()
     void checkWithoutAuthorizationNotAddArtist(ArtistJson[] artistJson) {
         Selenide.open(ArtistPage.PAGE_URL, ArtistPage.class);
@@ -39,7 +39,7 @@ public class ArtistTests extends BaseWebTest{
 
     @Test
     @DisplayName("Check search artist")
-    @Artist(count = 3)
+    @TestArtist(count = 3)
     void checkSearchArtist(ArtistJson[] artistJson) {
         String artistSearchName = artistJson[0].name();
 
@@ -104,7 +104,7 @@ public class ArtistTests extends BaseWebTest{
     @Test
     @DisplayName("Check update name, biography, photo")
     @ApiLogin(user = @TestUser)
-    @Artist()
+    @TestArtist()
     void checkUpdateDataAddArtist(ArtistJson[] artistJson) {
         Selenide.open(MainPage.PAGE_URL, MainPage.class);
         String name = DataUtils.generateRandomName();
@@ -154,7 +154,7 @@ public class ArtistTests extends BaseWebTest{
     @Test
     @DisplayName("Check add painting artist")
     @ApiLogin(user = @TestUser)
-    @Artist()
+    @TestArtist()
     @TestMuseum
     void checkAddPaintingOnArtist(ArtistJson[] artistJson, MuseumJson[] museumJsons) {
         PaintingRepository paintingRepository = new PaintingRepositoryHibernate();

@@ -18,7 +18,7 @@ public class ArtistApiTests extends BaseApiTest {
 
     @Test
     @DisplayName("Returned current artist")
-    @Artist()
+    @TestArtist()
     void currentArtistShouldBeReturned(ArtistJson[] artistJsons) throws Exception {
         ArtistJson response = gatewayApiClient.currentArtist(artistJsons[0].id());
         Allure.step("Check name", () -> {
@@ -88,7 +88,7 @@ public class ArtistApiTests extends BaseApiTest {
     @Test
     @DisplayName("Update artist")
     @ApiLogin(user = @TestUser)
-    @Artist()
+    @TestArtist()
     void userUpdateInfoArtistWithTokenShouldBeReturned(@Token String bearerToken, ArtistJson[] artist) throws Exception {
         String newName = DataUtils.generateRandomUsername();
         String newBiography = artist[0].biography();
@@ -125,7 +125,7 @@ public class ArtistApiTests extends BaseApiTest {
     }
 
     @Test
-    @Artist()
+    @TestArtist()
     @DisplayName("Dont update artist without authorization")
     void userUpdateInfoArtistWithoutTokenNotAllowed(ArtistJson[] artist) throws Exception {
         String newName = DataUtils.generateRandomUsername();
@@ -149,7 +149,7 @@ public class ArtistApiTests extends BaseApiTest {
     }
 
     @Test
-    @Artist(count = 5)
+    @TestArtist(count = 5)
     @DisplayName("Search artist by name")
     void checkSearchArtistByName(ArtistJson[] artist) throws Exception {
         ArtistList responseOnePage = gatewayApiClient.getAllArtist(0,1,artist[0].name());

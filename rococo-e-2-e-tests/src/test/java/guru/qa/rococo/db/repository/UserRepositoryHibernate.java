@@ -3,7 +3,6 @@ package guru.qa.rococo.db.repository;
 import guru.qa.rococo.db.EmfProvider;
 import guru.qa.rococo.db.jpa.JpaService;
 import guru.qa.rococo.db.jpa.ThreadLocalEntityManager;
-import guru.qa.rococo.db.model.PaintingEntity;
 import guru.qa.rococo.db.model.UserAuthEntity;
 import guru.qa.rococo.db.model.UserEntity;
 import io.qameta.allure.Step;
@@ -75,9 +74,9 @@ public class UserRepositoryHibernate extends JpaService implements UserRepositor
     public UserAuthEntity findUserAuthByName(String username) {
         return entityManager(AUTH)
                 .createQuery("""
-            FROM UserAuthEntity 
-            WHERE username = :username
-            """, UserAuthEntity.class)
+                        FROM UserAuthEntity 
+                        WHERE username = :username
+                        """, UserAuthEntity.class)
                 .setParameter("username", username)
                 .getSingleResult();
     }
@@ -91,14 +90,15 @@ public class UserRepositoryHibernate extends JpaService implements UserRepositor
     public UserEntity findUserdataByName(String username) {
         return entityManager(USERDATA)
                 .createQuery("""
-            FROM UserEntity 
-            WHERE username = :username
-            """, UserEntity.class)
+                        FROM UserEntity 
+                        WHERE username = :username
+                        """, UserEntity.class)
                 .setParameter("username", username)
-                .getSingleResult();    }
+                .getSingleResult();
+    }
 
     @Override
     public void deleteUserdataByName(String username) {
-    deleteInUserdataById(findUserdataByName(username).getId());
+        deleteInUserdataById(findUserdataByName(username).getId());
     }
 }

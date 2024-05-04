@@ -14,5 +14,5 @@ public record MuseumResponce(
         @JsonProperty("photo")
         String photo,
         @JsonProperty("geo")
-        GeoJson geo)  {
+        GeoJson geo) {
 }

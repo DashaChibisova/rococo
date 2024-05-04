@@ -13,7 +13,7 @@ import org.junit.jupiter.api.parallel.Isolated;
 public class PaginApiTests extends BaseApiTest {
 
     @Test
-    @Artist(count = 5)
+    @TestArtist(count = 5)
     @DisplayName("Get all artist returned by page")
     void checkPaginOnGetAllArtist(ArtistJson[] artist) throws Exception {
         ArtistList responseOnePage = gatewayApiClient.getAllArtist(0,1,"");

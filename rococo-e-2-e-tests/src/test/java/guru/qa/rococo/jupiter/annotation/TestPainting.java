@@ -17,7 +17,7 @@ public @interface TestPainting {
 
     TestMuseum museum() default @TestMuseum(fake = true);
 
-    Artist artist() default @Artist(fake = true);
+    TestArtist artist() default @TestArtist(fake = true);
 
     int count() default 1;
 }

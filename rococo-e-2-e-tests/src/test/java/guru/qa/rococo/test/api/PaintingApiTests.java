@@ -62,7 +62,7 @@ public class PaintingApiTests extends BaseApiTest {
     @DisplayName("Save current painting")
     @ApiLogin(user = @TestUser)
     @TestMuseum
-    @Artist
+    @TestArtist
     void savePaintingWithTokenShouldBeReturned(@Token String bearerToken, MuseumJson[] museumJsons, ArtistJson[] artistJsons) throws Exception {
         PaintingRepository paintingRepository = new PaintingRepositoryHibernate();
         PaintingJson paintingJson = new PaintingJson(
@@ -118,7 +118,7 @@ public class PaintingApiTests extends BaseApiTest {
     @Test
     @DisplayName("Dont save painting without authorization")
     @TestMuseum
-    @Artist
+    @TestArtist
     void savePaintingWithoutTokenNotAllowed(MuseumJson[] museumJsons, ArtistJson[] artistJsons) throws Exception {
 
         PaintingJson paintingJson = new PaintingJson(

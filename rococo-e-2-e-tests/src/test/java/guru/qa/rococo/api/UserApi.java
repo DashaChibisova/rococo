@@ -9,5 +9,4 @@ public interface UserApi {
 
     @GET("/currentUser")
     Call<UserJson> currentUser(@Query("username") String username);
-
 }

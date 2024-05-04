@@ -12,17 +12,17 @@ import org.apache.commons.lang3.StringUtils;
 
 public class AllureAppender extends StdoutLogger {
 
-  private final String templateName = "sql-query.ftl";
-  private final AttachmentProcessor<AttachmentData> attachmentProcessor = new DefaultAttachmentProcessor();
+    private final String templateName = "sql-query.ftl";
+    private final AttachmentProcessor<AttachmentData> attachmentProcessor = new DefaultAttachmentProcessor();
 
-  @Override
-  public void logSQL(int connectionId, String now, long elapsed, Category category, String prepared, String sql, String url) {
-    if (StringUtils.isNoneEmpty(sql)) {
-      SqlAttachment attachment = new SqlAttachment(
-          sql.split("\\s+")[0] + " query to :" + StringUtils.substringBefore(url, "?"),
-          SqlFormatter.of(Dialect.PlSql).format(sql)
-      );
-      attachmentProcessor.addAttachment(attachment, new FreemarkerAttachmentRenderer(templateName));
+    @Override
+    public void logSQL(int connectionId, String now, long elapsed, Category category, String prepared, String sql, String url) {
+        if (StringUtils.isNoneEmpty(sql)) {
+            SqlAttachment attachment = new SqlAttachment(
+                    sql.split("\\s+")[0] + " query to :" + StringUtils.substringBefore(url, "?"),
+                    SqlFormatter.of(Dialect.PlSql).format(sql)
+            );
+            attachmentProcessor.addAttachment(attachment, new FreemarkerAttachmentRenderer(templateName));
+        }
     }
-  }
 }

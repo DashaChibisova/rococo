@@ -19,22 +19,22 @@ public interface GatewayApi {
 
     @GET("/api/artist")
     Call<ArtistList> getAllArtist(
-                                 @Query("page") int page, @Query("size") int size,  @Query("name") String name);
+            @Query("page") int page, @Query("size") int size, @Query("name") String name);
 
     @GET("/api/artist/{id}")
     Call<ArtistJson> currentArtist(@Path("id") UUID id);
 
     @PATCH("/api/painting")
     Call<PaintingResponce> updateInfoPainting(@Header("Authorization") String bearerToken,
-                                          @Body PaintingResponce painting);
+                                              @Body PaintingResponce painting);
 
     @POST("/api/painting")
     Call<PaintingResponce> savePainting(@Header("Authorization") String bearerToken,
-                                 @Body PaintingResponce painting);
+                                        @Body PaintingResponce painting);
 
     @GET("/api/painting")
     Call<PaintingList> getAllPainting(
-            @Query("page") int page, @Query("size") int size,  @Query("name") String name);
+            @Query("page") int page, @Query("size") int size, @Query("name") String name);
 
     @GET("/api/painting/{id}")
     Call<PaintingResponce> currentPainting(@Path("id") UUID id);
@@ -43,7 +43,7 @@ public interface GatewayApi {
     Call<PaintingList> getPaintingByAuthor(@Path("id") UUID id, @Query("page") int page, @Query("size") int size);
 
     @GET("/api/museum")
-    Call<MuseumList> getAllMuseum(@Query("page") int page, @Query("size") int size,  @Query("name") String title);
+    Call<MuseumList> getAllMuseum(@Query("page") int page, @Query("size") int size, @Query("name") String title);
 
     @GET("/api/museum/{id}")
     Call<MuseumResponce> getCurrentMuseum(@Path("id") UUID id);

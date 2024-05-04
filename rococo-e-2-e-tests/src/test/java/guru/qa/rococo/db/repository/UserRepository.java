@@ -1,6 +1,5 @@
 package guru.qa.rococo.db.repository;
 
-import guru.qa.rococo.db.model.PaintingEntity;
 import guru.qa.rococo.db.model.UserAuthEntity;
 import guru.qa.rococo.db.model.UserEntity;
 

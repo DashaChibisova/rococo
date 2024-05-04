@@ -1,6 +1,6 @@
 package guru.qa.rococo.jupiter.extension;
 
-import guru.qa.rococo.jupiter.annotation.Artist;
+import guru.qa.rococo.jupiter.annotation.TestArtist;
 import guru.qa.rococo.jupiter.model.ArtistJson;
 import org.junit.jupiter.api.extension.*;
 import org.junit.platform.commons.support.AnnotationSupport;
@@ -18,12 +18,12 @@ public abstract class CreateArtistExtension implements BeforeEachCallback, Param
 
     @Override
     public void beforeEach(ExtensionContext extensionContext) throws Exception {
-        Optional<Artist> artist = AnnotationSupport.findAnnotation(
+        Optional<TestArtist> artist = AnnotationSupport.findAnnotation(
                 extensionContext.getRequiredTestMethod(),
-                Artist.class
+                TestArtist.class
         );
         if (artist.isPresent()) {
-            Artist artistData = artist.get();
+            TestArtist artistData = artist.get();
             List<ArtistJson> artistJsonList = new ArrayList<>();
 
 
@@ -35,13 +35,13 @@ public abstract class CreateArtistExtension implements BeforeEachCallback, Param
         }
     }
 
-    public abstract ArtistJson createArtist(Artist artist) throws IOException;
+    public abstract ArtistJson createArtist(TestArtist artist) throws IOException;
 
     public abstract void deleteArtist(UUID artistId);
 
     @Override
     public boolean supportsParameter(ParameterContext parameterContext, ExtensionContext extensionContext) throws ParameterResolutionException {
-        return AnnotationSupport.findAnnotation(extensionContext.getRequiredTestMethod(), Artist.class)
+        return AnnotationSupport.findAnnotation(extensionContext.getRequiredTestMethod(), TestArtist.class)
                 .isPresent() &&
                 (parameterContext.getParameter().getType().isAssignableFrom(ArtistJson.class) ||
                         parameterContext.getParameter().getType().isAssignableFrom(ArtistJson[].class));

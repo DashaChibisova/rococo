@@ -11,12 +11,7 @@ import guru.qa.rococo.jupiter.model.MuseumJson;
 import guru.qa.rococo.utils.DataUtils;
 import guru.qa.rococo.utils.FileUtils;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.util.Base64;
 import java.util.UUID;
 
 public class HibernateCreateMuseumExtension extends CreateMuseumExtension {
@@ -39,8 +34,8 @@ public class HibernateCreateMuseumExtension extends CreateMuseumExtension {
                 : museum.country();
 
         byte[] photo = museum.photoPath().isEmpty()
-                ?  FileUtils.encodedFileBytes("images/museum.png")
-                :  FileUtils.encodedFileBytes(museum.photoPath());
+                ? FileUtils.encodedFileBytes("images/museum.png")
+                : FileUtils.encodedFileBytes(museum.photoPath());
 
         CountryEntity countryEntity = museumRepository.findCountryByName(country);
 

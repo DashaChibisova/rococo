@@ -14,58 +14,58 @@ import java.util.stream.Stream;
 
 public class ServerLogsExtension implements SuiteExtension {
 
-  private final String pathToAllureResults = "./build/allure-results";
-  private final ObjectMapper om = new ObjectMapper();
+    private final String pathToAllureResults = "./build/allure-results";
+    private final ObjectMapper om = new ObjectMapper();
 
-  @Override
-  public void afterSuite() {
-    try (Stream<Path> paths = Files.walk(Path.of(pathToAllureResults))) {
-      List<Path> allureResults = paths
-          .filter(Files::isRegularFile)
-          .filter(p -> p.toString().endsWith("-result.json"))
-          .toList();
+    @Override
+    public void afterSuite() {
+        try (Stream<Path> paths = Files.walk(Path.of(pathToAllureResults))) {
+            List<Path> allureResults = paths
+                    .filter(Files::isRegularFile)
+                    .filter(p -> p.toString().endsWith("-result.json"))
+                    .toList();
 
-      for (Path allureResult : allureResults) {
-        try (InputStream is = Files.newInputStream(allureResult)) {
-          JsonNode resultAsJson = om.reader().readTree(is.readAllBytes());
-          if (resultAsJson.get("testCaseName").asText().equals("logTest()")) {
-            ObjectNode authAttachment = createAttachment("auth.log");
-            ObjectNode currencyAttachment = createAttachment("currency.log");
-            ObjectNode gatewayAttachment = createAttachment("gateway.log");
-            ObjectNode spendAttachment = createAttachment("spend.log");
-            ObjectNode userdataAttachment = createAttachment("userdata.log");
+            for (Path allureResult : allureResults) {
+                try (InputStream is = Files.newInputStream(allureResult)) {
+                    JsonNode resultAsJson = om.reader().readTree(is.readAllBytes());
+                    if (resultAsJson.get("testCaseName").asText().equals("logTest()")) {
+                        ObjectNode authAttachment = createAttachment("auth.log");
+                        ObjectNode currencyAttachment = createAttachment("currency.log");
+                        ObjectNode gatewayAttachment = createAttachment("gateway.log");
+                        ObjectNode spendAttachment = createAttachment("spend.log");
+                        ObjectNode userdataAttachment = createAttachment("userdata.log");
 
-            ((ObjectNode) resultAsJson).putArray("attachments")
-                .add(authAttachment)
-                .add(currencyAttachment)
-                .add(gatewayAttachment)
-                .add(spendAttachment)
-                .add(userdataAttachment);
+                        ((ObjectNode) resultAsJson).putArray("attachments")
+                                .add(authAttachment)
+                                .add(currencyAttachment)
+                                .add(gatewayAttachment)
+                                .add(spendAttachment)
+                                .add(userdataAttachment);
 
-            Files.write(allureResult, om.writeValueAsBytes(resultAsJson));
-            break;
-          }
+                        Files.write(allureResult, om.writeValueAsBytes(resultAsJson));
+                        break;
+                    }
 
-        } catch (Exception e) {
-          throw new RuntimeException(e);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-      }
-    } catch (IOException e) {
-      throw new RuntimeException(e);
     }
-  }
 
 
-  private ObjectNode createAttachment(String logName) throws Exception {
-    String sourceName = UUID.randomUUID() + "-attachment";
-    ObjectNode attachment = om.createObjectNode();
-    attachment.put("name", logName);
-    attachment.put("source", sourceName);
+    private ObjectNode createAttachment(String logName) throws Exception {
+        String sourceName = UUID.randomUUID() + "-attachment";
+        ObjectNode attachment = om.createObjectNode();
+        attachment.put("name", logName);
+        attachment.put("source", sourceName);
 
-    Files.copy(
-        Path.of("./" + logName),
-        Path.of(pathToAllureResults + "/" + attachment.get("source").asText())
-    );
-    return attachment;
-  }
+        Files.copy(
+                Path.of("./" + logName),
+                Path.of(pathToAllureResults + "/" + attachment.get("source").asText())
+        );
+        return attachment;
+    }
 }

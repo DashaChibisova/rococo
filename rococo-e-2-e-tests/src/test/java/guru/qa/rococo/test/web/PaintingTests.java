@@ -57,7 +57,7 @@ public class PaintingTests extends BaseWebTest {
     @DisplayName("Check add painting")
     @ApiLogin(user = @TestUser)
     @TestMuseum
-    @Artist
+    @TestArtist
     void checkAddPainting(ArtistJson[] artistJsons, MuseumJson[] museumJsons) {
          PaintingRepository paintingRepository = new PaintingRepositoryHibernate();
 
@@ -139,7 +139,7 @@ public class PaintingTests extends BaseWebTest {
     @Test
     @DisplayName("Name/description can`t be longer than 3/10 characters")
     @ApiLogin(user = @TestUser)
-    @Artist
+    @TestArtist
     @TestMuseum
     void checkInvalideDataForAddPaintingDisplayedError(ArtistJson[] artistJsons, MuseumJson[] museumJsons) {
         Selenide.open(MainPage.PAGE_URL, MainPage.class);

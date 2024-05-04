@@ -37,9 +37,9 @@ public class MuseumRepositoryHibernate extends JpaService implements MuseumRepos
     public MuseumEntity findMuseumByTitle(String title) {
         return entityManager(MUSEUM)
                 .createQuery("""
-            FROM MuseumEntity 
-            WHERE title = :title
-            """, MuseumEntity.class)
+                        FROM MuseumEntity 
+                        WHERE title = :title
+                        """, MuseumEntity.class)
                 .setParameter("title", title)
                 .getSingleResult();
 
@@ -55,9 +55,9 @@ public class MuseumRepositoryHibernate extends JpaService implements MuseumRepos
     public CountryEntity findCountryByName(String name) {
         return entityManager(MUSEUM)
                 .createQuery("""
-            FROM CountryEntity
-            WHERE name = :name
-            """, CountryEntity.class)
+                        FROM CountryEntity
+                        WHERE name = :name
+                        """, CountryEntity.class)
                 .setParameter("name", name)
                 .getSingleResult();
 

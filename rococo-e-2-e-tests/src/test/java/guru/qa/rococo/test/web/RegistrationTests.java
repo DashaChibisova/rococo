@@ -20,7 +20,7 @@ public class RegistrationTests extends BaseWebTest {
     @ParameterizedTest
     @DisplayName("Username/password can`t be longer than 30/50 characters")
     @MethodSource("testCasesLogin")
-    void checkInvalideDataForRegistrationDisplayedError(String username, String password) {
+    void checkInvalidDataForRegistrationDisplayedError(String username, String password) {
         Selenide.open(MainPage.PAGE_URL, MainPage.class);
         new MainPage()
                 .toLoginPage();

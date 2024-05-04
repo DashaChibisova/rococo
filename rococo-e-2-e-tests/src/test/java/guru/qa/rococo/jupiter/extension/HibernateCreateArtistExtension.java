@@ -3,18 +3,11 @@ package guru.qa.rococo.jupiter.extension;
 import guru.qa.rococo.db.model.*;
 import guru.qa.rococo.db.repository.ArtistRepository;
 import guru.qa.rococo.db.repository.ArtistRepositoryHibernate;
-import guru.qa.rococo.jupiter.annotation.Artist;
+import guru.qa.rococo.jupiter.annotation.TestArtist;
 import guru.qa.rococo.jupiter.model.ArtistJson;
 import guru.qa.rococo.utils.DataUtils;
 import guru.qa.rococo.utils.FileUtils;
-
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Base64;
 import java.util.UUID;
 
 public class HibernateCreateArtistExtension extends CreateArtistExtension {
@@ -22,7 +15,7 @@ public class HibernateCreateArtistExtension extends CreateArtistExtension {
     private final ArtistRepository artistRepository = new ArtistRepositoryHibernate();
 
     @Override
-    public ArtistJson createArtist(Artist artist) throws IOException {
+    public ArtistJson createArtist(TestArtist artist) throws IOException {
         String name = artist.name().isEmpty()
                 ? DataUtils.generateRandomUsername()
                 : artist.name();
@@ -32,8 +25,8 @@ public class HibernateCreateArtistExtension extends CreateArtistExtension {
 
 
         byte[] photo = artist.photoPath().isEmpty()
-                ?  FileUtils.encodedFileBytes("images/artist.png")
-                :  FileUtils.encodedFileBytes(artist.photoPath());
+                ? FileUtils.encodedFileBytes("images/artist.png")
+                : FileUtils.encodedFileBytes(artist.photoPath());
 
         ArtistEntity artistEntity = new ArtistEntity();
         artistEntity.setName(name);

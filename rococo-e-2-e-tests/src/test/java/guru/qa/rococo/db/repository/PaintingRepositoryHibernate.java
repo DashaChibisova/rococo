@@ -3,7 +3,6 @@ package guru.qa.rococo.db.repository;
 import guru.qa.rococo.db.EmfProvider;
 import guru.qa.rococo.db.jpa.JpaService;
 import guru.qa.rococo.db.jpa.ThreadLocalEntityManager;
-import guru.qa.rococo.db.model.MuseumEntity;
 import guru.qa.rococo.db.model.PaintingEntity;
 import io.qameta.allure.Step;
 
@@ -37,9 +36,9 @@ public class PaintingRepositoryHibernate extends JpaService implements PaintingR
     public PaintingEntity findPaintingByTitle(String title) {
         return entityManager(PAINTING)
                 .createQuery("""
-            FROM PaintingEntity 
-            WHERE title = :title
-            """, PaintingEntity.class)
+                        FROM PaintingEntity 
+                        WHERE title = :title
+                        """, PaintingEntity.class)
                 .setParameter("title", title)
                 .getSingleResult();
     }

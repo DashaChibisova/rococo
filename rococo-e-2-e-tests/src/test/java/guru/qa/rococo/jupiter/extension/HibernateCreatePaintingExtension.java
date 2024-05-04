@@ -2,7 +2,7 @@ package guru.qa.rococo.jupiter.extension;
 
 import guru.qa.rococo.db.model.PaintingEntity;
 import guru.qa.rococo.db.repository.*;
-import guru.qa.rococo.jupiter.annotation.Artist;
+import guru.qa.rococo.jupiter.annotation.TestArtist;
 import guru.qa.rococo.jupiter.annotation.TestMuseum;
 import guru.qa.rococo.jupiter.annotation.TestPainting;
 import guru.qa.rococo.jupiter.model.ArtistJson;
@@ -11,12 +11,7 @@ import guru.qa.rococo.jupiter.model.PaintingJson;
 import guru.qa.rococo.utils.DataUtils;
 import guru.qa.rococo.utils.FileUtils;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.util.Base64;
 import java.util.UUID;
 
 public class HibernateCreatePaintingExtension extends CreatePaintingExtension {
@@ -27,7 +22,7 @@ public class HibernateCreatePaintingExtension extends CreatePaintingExtension {
 
     @Override
     public PaintingJson createPainting(TestPainting painting) throws IOException {
-        Artist artistData = painting.artist();
+        TestArtist artistData = painting.artist();
         ArtistJson artist = hibernateCreateArtistExtension.createArtist(artistData);
 
         TestMuseum museumData = painting.museum();
@@ -42,8 +37,8 @@ public class HibernateCreatePaintingExtension extends CreatePaintingExtension {
                 : painting.description();
 
         byte[] content = painting.content().isEmpty()
-                ?  FileUtils.encodedFileBytes("images/painting.png")
-                :  FileUtils.encodedFileBytes(painting.content());
+                ? FileUtils.encodedFileBytes("images/painting.png")
+                : FileUtils.encodedFileBytes(painting.content());
 
         PaintingEntity paintingEntity = new PaintingEntity();
         paintingEntity.setTitle(title);

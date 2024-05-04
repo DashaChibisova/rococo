@@ -1,13 +1,12 @@
 package guru.qa.rococo.api;
 
 import guru.qa.rococo.api.interceptor.CodeInterceptor;
-import guru.qa.rococo.db.model.PaintingEntity;
 import guru.qa.rococo.jupiter.model.*;
 import retrofit2.Response;
 
 import java.util.UUID;
 
-public class GatewayApiClient  extends RestClient {
+public class GatewayApiClient extends RestClient {
     private final GatewayApi gatewayApi;
 
     public GatewayApiClient() {
@@ -24,7 +23,7 @@ public class GatewayApiClient  extends RestClient {
     }
 
     public ArtistList getAllArtist(int page, int size, String name) throws Exception {
-        return gatewayApi.getAllArtist( page, size, name).execute()
+        return gatewayApi.getAllArtist(page, size, name).execute()
                 .body();
     }
 
@@ -42,7 +41,7 @@ public class GatewayApiClient  extends RestClient {
     }
 
     public PaintingList getAllPainting(int page, int size, String name) throws Exception {
-        return gatewayApi.getAllPainting( page, size, name).execute()
+        return gatewayApi.getAllPainting(page, size, name).execute()
                 .body();
     }
 
@@ -55,7 +54,7 @@ public class GatewayApiClient  extends RestClient {
                 .body();
     }
 
-    public PaintingList getPaintingByAuthor(UUID idAuthor,int page, int size ) throws Exception {
+    public PaintingList getPaintingByAuthor(UUID idAuthor, int page, int size) throws Exception {
         return gatewayApi.getPaintingByAuthor(idAuthor, page, size).execute()
                 .body();
     }
@@ -65,12 +64,12 @@ public class GatewayApiClient  extends RestClient {
     }
 
     public MuseumList getAllMuseum(int page, int size, String title) throws Exception {
-        return gatewayApi.getAllMuseum( page, size, title).execute()
+        return gatewayApi.getAllMuseum(page, size, title).execute()
                 .body();
     }
 
     public CountryList getAllCountry(int page, int size) throws Exception {
-        return gatewayApi.getAllCountry( page, size).execute()
+        return gatewayApi.getAllCountry(page, size).execute()
                 .body();
     }
 
