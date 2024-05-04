@@ -77,9 +77,6 @@ dependencies {
     testImplementation 'com.github.vertical-blank:sql-formatter:2.0.3'
     // Kafka
     testImplementation "org.apache.kafka:kafka-clients:${kafkaClientsVersion}"
-    // Wiremock
-    testImplementation 'com.github.tomakehurst:wiremock-jre8:2.35.1'
-    testImplementation 'com.github.tomakehurst:wiremock-standalone:2.27.2'
     // Lombok
     testAnnotationProcessor "org.projectlombok:lombok:${project.ext.lombokVersion}"
     testCompileOnly "org.projectlombok:lombok:${project.ext.lombokVersion}"

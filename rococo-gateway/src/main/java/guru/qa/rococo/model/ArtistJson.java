@@ -21,5 +21,4 @@ public record ArtistJson(
         @NotNull(message = "Photo can not be null")
         @Size(max = RococoGatewayServiceConfig.ONE_MB)
         String photo) {
-
 }

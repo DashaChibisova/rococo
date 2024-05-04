@@ -29,7 +29,6 @@ public class PaintingController {
         return paintingDataClient.getPaintings(pageable, title);
     }
 
-
     @GetMapping("/painting/{id}")
     public PaintingJson getCurrentPainting(@PathVariable UUID id) {
         return paintingDataClient.getCurrentPainting(id);

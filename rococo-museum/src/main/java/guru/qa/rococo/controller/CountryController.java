@@ -29,5 +29,4 @@ public class CountryController {
         PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(Sort.Direction.ASC, "name"));
         return countryService.getAll(pageRequest, name);
     }
-
 }
