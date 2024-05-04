@@ -4,6 +4,7 @@ import guru.qa.rococo.data.CountryEntity;
 import guru.qa.rococo.data.GeoEntity;
 import guru.qa.rococo.data.MuseumEntity;
 import guru.qa.rococo.data.repository.CountryRepository;
+import guru.qa.rococo.data.repository.GeoRepository;
 import guru.qa.rococo.data.repository.MuseumRepository;
 import guru.qa.rococo.model.CountryJson;
 import guru.qa.rococo.model.GeoJson;
@@ -29,25 +30,35 @@ public class MuseumService {
 
     private final MuseumRepository museumRepository;
     private final CountryRepository сountryRepository;
+    private final GeoRepository geoRepository;
 
     @Autowired
-    public MuseumService(MuseumRepository museumRepository, CountryRepository сountryRepository) {
+    public MuseumService(MuseumRepository museumRepository, CountryRepository сountryRepository, GeoRepository geoRepository) {
         this.museumRepository = museumRepository;
         this.сountryRepository = сountryRepository;
+        this.geoRepository = geoRepository;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public @Nonnull
-    Page<MuseumJson> getAll(@Nonnull Pageable pageable
+    Page<MuseumJson> getAll(@Nonnull Pageable pageable, String title
     ) {
-        List<MuseumJson> museumJsons = museumRepository.findAll(pageable)
-                .stream()
-                .map(MuseumJson::fromEntity)
-                .toList();
-        return new PageImpl<>(museumJsons);
+        if (title.equals("notSorted")) {
+
+            List<MuseumJson> museumJsons = museumRepository.findAll(pageable)
+                    .stream()
+                    .map(MuseumJson::fromEntity)
+                    .toList();
+            return new PageImpl<>(museumJsons, pageable, museumRepository.findAll().size());
+        } else {
+            List<MuseumJson> museumJsons = museumRepository.findAllByTitleContainsIgnoreCase(title, pageable).stream()
+                    .map(MuseumJson::fromEntity)
+                    .toList();
+            return new PageImpl<>(museumJsons, pageable, museumRepository.findAll().size());
+        }
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public @Nonnull
     MuseumJson getCurrentAMuseum(@Nonnull UUID id) {
         return MuseumJson.fromEntity(museumRepository.getReferenceById(id));
@@ -90,6 +101,7 @@ public class MuseumService {
             CountryEntity referenceById = сountryRepository.getReferenceById(country.id());
             GeoJson geo = museum.geo();
             GeoEntity geoEntity = new GeoEntity();
+            geoEntity.setId(museumRepository.findById(museum.id()).get().getGeo().getId());
             geoEntity.setCity(geo.city());
             geoEntity.setCountry(referenceById);
 

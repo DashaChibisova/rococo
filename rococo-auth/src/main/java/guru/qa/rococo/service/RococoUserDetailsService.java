@@ -13,20 +13,20 @@ import org.springframework.transaction.annotation.Transactional;
 @Component
 public class RococoUserDetailsService implements UserDetailsService {
 
-  private final UserRepository userRepository;
+    private final UserRepository userRepository;
 
-  @Autowired
-  public RococoUserDetailsService(UserRepository userRepository) {
-    this.userRepository = userRepository;
-  }
-
-  @Override
-  @Transactional(readOnly = true)
-  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    UserEntity user = userRepository.findByUsername(username);
-    if (user == null) {
-      throw new UsernameNotFoundException("Username: " + username + " not found");
+    @Autowired
+    public RococoUserDetailsService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
-    return new RococoUserPrincipal(user);
-  }
+
+    @Override
+    @Transactional(readOnly = true)
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        UserEntity user = userRepository.findByUsername(username);
+        if (user == null) {
+            throw new UsernameNotFoundException("Username: " + username + " not found");
+        }
+        return new RococoUserPrincipal(user);
+    }
 }

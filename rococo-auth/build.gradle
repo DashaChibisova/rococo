@@ -17,6 +17,7 @@ dependencies {
     implementation "com.google.code.findbugs:jsr305:${project.ext.jsr305Version}"
     annotationProcessor "org.projectlombok:lombok:${project.ext.lombokVersion}"
     compileOnly "org.projectlombok:lombok:${project.ext.lombokVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-actuator" //хелс чек в докере
 //    runtimeOnly "mysql:mysql-connector-java:${project.ext.mysqlDriverVersion}"
     runtimeOnly "org.postgresql:postgresql:42.7.2" //добавила
     implementation "org.springframework.cloud:spring-cloud-starter-vault-config:${project.ext.springVaultVersion}"

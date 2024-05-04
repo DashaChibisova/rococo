@@ -56,9 +56,9 @@ spring:
       - 'org.springframework.cloud.vault.config.VaultObservationAutoConfiguration'
       - 'org.springframework.cloud.vault.config.VaultReactiveAutoConfiguration'
   datasource:
-     url: 'jdbc:postgresql://localhost:5432/rococo-painting'
-     username: postgres
-     password: secret
+    url: 'jdbc:postgresql://localhost:5432/rococo-painting'
+    username: postgres
+    password: secret
 rococo-artist:
   base-uri: 'http://127.0.0.1:8093'
 rococo-museum:
@@ -84,52 +84,13 @@ spring:
       - 'org.springframework.cloud.vault.config.VaultObservationAutoConfiguration'
       - 'org.springframework.cloud.vault.config.VaultReactiveAutoConfiguration'
   datasource:
-    url: 'jdbc:postgresql://rococo-all-db:5432/rococo-museum'
+    url: 'jdbc:postgresql://rococo-all-db:5432/rococo-painting'
     username: postgres
     password: secret
 
 rococo-userdata:
-  base-uri: 'http://userdata.niffler.dc:8089'
----
-spring:
-  config:
-    activate:
-      on-profile: 'prod'
-    import: vault://
-  cloud:
-    vault:
-      authentication: TOKEN
-      host: vault.qa.guru
-      port: 443
-      scheme: https
-      uri: https://vault.qa.guru:443
-      token: ${VAULT_TOKEN}
-  datasource:
-    url: ${db.url}
-    username: ${db.username}
-    password: ${db.password}
-
-rococo-userdata:
-  base-uri: ${rococo-userdata.url}
----
-spring:
-  config:
-    activate:
-      on-profile: 'staging'
-    import: vault://
-  cloud:
-    vault:
-      authentication: TOKEN
-      host: vault.qa.guru
-      port: 443
-      scheme: https
-      uri: https://vault.qa.guru:443
-      token: ${VAULT_TOKEN}
-  datasource:
-    url: ${db.url}
-    username: ${db.username}
-    password: ${db.password}
-
-rococo-userdata:
-  base-uri: ${rococo-userdata.url}
----
+  base-uri: 'http://userdata.rococo.dc:8089'
+rococo-artist:
+  base-uri: 'http://artist.rococo.dc:8093'
+rococo-museum:
+  base-uri: 'http://museum.rococo.dc:8098'

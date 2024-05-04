@@ -40,10 +40,7 @@ logging:
     org.springframework.web: DEBUG
     org.springframework.security: DEBUG
     org.springframework.security.oauth2: DEBUG
-#    org.springframework.boot.autoconfigure: DEBUG
-
-  file:
-    name: 'spend.log'
+  #    org.springframework.boot.autoconfigure: DEBUG
 
 ---
 spring:
@@ -59,11 +56,6 @@ spring:
     url: 'jdbc:postgresql://localhost:5432/rococo-artist'
     username: postgres
     password: secret
-grpc:
-  client:
-    grpcCurrencyClient:
-      address: 'static://localhost:8092'
-      negotiationType: PLAINTEXT
 
 rococo-userdata:
   base-uri: 'http://127.0.0.1:8089'
@@ -83,47 +75,4 @@ spring:
     password: secret
 
 rococo-userdata:
-  base-uri: 'http://userdata.niffler.dc:8089'
----
-spring:
-  config:
-    activate:
-      on-profile: 'prod'
-    import: vault://
-  cloud:
-    vault:
-      authentication: TOKEN
-      host: vault.qa.guru
-      port: 443
-      scheme: https
-      uri: https://vault.qa.guru:443
-      token: ${VAULT_TOKEN}
-  datasource:
-    url: ${db.url}
-    username: ${db.username}
-    password: ${db.password}
-
-rococo-userdata:
-  base-uri: ${rococo-userdata.url}
----
-spring:
-  config:
-    activate:
-      on-profile: 'staging'
-    import: vault://
-  cloud:
-    vault:
-      authentication: TOKEN
-      host: vault.qa.guru
-      port: 443
-      scheme: https
-      uri: https://vault.qa.guru:443
-      token: ${VAULT_TOKEN}
-  datasource:
-    url: ${db.url}
-    username: ${db.username}
-    password: ${db.password}
-
-rococo-userdata:
-  base-uri: ${rococo-userdata.url}
----
+  base-uri: 'http://userdata.rococo.dc:8089'

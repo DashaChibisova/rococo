@@ -1,5 +1,6 @@
 package guru.qa.rococo.service;
 
+
 import guru.qa.rococo.client.RestArtistDataClient;
 import guru.qa.rococo.client.RestMuseumDataClient;
 import guru.qa.rococo.data.PaintingEntity;
@@ -37,19 +38,26 @@ public class PaintingService {
         this.restArtistDataClient = restArtistDataClient;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public @Nonnull
     Page<PaintingJson> getAll(@Nonnull Pageable pageable
-    ) {
+            , String title) {
+        if (title.equals("notSorted")) {
 
-        List<PaintingJson> paintingJsons = paintingRepository.findAll(pageable)
-                .stream()
-                .map(this::fromEntity)
-                .toList();
-        return new PageImpl<>(paintingJsons);
+            List<PaintingJson> paintingJsons = paintingRepository.findAll(pageable)
+                    .stream()
+                    .map(this::fromEntity)
+                    .toList();
+            return new PageImpl<>(paintingJsons, pageable, paintingRepository.findAll().size());
+        } else {
+            List<PaintingJson> paintingJsons = paintingRepository.findAllByTitleContainsIgnoreCase(title, pageable).stream()
+                    .map(this::fromEntity)
+                    .toList();
+            return new PageImpl<>(paintingJsons, pageable, paintingRepository.findAll().size());
+        }
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public @Nonnull
     PaintingJson getCurrentPainting(@Nonnull UUID id) {
         return fromEntity(paintingRepository.getReferenceById(id));
@@ -88,14 +96,14 @@ public class PaintingService {
         }
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public @Nonnull
     Page<PaintingJson> getPaintingByAuthorId(@Nonnull UUID id, @Nonnull Pageable pageable) {
         List<PaintingJson> paintingJsons = paintingRepository.findAllByArtist(id, pageable)
                 .stream()
                 .map(this::fromEntity)
                 .toList();
-        return new PageImpl<>(paintingJsons);
+        return new PageImpl<>(paintingJsons, pageable, paintingRepository.findAllByArtist(id).size());
     }
 
 

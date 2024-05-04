@@ -53,7 +53,7 @@ public class ArtistService {
         }
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public @Nonnull
     Page<ArtistJson> allArtists(@Nonnull Pageable pageable,
                                 String name) {
@@ -62,19 +62,19 @@ public class ArtistService {
                     .stream()
                     .map(ArtistJson::fromEntity)
                     .toList();
-            return new PageImpl<>(artistJsons);
+
+            return new PageImpl<>(artistJsons, pageable, artistRepository.findAll().size());
 
         } else {
-
             List<ArtistJson> artistJsons = artistRepository.findAllByNameContainsIgnoreCase(name, pageable).stream()
                     .map(ArtistJson::fromEntity)
                     .toList();
-            return new PageImpl<>(artistJsons);
+            return new PageImpl<>(artistJsons, pageable, artistRepository.findAll().size());
         }
     }
 
 
-    @Transactional
+    @Transactional(readOnly = true)
     public @Nonnull
     ArtistJson getCurrentArtist(@Nonnull UUID id) {
         return ArtistJson.fromEntity(artistRepository.getReferenceById(id));

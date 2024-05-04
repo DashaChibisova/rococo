@@ -4,11 +4,14 @@ import guru.qa.rococo.model.CountryJson;
 import guru.qa.rococo.service.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 
 @RestController
 public class CountryController {
@@ -23,7 +26,7 @@ public class CountryController {
     @GetMapping("/country")
     public Page<CountryJson> getAllCountry(@PageableDefault Pageable pageable,
                                            @RequestParam(defaultValue = "notSorted") String name) {
-        return countryService.getAll(pageable, name);
+        PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(Sort.Direction.ASC, "name"));
+        return countryService.getAll(pageRequest, name);
     }
-
 }

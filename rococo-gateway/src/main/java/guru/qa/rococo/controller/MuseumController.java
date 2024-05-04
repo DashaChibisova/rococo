@@ -32,8 +32,8 @@ public class MuseumController {
     }
 
     @GetMapping("/museum")
-    public Page<MuseumJson> getAllMuseum(@PageableDefault Pageable pageable) {
-        return museumDataClient.getAllMuseum(pageable);
+    public Page<MuseumJson> getAllMuseum(@PageableDefault Pageable pageable, String title) {
+        return museumDataClient.getAllMuseum(pageable, title);
     }
 
     @GetMapping("/museum/{id}")

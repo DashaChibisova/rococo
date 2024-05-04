@@ -34,6 +34,6 @@ public class RestArtistDataClient {
                         .retrieve()
                         .bodyToMono(ArtistJson.class)
                         .block()
-        ).orElseThrow(() -> new NoRestResponseException("No REST ArtistJson response is given [/artist Route]"));
+        ).orElseThrow(() -> new NoRestResponseException("No REST ArtistJson response is given [/currentArtist Route]"));
     }
 }

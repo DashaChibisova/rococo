@@ -41,7 +41,7 @@ public class RestUserDataClient implements UserDataClient {
                         .retrieve()
                         .bodyToMono(UserJson.class)
                         .block()
-        ).orElseThrow(() -> new NoRestResponseException("No REST UserJson response is given [/user Route]"));
+        ).orElseThrow(() -> new NoRestResponseException("No REST UserJson response is given [/updateUserInfo Route]"));
     }
 
     @Override

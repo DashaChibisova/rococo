@@ -12,8 +12,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name = "museum")
-
+@Table(name = "museum", catalog = "rococo-museum")
 public class MuseumEntity implements Serializable {
 
     @Id

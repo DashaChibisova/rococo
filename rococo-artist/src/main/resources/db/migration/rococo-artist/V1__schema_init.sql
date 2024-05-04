@@ -1,3 +1,4 @@
+-- create database "niffler-spend" with owner postgres;
 
 create extension if not exists "uuid-ossp";
 

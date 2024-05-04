@@ -34,6 +34,6 @@ public class RestMuseumDataClient {
                         .retrieve()
                         .bodyToMono(MuseumJson.class)
                         .block()
-        ).orElseThrow(() -> new NoRestResponseException("No REST MuseumJson response is given [/museum Route]"));
+        ).orElseThrow(() -> new NoRestResponseException("No REST MuseumJson response is given [/currentMuseum Route]"));
     }
 }

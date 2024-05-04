@@ -1,7 +1,7 @@
 package guru.qa.rococo.service.api;
 
 import guru.qa.rococo.ex.NoRestResponseException;
-import guru.qa.rococo.model.ArtistDao;
+import guru.qa.rococo.model.ArtistDto;
 import guru.qa.rococo.model.ArtistJson;
 import jakarta.annotation.Nonnull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -44,7 +46,7 @@ public class RestArtistDataClient {
                         .retrieve()
                         .bodyToMono(ArtistJson.class)
                         .block()
-        ).orElseThrow(() -> new NoRestResponseException("No REST ArtistJson response is given [/updateArtistInfo Route]"));
+        ).orElseThrow(() -> new NoRestResponseException("No REST ArtistJson response is given [/updateUserInfo Route]"));
     }
 
     public @Nonnull
@@ -57,7 +59,7 @@ public class RestArtistDataClient {
                         .bodyToMono(ArtistJson.class)
                         .block()
         ).orElseThrow(() -> new NoRestResponseException(
-                "No REST ArtistJson response is given [/saveArtists Route]"
+                "No REST ArtistJson response is given [/Artist Route]"
         ));
     }
 
@@ -66,19 +68,23 @@ public class RestArtistDataClient {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("size", String.valueOf(pageable.getPageSize()));
         params.add("page", String.valueOf(pageable.getPageNumber()));
+        if (name != null) {
+            params.add("name", name);
+        }
         URI uri = UriComponentsBuilder.fromHttpUrl(rococoArtistBaseUri + "/artist").queryParams(params).build().toUri();
 
-        ArtistDao artistDao = Optional.ofNullable(
+        ArtistDto artistDto = Optional.ofNullable(
                 webClient.get()
                         .uri(uri)
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
-                        .bodyToMono(ArtistDao.class)
+                        .bodyToMono(ArtistDto.class)
                         .block()
         ).orElseThrow(() -> new NoRestResponseException(
-                "No REST List<ArtistJson> response is given [/getArtists Route]"
+                "No REST List<ArtistJson> response is given [/artist Route]"
         ));
-        return new PageImpl<>(artistDao.content());
+
+        return new PageImpl<>(artistDto.content(), pageable, artistDto.totalElements());
     }
 
 
@@ -92,6 +98,6 @@ public class RestArtistDataClient {
                         .retrieve()
                         .bodyToMono(ArtistJson.class)
                         .block()
-        ).orElseThrow(() -> new NoRestResponseException("No REST ArtistJson response is given [/getCurrentArtist Route]"));
+        ).orElseThrow(() -> new NoRestResponseException("No REST UserJson response is given [/currentUser Route]"));
     }
 }

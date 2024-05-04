@@ -46,122 +46,122 @@ import java.util.UUID;
 @Configuration
 public class RococoAuthServiceConfig {
 
-  private final KeyManager keyManager;
-  private final String rococoFrontUri;
-  private final String rococoAuthUri;
-  private final String clientId;
-  private final String clientSecret;
-  private final CorsCustomizer corsCustomizer;
-  private final String serverPort;
-  private final String defaultHttpsPort = "443";
-  private final Environment environment;
+    private final KeyManager keyManager;
+    private final String rococoFrontUri;
+    private final String rococoAuthUri;
+    private final String clientId;
+    private final String clientSecret;
+    private final CorsCustomizer corsCustomizer;
+    private final String serverPort;
+    private final String defaultHttpsPort = "443";
+    private final Environment environment;
 
-  @Autowired
-  public RococoAuthServiceConfig(KeyManager keyManager,
-                                 @Value("${rococo-front.base-uri}") String rococoFrontUri,
-                                 @Value("${rococo-auth.base-uri}") String rococoAuthUri,
-                                 @Value("${oauth2.client-id}") String clientId,
-                                 @Value("${oauth2.client-secret}") String clientSecret,
-                                 @Value("${server.port}") String serverPort,
-                                 CorsCustomizer corsCustomizer,
-                                 Environment environment) {
-    this.keyManager = keyManager;
-    this.rococoFrontUri = rococoFrontUri;
-    this.rococoAuthUri = rococoAuthUri;
-    this.clientId = clientId;
-    this.clientSecret = clientSecret;
-    this.serverPort = serverPort;
-    this.corsCustomizer = corsCustomizer;
-    this.environment = environment;
-  }
-
-  @Bean
-  @Order(Ordered.HIGHEST_PRECEDENCE)
-  public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http,
-                                                                    LoginUrlAuthenticationEntryPoint entryPoint) throws Exception {
-    OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
-    if (environment.acceptsProfiles(Profiles.of("local", "staging"))) {
-      http.addFilterBefore(new SpecificRequestDumperFilter(
-          new RequestDumperFilter(),
-          "/login", "/oauth2/.*"
-      ), DisableEncodeUrlFilter.class);
+    @Autowired
+    public RococoAuthServiceConfig(KeyManager keyManager,
+                                   @Value("${rococo-front.base-uri}") String rococoFrontUri,
+                                   @Value("${rococo-auth.base-uri}") String rococoAuthUri,
+                                   @Value("${oauth2.client-id}") String clientId,
+                                   @Value("${oauth2.client-secret}") String clientSecret,
+                                   @Value("${server.port}") String serverPort,
+                                   CorsCustomizer corsCustomizer,
+                                   Environment environment) {
+        this.keyManager = keyManager;
+        this.rococoFrontUri = rococoFrontUri;
+        this.rococoAuthUri = rococoAuthUri;
+        this.clientId = clientId;
+        this.clientSecret = clientSecret;
+        this.serverPort = serverPort;
+        this.corsCustomizer = corsCustomizer;
+        this.environment = environment;
     }
 
-    http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
-        .oidc(Customizer.withDefaults());    // Enable OpenID Connect 1.0
+    @Bean
+    @Order(Ordered.HIGHEST_PRECEDENCE)
+    public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http,
+                                                                      LoginUrlAuthenticationEntryPoint entryPoint) throws Exception {
+        OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
+        if (environment.acceptsProfiles(Profiles.of("local", "staging"))) {
+            http.addFilterBefore(new SpecificRequestDumperFilter(
+                    new RequestDumperFilter(),
+                    "/login", "/oauth2/.*"
+            ), DisableEncodeUrlFilter.class);
+        }
 
-    http.exceptionHandling(exceptions -> exceptions.authenticationEntryPoint(entryPoint))
-        .oauth2ResourceServer(rs -> rs.jwt(Customizer.withDefaults()));
+        http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
+                .oidc(Customizer.withDefaults());    // Enable OpenID Connect 1.0
 
-    corsCustomizer.corsCustomizer(http);
-    return http.build();
-  }
+        http.exceptionHandling(exceptions -> exceptions.authenticationEntryPoint(entryPoint))
+                .oauth2ResourceServer(rs -> rs.jwt(Customizer.withDefaults()));
 
-  @Bean
-  @Profile({"staging", "prod"})
-  public LoginUrlAuthenticationEntryPoint loginUrlAuthenticationEntryPointHttps() {
-    LoginUrlAuthenticationEntryPoint entryPoint = new LoginUrlAuthenticationEntryPoint("/login");
-    PortMapperImpl portMapper = new PortMapperImpl();
-    portMapper.setPortMappings(Map.of(
-        serverPort, defaultHttpsPort,
-        "80", defaultHttpsPort,
-        "8080", "8443"
-    ));
-    PortResolverImpl portResolver = new PortResolverImpl();
-    portResolver.setPortMapper(portMapper);
-    entryPoint.setForceHttps(true);
-    entryPoint.setPortMapper(portMapper);
-    entryPoint.setPortResolver(portResolver);
-    return entryPoint;
-  }
+        corsCustomizer.corsCustomizer(http);
+        return http.build();
+    }
 
-  @Bean
-  @Profile({"local", "docker"})
-  public LoginUrlAuthenticationEntryPoint loginUrlAuthenticationEntryPointHttp() {
-    return new LoginUrlAuthenticationEntryPoint("/login");
-  }
+    @Bean
+    @Profile({"staging", "prod"})
+    public LoginUrlAuthenticationEntryPoint loginUrlAuthenticationEntryPointHttps() {
+        LoginUrlAuthenticationEntryPoint entryPoint = new LoginUrlAuthenticationEntryPoint("/login");
+        PortMapperImpl portMapper = new PortMapperImpl();
+        portMapper.setPortMappings(Map.of(
+                serverPort, defaultHttpsPort,
+                "80", defaultHttpsPort,
+                "8080", "8443"
+        ));
+        PortResolverImpl portResolver = new PortResolverImpl();
+        portResolver.setPortMapper(portMapper);
+        entryPoint.setForceHttps(true);
+        entryPoint.setPortMapper(portMapper);
+        entryPoint.setPortResolver(portResolver);
+        return entryPoint;
+    }
 
-  @Bean
-  public RegisteredClientRepository registeredClientRepository() {
-    RegisteredClient registeredClient = RegisteredClient.withId(UUID.randomUUID().toString())
-        .clientId(clientId)
-        .clientSecret(clientSecret)
-        .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
-        .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-        .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
-        .redirectUri(rococoFrontUri + "/authorized")
-        .scope(OidcScopes.OPENID)
-        .clientSettings(ClientSettings.builder()
-            .requireAuthorizationConsent(true).build())
-        .tokenSettings(TokenSettings.builder()
-            .accessTokenTimeToLive(Duration.ofHours(1))
-            .refreshTokenTimeToLive(Duration.ofHours(10))
-            .build())
-        .build();
+    @Bean
+    @Profile({"local", "docker"})
+    public LoginUrlAuthenticationEntryPoint loginUrlAuthenticationEntryPointHttp() {
+        return new LoginUrlAuthenticationEntryPoint("/login");
+    }
 
-    return new InMemoryRegisteredClientRepository(registeredClient);
-  }
+    @Bean
+    public RegisteredClientRepository registeredClientRepository() {
+        RegisteredClient registeredClient = RegisteredClient.withId(UUID.randomUUID().toString())
+                .clientId(clientId)
+                .clientSecret(clientSecret)
+                .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+                .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+                .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
+                .redirectUri(rococoFrontUri + "/authorized")
+                .scope(OidcScopes.OPENID)
+                .clientSettings(ClientSettings.builder()
+                        .requireAuthorizationConsent(true).build())
+                .tokenSettings(TokenSettings.builder()
+                        .accessTokenTimeToLive(Duration.ofHours(1))
+                        .refreshTokenTimeToLive(Duration.ofHours(10))
+                        .build())
+                .build();
 
-  @Bean
-  public PasswordEncoder passwordEncoder() {
-    return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-  }
+        return new InMemoryRegisteredClientRepository(registeredClient);
+    }
 
-  @Bean
-  public AuthorizationServerSettings authorizationServerSettings() {
-    return AuthorizationServerSettings.builder()
-        .issuer(rococoAuthUri)
-        .build();
-  }
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    }
 
-  @Bean
-  public JWKSource<SecurityContext> jwkSource() throws NoSuchAlgorithmException {
-    JWKSet set = new JWKSet(keyManager.rsaKey());
-    return (jwkSelector, securityContext) -> jwkSelector.select(set);
-  }
+    @Bean
+    public AuthorizationServerSettings authorizationServerSettings() {
+        return AuthorizationServerSettings.builder()
+                .issuer(rococoAuthUri)
+                .build();
+    }
 
-  @Bean
-  public JwtDecoder jwtDecoder(JWKSource<SecurityContext> jwkSource) {
-    return OAuth2AuthorizationServerConfiguration.jwtDecoder(jwkSource);
-  }
+    @Bean
+    public JWKSource<SecurityContext> jwkSource() throws NoSuchAlgorithmException {
+        JWKSet set = new JWKSet(keyManager.rsaKey());
+        return (jwkSelector, securityContext) -> jwkSelector.select(set);
+    }
+
+    @Bean
+    public JwtDecoder jwtDecoder(JWKSource<SecurityContext> jwkSource) {
+        return OAuth2AuthorizationServerConfiguration.jwtDecoder(jwkSource);
+    }
 }

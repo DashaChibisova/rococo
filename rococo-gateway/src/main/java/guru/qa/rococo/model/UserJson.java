@@ -24,11 +24,13 @@ public record UserJson(
         @Size(max = RococoGatewayServiceConfig.ONE_MB)
         String avatar) {
 
-    public @Nonnull UserJson addUsername(@Nonnull String username) {
+    public @Nonnull
+    UserJson addUsername(@Nonnull String username) {
         return new UserJson(id, username, firstname, lastname, avatar);
     }
 
-    public @Nonnull User toJaxbUser() {
+    public @Nonnull
+    User toJaxbUser() {
         User jaxbUser = new User();
         jaxbUser.setId(id != null ? id.toString() : null);
         jaxbUser.setUsername(username);
@@ -38,7 +40,8 @@ public record UserJson(
         return jaxbUser;
     }
 
-    public static @Nonnull UserJson fromJaxb(@Nonnull User jaxbUser) {
+    public static @Nonnull
+    UserJson fromJaxb(@Nonnull User jaxbUser) {
         return new UserJson(
                 jaxbUser.getId() != null ? UUID.fromString(jaxbUser.getId()) : null,
                 jaxbUser.getUsername(),
