@@ -11,7 +11,6 @@ import static com.codeborne.selenide.Selenide.$;
 import static guru.qa.rococo.condition.PhotoCondition.photoFromClasspath;
 
 public class PaintingPage extends BasePage<PaintingPage> {
-    public static final String PAGE_URL = CFG.frontUrl() + "/painting";
 
     private final SelenideElement pageContent = $("#page-content");
     private final SelenideElement addPaintingBtn = $("#page-content .variant-filled-primary");

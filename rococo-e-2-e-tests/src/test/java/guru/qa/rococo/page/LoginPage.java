@@ -9,8 +9,6 @@ import static com.codeborne.selenide.Selenide.$;
 
 public class LoginPage extends BasePage<LoginPage> {
 
-    public static final String PAGE_URL = CFG.frontUrl() + "/profile";
-
     private final SelenideElement loginInput = $("input[name='username']");
     private final SelenideElement passwordInput = $("input[name='password']");
     private final SelenideElement submitBtn = $("button[type='submit']");
