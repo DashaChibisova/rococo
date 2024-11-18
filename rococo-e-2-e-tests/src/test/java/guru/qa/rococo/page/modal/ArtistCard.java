@@ -8,15 +8,14 @@ import static com.codeborne.selenide.Selenide.$;
 
 public class ArtistCard extends BaseComponent<ArtistCard> {
 
-    public ArtistCard() {
-        super($(".card"));
-    }
-
     private final SelenideElement inputName = $("input[name='name']");
     private final SelenideElement inputBiography = $("textarea[name='biography']");
     private final SelenideElement photoInput = $("input[name='photo']");
     private final SelenideElement addBtn = $(".card .variant-filled-primary");
     private final SelenideElement closeBtn = $(".card .variant-ringed");
+    public ArtistCard() {
+        super($(".card"));
+    }
 
     @Step("Check that page is loaded")
     public ArtistCard waitForNewArtistLoaded() {

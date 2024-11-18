@@ -86,7 +86,7 @@ public class MuseumApiTests extends BaseApiTest {
                     code
             );
         });
-        
+
     }
 
     @Test
@@ -161,7 +161,7 @@ public class MuseumApiTests extends BaseApiTest {
     @TestMuseum(count = 5)
     @DisplayName("Search museum by title")
     void checkSearchMuseumByTitle(MuseumJson[] museumJsons) throws Exception {
-        MuseumList responseByTitle = gatewayApiClient.getAllMuseum(0,1,museumJsons[0].title());
+        MuseumList responseByTitle = gatewayApiClient.getAllMuseum(0, 1, museumJsons[0].title());
 
         Allure.step("Check size one page", () -> {
             Assertions.assertEquals(
@@ -183,8 +183,8 @@ public class MuseumApiTests extends BaseApiTest {
     @Test
     @DisplayName("Get all country returned by page")
     void checkPaginOnGetAllCountry() throws Exception {
-        CountryList responseOnePage = gatewayApiClient.getAllCountry(0,1);
-        CountryList responseToPage = gatewayApiClient.getAllCountry(1,1);
+        CountryList responseOnePage = gatewayApiClient.getAllCountry(0, 1);
+        CountryList responseToPage = gatewayApiClient.getAllCountry(1, 1);
 
 
         Allure.step("Check size one page", () -> {
@@ -221,7 +221,7 @@ public class MuseumApiTests extends BaseApiTest {
 
     }
 
-    private MuseumResponce museumJsonToMuseumResponce(MuseumJson museumJson){
+    private MuseumResponce museumJsonToMuseumResponce(MuseumJson museumJson) {
         MuseumRepository museumRepository = new MuseumRepositoryHibernate();
         CountryEntity countryByName = museumRepository.findCountryByName(museumJson.country());
         CountryJson countryJson = new CountryJson(

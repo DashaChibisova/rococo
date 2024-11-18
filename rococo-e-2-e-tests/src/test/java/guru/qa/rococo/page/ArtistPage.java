@@ -12,17 +12,15 @@ import static guru.qa.rococo.condition.PhotoCondition.photoFromClasspath;
 
 public class ArtistPage extends BasePage<ArtistPage> {
     public static final String PAGE_URL = CFG.frontUrl() + "/artist";
-
+    protected final ArtistCard artistCard = new ArtistCard();
+    protected final ArtistInfo artistInfo = new ArtistInfo();
     private final SelenideElement pageContent = $("#page-content");
     private final SelenideElement addArtistBtn = $("#page-content .variant-filled-primary");
     private final SelenideElement artistDataTable = $("#page-content .grid");
     private final SelenideElement searchLine = $("input[type='search']");
     private final SelenideElement iconeSearchBtn = $(".variant-soft-surface");
     private final SelenideElement titleSearchBtn = $(byTitle("Искать художников..."));
-
     private final SelenideElement avatarImage = $("#page-content .avatar-image");
-    protected final ArtistCard artistCard = new ArtistCard();
-    protected final ArtistInfo artistInfo = new ArtistInfo();
 
     @Step("Check that page is loaded")
     public ArtistPage waitForPageLoaded() {

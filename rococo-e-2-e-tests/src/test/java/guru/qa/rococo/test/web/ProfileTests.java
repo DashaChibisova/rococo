@@ -19,6 +19,16 @@ import java.util.stream.Stream;
 
 public class ProfileTests extends BaseWebTest {
 
+    static Stream<Arguments> testCasesFirstname() {
+        return Stream.of(Arguments.of(DataUtils.generateRandomString(31), ErrorMsgFirstname.FIRSTNAME_MSG),
+                Arguments.of(DataUtils.generateRandomString(30), SuccessMsgProfile.PROFILE_MSG));
+    }
+
+    static Stream<Arguments> testCasesLastname() {
+        return Stream.of(Arguments.of(DataUtils.generateRandomString(51), ErrorMsgLastname.LASTNAME_MSG),
+                Arguments.of(DataUtils.generateRandomString(50), SuccessMsgProfile.PROFILE_MSG));
+    }
+
     @Test
     @DisplayName("Add avatar")
     @ApiLogin(user = @TestUser)
@@ -117,15 +127,5 @@ public class ProfileTests extends BaseWebTest {
                 .setSurnameUser(name)
                 .updateClick()
                 .checkMessage(massage);
-    }
-
-    static Stream<Arguments> testCasesFirstname() {
-        return Stream.of(Arguments.of(DataUtils.generateRandomString(31),ErrorMsgFirstname.FIRSTNAME_MSG),
-                Arguments.of(DataUtils.generateRandomString(30), SuccessMsgProfile.PROFILE_MSG));
-    }
-
-    static Stream<Arguments> testCasesLastname() {
-        return Stream.of(Arguments.of(DataUtils.generateRandomString(51),ErrorMsgLastname.LASTNAME_MSG),
-                Arguments.of(DataUtils.generateRandomString(50), SuccessMsgProfile.PROFILE_MSG));
     }
 }

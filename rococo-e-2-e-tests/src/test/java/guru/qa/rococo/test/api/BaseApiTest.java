@@ -9,10 +9,8 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 @ApiTest
 public abstract class BaseApiTest {
 
+    protected static final Config CFG = Config.getInstance();
     @RegisterExtension
     protected final ApiLoginExtension apiLoginExtension = new ApiLoginExtension(false);
-
-    protected static final Config CFG = Config.getInstance();
-
     protected final GatewayApiClient gatewayApiClient = new GatewayApiClient();
 }

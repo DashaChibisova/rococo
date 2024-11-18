@@ -20,7 +20,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ArtistTests extends BaseWebTest{
+public class ArtistTests extends BaseWebTest {
 
     @Test
     @DisplayName("Add artist without authorization not allowed")
@@ -55,7 +55,7 @@ public class ArtistTests extends BaseWebTest{
     @DisplayName("Check add artist on page artist")
     @ApiLogin(user = @TestUser)
     void checkAddArtist() {
-         ArtistRepository artistRepository = new ArtistRepositoryHibernate();
+        ArtistRepository artistRepository = new ArtistRepositoryHibernate();
 
         Selenide.open(MainPage.PAGE_URL, MainPage.class);
         String name = DataUtils.generateRandomName();
@@ -66,7 +66,7 @@ public class ArtistTests extends BaseWebTest{
                 .toArtistPageFromHeader();
         new ArtistPage()
                 .waitForPageLoaded()
-                        .addArtistClick()
+                .addArtistClick()
                 .getCardArtist()
                 .waitForNewArtistLoaded()
                 .setName(name)

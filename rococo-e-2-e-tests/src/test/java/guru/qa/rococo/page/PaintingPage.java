@@ -12,16 +12,14 @@ import static guru.qa.rococo.condition.PhotoCondition.photoFromClasspath;
 
 public class PaintingPage extends BasePage<PaintingPage> {
 
+    protected final PaintingInfo paintingInfo = new PaintingInfo();
+    protected final PaintingCardSave paintingCardSave = new PaintingCardSave();
     private final SelenideElement pageContent = $("#page-content");
     private final SelenideElement addPaintingBtn = $("#page-content .variant-filled-primary");
     private final SelenideElement paintingDataTable = $("#page-content .grid");
     private final SelenideElement searchLine = $("input[type='search']");
-
     private final SelenideElement iconeSearchBtn = $(".variant-soft-surface");
     private final SelenideElement titleSearchBtn = $(byTitle("Искать картины..."));
-
-    protected final PaintingInfo paintingInfo = new PaintingInfo();
-    protected final PaintingCardSave paintingCardSave = new PaintingCardSave();
 
     @Step("Check that page is loaded")
     public PaintingPage waitForPageLoaded() {

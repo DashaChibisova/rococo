@@ -7,6 +7,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 @ExtendWith({BrowserExtension.class})
 public abstract class BaseWebTest {
 
-  protected static final Config CFG = Config.getInstance();
+    protected static final Config CFG = Config.getInstance();
 
 }

@@ -16,8 +16,8 @@ public class PaginApiTests extends BaseApiTest {
     @TestArtist(count = 5)
     @DisplayName("Get all artist returned by page")
     void checkPaginOnGetAllArtist(ArtistJson[] artist) throws Exception {
-        ArtistList responseOnePage = gatewayApiClient.getAllArtist(0,1,"");
-        ArtistList responseToPage = gatewayApiClient.getAllArtist(1,1,"");
+        ArtistList responseOnePage = gatewayApiClient.getAllArtist(0, 1, "");
+        ArtistList responseToPage = gatewayApiClient.getAllArtist(1, 1, "");
 
 
         Allure.step("Check size one page", () -> {
@@ -58,9 +58,9 @@ public class PaginApiTests extends BaseApiTest {
     @TestPainting(count = 5)
     @DisplayName("Get all painting returned by page")
     void checkPaginOnGetAllPainting(PaintingJson[] paintingJsons) throws Exception {
-        PaintingList responseOnePage = gatewayApiClient.getAllPainting(0,1,"");
-        PaintingList responseToPage = gatewayApiClient.getAllPainting(1,1,"");
-        PaintingList responseName = gatewayApiClient.getAllPainting(1,1,paintingJsons[0].title());
+        PaintingList responseOnePage = gatewayApiClient.getAllPainting(0, 1, "");
+        PaintingList responseToPage = gatewayApiClient.getAllPainting(1, 1, "");
+        PaintingList responseName = gatewayApiClient.getAllPainting(1, 1, paintingJsons[0].title());
 
 
         Allure.step("Check size one page", () -> {
@@ -101,8 +101,8 @@ public class PaginApiTests extends BaseApiTest {
     @TestMuseum(count = 5)
     @DisplayName("Get all museum returned by page")
     void checkPaginOnGetAllMuseum(MuseumJson[] museumJsons) throws Exception {
-        MuseumList responseOnePage = gatewayApiClient.getAllMuseum(0,1,"");
-        MuseumList responseToPage = gatewayApiClient.getAllMuseum(1,1,"");
+        MuseumList responseOnePage = gatewayApiClient.getAllMuseum(0, 1, "");
+        MuseumList responseToPage = gatewayApiClient.getAllMuseum(1, 1, "");
 
 
         Allure.step("Check size one page", () -> {

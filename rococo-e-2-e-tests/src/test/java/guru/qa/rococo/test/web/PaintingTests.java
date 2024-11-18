@@ -59,7 +59,7 @@ public class PaintingTests extends BaseWebTest {
     @TestMuseum
     @TestArtist
     void checkAddPainting(ArtistJson[] artistJsons, MuseumJson[] museumJsons) {
-         PaintingRepository paintingRepository = new PaintingRepositoryHibernate();
+        PaintingRepository paintingRepository = new PaintingRepositoryHibernate();
 
         Selenide.open(MainPage.PAGE_URL, MainPage.class);
         String title = DataUtils.generateRandomName();
@@ -70,7 +70,7 @@ public class PaintingTests extends BaseWebTest {
                 .toPaintingPageFromHeader();
         new PaintingPage()
                 .waitForPageLoaded()
-                        .addPaintingClick()
+                .addPaintingClick()
                 .getPaintingCardSave()
                 .waitForNewPaintingLoaded()
                 .setTitle(title)

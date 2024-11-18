@@ -17,6 +17,7 @@ import org.openqa.selenium.Cookie;
 
 public class ApiLoginExtension implements BeforeEachCallback, AfterTestExecutionCallback, ParameterResolver {
 
+    public static final ExtensionContext.Namespace NAMESPACE = ExtensionContext.Namespace.create(ApiLoginExtension.class);
     private static final Config CFG = Config.getInstance();
     private final AuthApiClient authApiClient = new AuthApiClient();
     private boolean initBrowser;
@@ -29,8 +30,45 @@ public class ApiLoginExtension implements BeforeEachCallback, AfterTestExecution
         this.initBrowser = initBrowser;
     }
 
-    public static final ExtensionContext.Namespace NAMESPACE = ExtensionContext.Namespace.create(ApiLoginExtension.class);
+    private static UserJson getCreatedUserForApiLogin(ExtensionContext extensionContext) {
+        return extensionContext.getStore(CreateUserExtension.CREATE_USER_NAMESPACE).get(extensionContext.getUniqueId(), UserJson.class);
+    }
 
+    public static void setCodeVerifier(ExtensionContext context, String codeVerifier) {
+        context.getStore(ApiLoginExtension.NAMESPACE).put("code_verifier", codeVerifier);
+    }
+
+    public static void setCodChallenge(ExtensionContext context, String codeChallenge) {
+        context.getStore(ApiLoginExtension.NAMESPACE).put("code_challenge", codeChallenge);
+    }
+
+    public static void setCode(ExtensionContext context, String code) {
+        context.getStore(ApiLoginExtension.NAMESPACE).put("code", code);
+    }
+
+    public static void setToken(ExtensionContext context, String token) {
+        context.getStore(ApiLoginExtension.NAMESPACE).put("token", token);
+    }
+
+    public static String getCodeVerifier(ExtensionContext context) {
+        return context.getStore(ApiLoginExtension.NAMESPACE).get("code_verifier", String.class);
+    }
+
+    public static String getCodChallenge(ExtensionContext context) {
+        return context.getStore(ApiLoginExtension.NAMESPACE).get("code_challenge", String.class);
+    }
+
+    public static String getCode(ExtensionContext context) {
+        return context.getStore(ApiLoginExtension.NAMESPACE).get("code", String.class);
+    }
+
+    public static String getToken(ExtensionContext context) {
+        return context.getStore(ApiLoginExtension.NAMESPACE).get("token", String.class);
+    }
+
+    public static String getCsrfToken() {
+        return ThreadSafeCookieManager.INSTANCE.getCookieValue("XSRF-TOKEN");
+    }
 
     @Override
     public void beforeEach(ExtensionContext extensionContext) throws Exception {
@@ -94,49 +132,9 @@ public class ApiLoginExtension implements BeforeEachCallback, AfterTestExecution
         return "Bearer " + getToken(extensionContext);
     }
 
-    private static UserJson getCreatedUserForApiLogin(ExtensionContext extensionContext) {
-        return extensionContext.getStore(CreateUserExtension.CREATE_USER_NAMESPACE).get(extensionContext.getUniqueId(), UserJson.class);
-    }
-
     @Override
     public void afterTestExecution(ExtensionContext extensionContext) throws Exception {
         ThreadSafeCookieManager.INSTANCE.removeAll();
-    }
-
-    public static void setCodeVerifier(ExtensionContext context, String codeVerifier) {
-        context.getStore(ApiLoginExtension.NAMESPACE).put("code_verifier", codeVerifier);
-    }
-
-    public static void setCodChallenge(ExtensionContext context, String codeChallenge) {
-        context.getStore(ApiLoginExtension.NAMESPACE).put("code_challenge", codeChallenge);
-    }
-
-    public static void setCode(ExtensionContext context, String code) {
-        context.getStore(ApiLoginExtension.NAMESPACE).put("code", code);
-    }
-
-    public static void setToken(ExtensionContext context, String token) {
-        context.getStore(ApiLoginExtension.NAMESPACE).put("token", token);
-    }
-
-    public static String getCodeVerifier(ExtensionContext context) {
-        return context.getStore(ApiLoginExtension.NAMESPACE).get("code_verifier", String.class);
-    }
-
-    public static String getCodChallenge(ExtensionContext context) {
-        return context.getStore(ApiLoginExtension.NAMESPACE).get("code_challenge", String.class);
-    }
-
-    public static String getCode(ExtensionContext context) {
-        return context.getStore(ApiLoginExtension.NAMESPACE).get("code", String.class);
-    }
-
-    public static String getToken(ExtensionContext context) {
-        return context.getStore(ApiLoginExtension.NAMESPACE).get("token", String.class);
-    }
-
-    public static String getCsrfToken() {
-        return ThreadSafeCookieManager.INSTANCE.getCookieValue("XSRF-TOKEN");
     }
 
     public Cookie jsessionCookie() {

@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class MuseumTests extends BaseWebTest{
+public class MuseumTests extends BaseWebTest {
 
     @Test
     @DisplayName("Add museum without authorization not allowed")
@@ -58,7 +58,7 @@ public class MuseumTests extends BaseWebTest{
     @DisplayName("Check add museum")
     @ApiLogin(user = @TestUser)
     void checkAddMuseum() {
-         MuseumRepository museumRepository = new MuseumRepositoryHibernate();
+        MuseumRepository museumRepository = new MuseumRepositoryHibernate();
 
         Selenide.open(MainPage.PAGE_URL, MainPage.class);
         String title = DataUtils.generateRandomName();
@@ -69,7 +69,7 @@ public class MuseumTests extends BaseWebTest{
                 .toMuseumPageFromContent();
         new MuseumPage()
                 .waitForPageLoaded()
-                        .addMuseumClick()
+                .addMuseumClick()
                 .getMuseumCardSave()
                 .waitForNewMuseumLoaded()
                 .setTitle(title)

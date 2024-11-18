@@ -9,18 +9,16 @@ import static com.codeborne.selenide.Selenide.$;
 
 public class ArtistInfo extends BaseComponent<ArtistInfo> {
 
-    public ArtistInfo() {
-        super($(".card"));
-    }
-
+    protected final ArtistCard artistCard = new ArtistCard();
+    protected final PaintingCardSave paintingCard = new PaintingCardSave();
     private final SelenideElement editBtn = $("button[data-testid='edit-artist']");
     private final SelenideElement addPaintingUnderPhoto = $(".card .flex .variant-filled-primary");
     private final SelenideElement addPaintingUnderPainting = $(".card .rounded-container-token .btn");
     private final SelenideElement cardHeader = $(".card .card-header");
     private final SelenideElement biographyInfo = $(".card .grid");
-    protected final ArtistCard artistCard = new ArtistCard();
-    protected final PaintingCardSave paintingCard = new PaintingCardSave();
-
+    public ArtistInfo() {
+        super($(".card"));
+    }
 
     @Step("Edit button click")
     public ArtistInfo editClick() {

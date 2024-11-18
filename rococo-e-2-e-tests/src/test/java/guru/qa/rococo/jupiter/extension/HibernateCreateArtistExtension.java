@@ -7,6 +7,7 @@ import guru.qa.rococo.jupiter.annotation.TestArtist;
 import guru.qa.rococo.jupiter.model.ArtistJson;
 import guru.qa.rococo.utils.DataUtils;
 import guru.qa.rococo.utils.FileUtils;
+
 import java.io.IOException;
 import java.util.UUID;
 

@@ -6,6 +6,6 @@ import guru.qa.rococo.jupiter.annotation.meta.WebTest;
 @WebTest
 public abstract class BaseWebTest {
 
-  protected static final Config CFG = Config.getInstance();
+    protected static final Config CFG = Config.getInstance();
 
 }

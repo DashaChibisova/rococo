@@ -8,16 +8,14 @@ import static com.codeborne.selenide.Selenide.$;
 
 public class MuseumInfo extends BaseComponent<MuseumInfo> {
 
-    public MuseumInfo() {
-        super($(".card"));
-    }
-
+    protected final MuseumCardSave museumCardSave = new MuseumCardSave();
     private final SelenideElement editBtn = $("button[data-testid='edit-museum']");
     private final SelenideElement addPaintingUnderPainting = $(".card .rounded-container-token");
     private final SelenideElement cardHeader = $(".card .card-header");
     private final SelenideElement contentInfo = $(".card .grid");
-    protected final MuseumCardSave museumCardSave = new MuseumCardSave();
-
+    public MuseumInfo() {
+        super($(".card"));
+    }
 
     @Step("Edit button click")
     public MuseumInfo editClick() {

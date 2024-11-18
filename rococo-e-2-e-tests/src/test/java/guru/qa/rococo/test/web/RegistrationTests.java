@@ -17,6 +17,11 @@ import java.util.stream.Stream;
 
 public class RegistrationTests extends BaseWebTest {
 
+    static Stream<Arguments> testCasesLogin() {
+        return Stream.of(Arguments.of(DataUtils.generateRandomString(51), DataUtils.generateRandomString(2)),
+                Arguments.of(DataUtils.generateRandomString(55), DataUtils.generateRandomString(13)));
+    }
+
     @ParameterizedTest
     @DisplayName("Username/password can`t be longer than 30/50 characters")
     @MethodSource("testCasesLogin")
@@ -84,11 +89,6 @@ public class RegistrationTests extends BaseWebTest {
                 .setPasswordRepeat(password2)
                 .submitClick()
                 .errorRegistrationDifferentPassword();
-   }
-
-    static Stream<Arguments> testCasesLogin() {
-        return Stream.of(Arguments.of(DataUtils.generateRandomString(51), DataUtils.generateRandomString(2)),
-                Arguments.of(DataUtils.generateRandomString(55), DataUtils.generateRandomString(13)));
     }
 
 }

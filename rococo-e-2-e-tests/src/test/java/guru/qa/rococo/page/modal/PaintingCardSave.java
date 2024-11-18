@@ -12,10 +12,6 @@ import static guru.qa.rococo.condition.PhotoCondition.photoFromClasspath;
 
 public class PaintingCardSave extends BaseComponent<PaintingCardSave> {
 
-    public PaintingCardSave() {
-        super($(".card"));
-    }
-
     private final SelenideElement inputTitle = $("input[name='title']");
     private final SelenideElement inputCity = $("input[name='city']");
     private final SelenideElement inputDescription = $("textarea[name='description']");
@@ -24,6 +20,9 @@ public class PaintingCardSave extends BaseComponent<PaintingCardSave> {
     private final SelenideElement photoInput = $("input[name='content']");
     private final SelenideElement addBtn = $(".card .variant-filled-primary");
     private final SelenideElement closeBtn = $(".card .variant-ringed");
+    public PaintingCardSave() {
+        super($(".card"));
+    }
 
     @Step("Check that page is loaded")
     public PaintingCardSave waitForNewPaintingLoaded() {

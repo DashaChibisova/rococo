@@ -11,10 +11,6 @@ import static com.codeborne.selenide.Selenide.$$;
 
 public class MuseumCardSave extends BaseComponent<MuseumCardSave> {
 
-    public MuseumCardSave() {
-        super($(".card"));
-    }
-
     private final SelenideElement inputTitle = $("input[name='title']");
     private final SelenideElement inputCity = $("input[name='city']");
     private final SelenideElement inputDescription = $("textarea[name='description']");
@@ -22,6 +18,9 @@ public class MuseumCardSave extends BaseComponent<MuseumCardSave> {
     private final SelenideElement photoInput = $("input[name='photo']");
     private final SelenideElement addBtn = $(".card .variant-filled-primary");
     private final SelenideElement closeBtn = $(".card .variant-ringed");
+    public MuseumCardSave() {
+        super($(".card"));
+    }
 
     @Step("Check that page is loaded")
     public MuseumCardSave waitForNewMuseumLoaded() {

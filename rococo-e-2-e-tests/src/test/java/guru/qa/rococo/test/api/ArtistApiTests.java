@@ -82,7 +82,7 @@ public class ArtistApiTests extends BaseApiTest {
                     code
             );
         });
-        
+
     }
 
     @Test
@@ -152,7 +152,7 @@ public class ArtistApiTests extends BaseApiTest {
     @TestArtist(count = 5)
     @DisplayName("Search artist by name")
     void checkSearchArtistByName(ArtistJson[] artist) throws Exception {
-        ArtistList responseOnePage = gatewayApiClient.getAllArtist(0,1,artist[0].name());
+        ArtistList responseOnePage = gatewayApiClient.getAllArtist(0, 1, artist[0].name());
 
         Allure.step("Check size one page", () -> {
             Assertions.assertEquals(

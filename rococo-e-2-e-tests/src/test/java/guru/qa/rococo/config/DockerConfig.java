@@ -11,9 +11,6 @@ public class DockerConfig implements Config {
 
     static final DockerConfig instance = new DockerConfig();
 
-    private DockerConfig() {
-    }
-
     static {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         ChromeOptions options = new ChromeOptions();
@@ -32,6 +29,9 @@ public class DockerConfig implements Config {
         Configuration.browserSize = "1980x1024";
         Configuration.headless = false;
         Configuration.timeout = 20000L;
+    }
+
+    private DockerConfig() {
     }
 
     @Override

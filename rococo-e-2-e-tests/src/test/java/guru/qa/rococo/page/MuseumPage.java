@@ -12,17 +12,14 @@ import static guru.qa.rococo.condition.PhotoCondition.photoFromClasspath;
 
 public class MuseumPage extends BasePage<MuseumPage> {
 
+    protected final MuseumInfo museumInfo = new MuseumInfo();
+    protected final MuseumCardSave museumCardSave = new MuseumCardSave();
     private final SelenideElement pageContent = $("#page-content");
     private final SelenideElement addMuseumBtn = $("#page-content .variant-filled-primary");
     private final SelenideElement museumDataTable = $("#page-content .grid");
     private final SelenideElement searchLine = $("input[type='search']");
-
     private final SelenideElement iconeSearchBtn = $(".variant-soft-surface");
     private final SelenideElement titleSearchBtn = $(byTitle("Искать музей..."));
-
-    protected final MuseumInfo museumInfo = new MuseumInfo();
-    protected final MuseumCardSave museumCardSave = new MuseumCardSave();
-
 
     @Step("Check that page is loaded")
     public MuseumPage waitForPageLoaded() {

@@ -161,7 +161,7 @@ public class PaintingApiTests extends BaseApiTest {
         ArtistRepository artistRepository = new ArtistRepositoryHibernate();
         MuseumEntity museumById = museumRepository.findMuseumById(UUID.fromString(paintingJsons[0].museum()));
         ArtistEntity artistById = artistRepository.findArtistById(UUID.fromString(paintingJsons[0].artist()));
-        PaintingResponce painting = paintingJsonToPaintingResponce(MuseumJson.fromEntity(museumById), ArtistJson.fromEntity(artistById),paintingJson);
+        PaintingResponce painting = paintingJsonToPaintingResponce(MuseumJson.fromEntity(museumById), ArtistJson.fromEntity(artistById), paintingJson);
         PaintingResponce response = gatewayApiClient.updateInfoPainting(bearerToken, painting).body();
 
         Allure.step("Check id", () -> {
@@ -206,7 +206,7 @@ public class PaintingApiTests extends BaseApiTest {
         ArtistRepository artistRepository = new ArtistRepositoryHibernate();
         MuseumEntity museumById = museumRepository.findMuseumById(UUID.fromString(paintingJsons[0].museum()));
         ArtistEntity artistById = artistRepository.findArtistById(UUID.fromString(paintingJsons[0].artist()));
-        PaintingResponce painting = paintingJsonToPaintingResponce(MuseumJson.fromEntity(museumById), ArtistJson.fromEntity(artistById),paintingJson);
+        PaintingResponce painting = paintingJsonToPaintingResponce(MuseumJson.fromEntity(museumById), ArtistJson.fromEntity(artistById), paintingJson);
 
         int code = gatewayApiClient.updateInfoPainting(null, painting).raw().code();
         Allure.step("Check code", () -> {
@@ -222,7 +222,7 @@ public class PaintingApiTests extends BaseApiTest {
     @TestPainting(count = 5)
     @DisplayName("Search all painting returned")
     void checkSearchPaintingByTitle(PaintingJson[] paintingJsons) throws Exception {
-        PaintingList responseName = gatewayApiClient.getAllPainting(0,1,paintingJsons[0].title());
+        PaintingList responseName = gatewayApiClient.getAllPainting(0, 1, paintingJsons[0].title());
 
         Allure.step("Check size one page", () -> {
             Assertions.assertEquals(
@@ -267,7 +267,7 @@ public class PaintingApiTests extends BaseApiTest {
     }
 
 
-    private PaintingResponce paintingJsonToPaintingResponce(MuseumJson museumJson, ArtistJson artistJson, PaintingJson paintingJson){
+    private PaintingResponce paintingJsonToPaintingResponce(MuseumJson museumJson, ArtistJson artistJson, PaintingJson paintingJson) {
         MuseumRepository museumRepository = new MuseumRepositoryHibernate();
         CountryEntity countryByName = museumRepository.findCountryByName(museumJson.country());
         CountryJson countryJson = new CountryJson(
@@ -287,7 +287,7 @@ public class PaintingApiTests extends BaseApiTest {
                 geoJson
         );
 
-       return new PaintingResponce(
+        return new PaintingResponce(
                 paintingJson.id(),
                 paintingJson.title(),
                 paintingJson.description(),
